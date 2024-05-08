@@ -1,4 +1,4 @@
-import styles from './StartPage.module.css';
+import styles from '../General.module.css';
 import { useNavigate } from "react-router-dom";
 
 function StartPage(){
@@ -15,7 +15,9 @@ function StartPage(){
            Senpai 
         </h1>
         <div>
-            <button className = {styles.button01} onClick={handleClick}>Start Your Journey</button>
+            <button className = {styles.button01} 
+                    onClick={handleClick}>
+                Start Your Journey</button>
         </div>
         </>
         

@@ -1,0 +1,18 @@
+.loginContainer{
+  border: 2px solid white; /* Apply a 2px solid white border */
+  padding: 20px; /* Add some padding for better spacing */
+}
+
+.loginFormDiv {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+.loginButtonDiv {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin-top: 20px;
+}
