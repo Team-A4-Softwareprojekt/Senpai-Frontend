@@ -1,0 +1,11 @@
+.imageContainer {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 20vh; /* Set the container height to full viewport height */
+  }
+  
+  .image {
+    max-width: 60%;
+    max-height: 60%;
+  }
