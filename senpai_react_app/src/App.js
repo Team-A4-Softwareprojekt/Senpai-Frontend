@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import StartPage from "./pages/startPage/StartPage.js";
-import LoginPage from "./pages/loginPage/LoginPage.js";
-import RegisterPage from "./pages/loginPage/RegisterPage.js";
+import LoginPage from "./pages/loginAndRegisterPages/LoginPage.js";
+import RegisterPage from "./pages/loginAndRegisterPages/RegisterPage.js";
 import NoPage from "./pages/noPage/NoPage.js";
 
 function App() {
