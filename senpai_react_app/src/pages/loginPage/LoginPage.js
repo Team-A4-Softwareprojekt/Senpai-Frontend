@@ -1,7 +1,14 @@
 import styles from '../General.module.css';
 import styles2 from './LoginPage.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
+  
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("*");
+  }
   return (
     <div> 
         <h1>Login</h1>
@@ -24,7 +31,7 @@ function LoginPage() {
           
         </div>
         <div className= {styles2.loginButtonDiv}>
-            <button className={styles.button01}>Login</button>
+            <button className={styles.button01} onClick={handleLogin}>Login</button>
         </div>
        
         

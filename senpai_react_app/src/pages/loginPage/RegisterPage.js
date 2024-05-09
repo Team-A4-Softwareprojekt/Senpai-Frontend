@@ -1,7 +1,14 @@
 import styles from '../General.module.css';
 import styles2 from './LoginPage.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("*");
+  }
   return (
     <div> 
         <h1>Register</h1>
@@ -28,7 +35,7 @@ function RegisterPage() {
           
         </div>
         <div className= {styles2.loginButtonDiv}>
-            <button className={styles.button01}>Register</button>
+            <button className={styles.button01} onClick={handleLogin}>Register</button>
         </div>
        
         
