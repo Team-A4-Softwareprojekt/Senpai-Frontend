@@ -18,7 +18,7 @@ function StartPage(){
                 <div>
                     <button className={styles.button01} onClick={handleClick}>
                         Start Your Journey
-                    </button>
+                    </button> 
                 </div>
             </div>
             

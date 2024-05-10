@@ -7,14 +7,18 @@
 
 }
 
-
 .startDiv {
-  position: absolute; /* Set position absolute for the .startDiv */
-  top: 50%; /* Position from the top */
-  left: 50%; /* Position from the left */
-  transform: translate(-50%, -50%); /* Center the element */
-  background-color: rgb(27, 27, 27); /* Change the background color */
-  padding: 20px; /* Add padding as needed */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(27, 27, 27);
+  padding: 20px;
   box-sizing: border-box;
-  border-radius: 20px; /* Add border radius */
+  border-radius: 20px;
+  transition: border 0.1s ease; /* Add transition for smoother effect */
+}
+
+.startDiv:hover {
+  border: 2px solid white; /* Add white border on hover */
 }
