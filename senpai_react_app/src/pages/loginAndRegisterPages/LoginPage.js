@@ -7,7 +7,7 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate("*");
+    navigate("/selectLearningContent");
   }
   return (
     <div> 

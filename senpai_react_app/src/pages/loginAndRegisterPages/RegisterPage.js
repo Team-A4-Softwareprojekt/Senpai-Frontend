@@ -7,7 +7,7 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate("*");
+    navigate("/SelectLearningContent");
   }
   return (
     <div> 
