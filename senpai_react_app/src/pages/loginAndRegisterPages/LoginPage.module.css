@@ -1,6 +1,7 @@
 .loginContainer{
-  border: 2px solid white; /* Apply a 2px solid white border */
+  border: 3px solid white; /* Apply a 2px solid white border */
   padding: 20px; /* Add some padding for better spacing */
+  border-radius: 12px;
 }
 
 .loginFormDiv {

@@ -17,8 +17,5 @@
   box-sizing: border-box;
   border-radius: 20px;
   transition: border 0.1s ease; /* Add transition for smoother effect */
-}
-
-.startDiv:hover {
-  border: 2px solid white; /* Add white border on hover */
+  border: 3px solid white;
 }
