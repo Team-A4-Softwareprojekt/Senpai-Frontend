@@ -51,6 +51,7 @@ body {
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 8px;
+    border: 3px solid white;
   }
   
   .button01:hover {

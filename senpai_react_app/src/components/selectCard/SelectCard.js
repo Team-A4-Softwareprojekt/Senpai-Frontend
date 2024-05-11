@@ -17,10 +17,6 @@ function SelectCard({ buttonText, imageUrl, linkTo, modalHeader, modalText}){
             </Link>
             <Modal header = {modalHeader} text = {modalText}></Modal>
         </div>
-            
-        
-        
-        
     );
 }
 

@@ -5,6 +5,8 @@ import codeChallengeImg from '../../assets/codeChallenge.jpg';
 import codeBattleImg from '../../assets/codeBattle.jpg';
 import codeExerciseImg from '../../assets/codeExercise.jpg';
 
+import accountIcon from '../../assets/accountIcon.png';
+
 /*
 This is the code-senpai page that holds an account button, amount of lives and three different
 game modes to choose from. Each game mode has a modal with the basic explanation of the mode
@@ -28,7 +30,11 @@ function codeSenpaiPage() {
             modalText= "Work on complex tasks in different categories and receive individual feedback from experienced tutors to deepen your understanding."/>
             </div>
             <div className= {styles2.accountButtonContainer}>
-                <button className= {styles.button01}>Account</button>
+                <button className= {styles.button01}>
+                    Account
+                    <img className= {styles2.accountIcon} src= {accountIcon} alt= "0"></img>
+                </button>
+                
             </div>
             
         </div>
