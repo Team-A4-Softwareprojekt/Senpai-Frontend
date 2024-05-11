@@ -1,10 +1,16 @@
 import styles from './Modal.module.css';
 import React, { useState } from "react";
 
+/*
+This is a basic modal component that holds text and a close button
+The header and text parameters are set when the component is initialized
+*/
 function Modal({header, text}){
 
+    // Modal is a boolean and setModal is the setter function for the boolean
     const [modal, setModal] = useState(false);
 
+    // Simple toggle function that sets the boolean to the opposite when called
     const toggleModal = () => {
         setModal(!modal)
     }

@@ -2,10 +2,17 @@ import styles from '../General.module.css';
 import styles2 from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
 
+/*
+This is the login page that takes two inputs (username, password) 
+and has a button to confirm the login process. The page also has two hyperlinks that link to 
+the register page and the forgot password page
+*/
 function LoginPage() {
   
+  // Navigate function
   const navigate = useNavigate();
 
+  // Navigates to the selectlearningcontent page
   const handleLogin = () => {
     navigate("/selectLearningContent");
   }

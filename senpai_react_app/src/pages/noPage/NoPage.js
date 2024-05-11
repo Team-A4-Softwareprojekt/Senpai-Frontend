@@ -1,6 +1,10 @@
 import sadFaceImg from '../../assets/sadFace.png';
 import styles from './NoPage.module.css';
 
+/*
+This is the no page which appears when a page is not found or not yet implemented
+(Error 404)
+*/
 function NoPage(){
     return (
         <div>

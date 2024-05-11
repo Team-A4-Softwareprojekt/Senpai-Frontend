@@ -2,10 +2,16 @@ import styles from '../General.module.css';
 import styles2 from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
 
+/*
+This is the register page that takes three inputs (username, password, email) 
+and has a button to confirm the register process
+*/
 function RegisterPage() {
 
+  // Navigate function
   const navigate = useNavigate();
 
+  // Navigates to the selectlearningcontent page
   const handleLogin = () => {
     navigate("/SelectLearningContent");
   }
