@@ -14,6 +14,13 @@ function StartPage(){
     // Navigates to the login page
     const handleClick = () => {
         navigate("./login");
+
+        fetch('https://senpai-server.onrender.com/registration').then(data => {
+            console.log('Response from server:', data); // Anzeige der Antwort in der Konsole
+            // Hier kannst du die Antwort in deiner Anwendungslogik weiterverarbeiten oder anzeigen
+        })
+
+
     };
 
     return(
