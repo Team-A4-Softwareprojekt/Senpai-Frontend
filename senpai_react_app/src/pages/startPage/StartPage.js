@@ -15,10 +15,20 @@ function StartPage(){
     const handleClick = () => {
         navigate("./login");
 
-        fetch('https://senpai-server.onrender.com/registration').then(data => {
+        fetch('https://senpai-server.onrender.com/registration')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text(); // Die Antwort als Text lesen
+        })
+        .then(data => {
             console.log('Response from server:', data); // Anzeige der Antwort in der Konsole
             // Hier kannst du die Antwort in deiner Anwendungslogik weiterverarbeiten oder anzeigen
         })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
 
 
     };
