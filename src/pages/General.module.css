@@ -8,9 +8,7 @@ body {
   
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
     background-color: rgb(27, 27, 27);
     overflow-x: hidden; /* Prevent horizontal scrolling */
   }
@@ -22,26 +20,16 @@ body, #root {
   flex-direction: column;
 }
 
-/* Add this to center the content horizontally */
-#root {
-  align-items: center;
-  justify-content: center;
-}
 
   
   
   h1 {
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
   }
 
   h2 {
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   label {
@@ -70,4 +58,8 @@ body, #root {
   
   .button01:hover {
     background-color: #a2163b; 
+  }
+
+  p {
+    color: white;
   }

@@ -14,7 +14,7 @@ function SelectLearningContent(){
         </div>
         <div className={styles2.cardsGridContainer}>
                 <SelectCard buttonText="Code Senpai" imageUrl={codeSenpaiImage}
-                    linkTo="/CodeSenpaiPage" modalHeader="Code Senpai" modalText="This is the place where u can learn to code" />
+                    linkTo="/select/code" modalHeader="Code Senpai" modalText="This is the place where u can learn to code" />
 
                 <SelectCard buttonText="Med Senpai" imageUrl={medSenpaiImage} linkTo="*"
                     modalHeader="Med Senpai" modalText="This is the place where u can learn med related topics" />
