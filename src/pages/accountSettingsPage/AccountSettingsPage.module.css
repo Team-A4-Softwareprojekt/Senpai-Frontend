@@ -1,18 +1,28 @@
 
-.userInfo {
+.accountDiv {
     position: absolute;
-    top: 30px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border: 3px;
+    border-radius: 10px;
+    border : 3px solid white;   
 }
-
 
 .friendList {
-    padding-top: 100px;
-    margin: 0 auto;
-    text-align: center;
+    max-height: 47vh;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
+
+
 p {
     font-size: 20px;
 }
 
+input {
+    font-size: 20px;
+    margin: 10px;
+    border-radius: 8px;
+}
