@@ -7,6 +7,7 @@ import CodeSenpaiPage from "./pages/codeSenpaiPage/CodeSenpaiPage.jsx";
 import AccountSettingsPage from "./pages/accountSettingsPage/AccountSettingsPage.jsx";
 import DailyChallengePage from "./pages/dailyChallengePage/DailyChallengePage.jsx";
 import CodeBattlePage from "./pages/codeBattlePage/CodeBattlePage.jsx";
+import ExercisePage from "./pages/exercisePage/ExercisePage.jsx";
 import NoPage from "./pages/noPage/NoPage.jsx";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/select/code" element={<CodeSenpaiPage/>}/>
           <Route path="/select/code/dailyChallenge" element={<DailyChallengePage/>}/>
           <Route path="/select/code/codeBattle" element={<CodeBattlePage/>}/>
+          <Route path="/select/code/exercise" element={<ExercisePage/>}/>
           <Route path="/account" element={<AccountSettingsPage/>}/>
           <Route path="*" element={<NoPage/>} />
         </Routes>

@@ -40,9 +40,9 @@ function codeBattlePage() {
                     className= {styles2.selectCard}/>
             </div>
             <div className= {styles2.accountButtonContainer}>
-                <button className= {styles.button01} onClick={handleClick}>
+                <button className= {styles2.accountButton} onClick={handleClick}>
                     Account
-                    <img className= {styles2.accountIcon} src= {accountIcon} alt= "0"></img>
+                    <img className= {styles2.accountIcon} src= {accountIcon} alt= "Account Icon"></img>
                 </button>
                 
             </div>

@@ -1,0 +1,51 @@
+.exercisesDiv {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border: 3px;
+    border-radius: 10px;
+    border : 3px solid white;   
+    padding: 5px
+}
+
+.exerciseList {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 15px; /* Abstand zum rechten Rand vergrößern */
+    padding-left: 15px; /* Abstand zum linken Rand vergrößern */
+    scrollbar-width: auto;
+    scrollbar-color: hsla(0, 0%, 3%, 0.5) hsl(0, 10%, 90%);
+    scroll-padding-block-start: 125%;
+}
+
+p {
+    font-size: 20px;
+}
+
+input {
+    font-size: 20px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.accountButtonContainer {
+    position: absolute;
+    top: 10px; /* Abstand vom oberen Rand */
+    right: 10px; /* Abstand vom rechten Rand */
+}
+
+.accountButton {
+    font-size: 18px; /* Schriftgröße des Buttons */
+    padding: 10px 15px; /* Innenabstand des Buttons */
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.accountIcon {
+    width: 25px; /* Breite des Icons */
+    height: 25px; /* Höhe des Icons */
+    margin-left: 5px; /* Abstand zwischen Text und Icon */
+}

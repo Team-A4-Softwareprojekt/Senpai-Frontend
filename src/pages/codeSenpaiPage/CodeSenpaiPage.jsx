@@ -34,7 +34,7 @@ function codeSenpaiPage() {
                     modalHeader = "Code Battle" 
                     modalText = "Challenge yourself and compete with others in entertaining code duels to expand your knowledge in a playful way."
                     className= {styles2.selectCard}/>
-                <SelectCard buttonText= "Exercise" imageUrl={codeExerciseImg} linkTo={"*"}
+                <SelectCard buttonText= "Exercise" imageUrl={codeExerciseImg} linkTo={"/select/code/exercise"}
                     modalHeader= "Exercise" 
                     modalText= "Work on complex tasks in different categories and receive individual feedback from experienced tutors to deepen your understanding."
                     className= {styles2.selectCard}/>
