@@ -26,7 +26,7 @@ function codeSenpaiPage() {
                 Choose Your Form Of Training
             </h1>
             <div className= {styles2.cardsGridContainer}>      
-                <SelectCard buttonText= "Daily Challenge" imageUrl={codeChallengeImg} linkTo={"*"}
+                <SelectCard buttonText= "Daily Challenge" imageUrl={codeChallengeImg} linkTo={"/select/code/dailyChallenge"}
                     modalHeader= "Daily Challenge" 
                     modalText = "Participate in daily challenges to improve your skills and build a continuous learning routine."
                     className= {styles2.selectCard}/>

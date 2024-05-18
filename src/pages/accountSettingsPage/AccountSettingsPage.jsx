@@ -14,7 +14,7 @@ function AccountSettingsPage() {
                 <button className={styles.button01}>Corrected Exercises</button>
                 
             </div>
-            <input type="text" placeholder="Search friends" />
+            <input type="text" placeholder="Search friends"/>
             <div className={styles2.friendList}>
                 
                 <UserCard 
