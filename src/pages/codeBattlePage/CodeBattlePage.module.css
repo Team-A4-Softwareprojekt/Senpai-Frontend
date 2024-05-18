@@ -1,0 +1,36 @@
+.cardsGridContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+}
+.selectCard {
+    width: 300px; /* Set a fixed width */
+    height: 400px; /* Set a fixed height */
+    overflow: auto; /* Add scrollbars if content overflows */
+    max-width: 100%; /* Allow cards to grow up to 100% of their parent container */
+}
+
+/* Optionally, you can style the inner content */
+.selectCard .content {
+    padding: 20px;
+    /*box-sizing: border-box;*/ /* Include padding in the element's total width and height */
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Truncate text if it overflows */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.accountButtonContainer {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+}
+
+.accountIcon {
+    width: 1.5vw;
+    height: 3vh;
+    padding-left: 2vw;
+}
