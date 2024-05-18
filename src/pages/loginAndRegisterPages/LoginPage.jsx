@@ -51,7 +51,7 @@ function LoginPage() {
                 console.error('There was a problem with the fetch operation:', error);
             });
 
-        //navigate("/selectLearningContent");
+        //navigate("/select");
     }
 
     return (

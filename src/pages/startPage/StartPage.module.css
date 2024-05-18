@@ -19,3 +19,26 @@
   transition: border 0.1s ease; /* Add transition for smoother effect */
   border: 3px solid white;
 }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Add this to center the content horizontally */
+#root {
+  align-items: center;
+  justify-content: center;
+}
+
+h1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,7 +1,17 @@
 .cardsGridContainer {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    grid-auto-rows: minmax(200px, auto); /* Automatic row height */
     gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-items: center; /* Center items horizontally */
+}
+
+.cardsGridContainer img {
+    max-width: 100%;;
+    height: auto;
 }
 
 .grayImg {

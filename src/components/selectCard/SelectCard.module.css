@@ -1,17 +1,19 @@
 .selectCardImg {
-    width: 13vw;
-    height:13vw;
+    width: 87%;
+    height: auto;
     border-radius: 10px;
 }
-
 .selectButton {
-    background-color:  rgb(27, 27, 27);;
+    width: 330px;
+    height: 430px;
+    background-color:  rgb(27, 27, 27);
     border-radius: 10px;
     color: black;
     border: 6px solid rgb(255, 255, 255);
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 9px; /* Add this line to make the font smaller */
 }
 
 .selectButton:hover {

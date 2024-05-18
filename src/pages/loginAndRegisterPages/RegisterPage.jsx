@@ -13,7 +13,7 @@ function RegisterPage() {
 
   // Navigates to the selectlearningcontent page
   const handleLogin = () => {
-    navigate("/SelectLearningContent");
+    navigate("/select");
   }
   return (
     <div> 

@@ -8,26 +8,28 @@ body {
   
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* This ensures the content is centered vertically */
+    
     background-color: rgb(27, 27, 27);
+    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
+
+  /* Add this to ensure content is always centered vertically and horizontally */
+body, #root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
   
   
   h1 {
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
   }
 
   h2 {
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   label {
@@ -56,4 +58,8 @@ body {
   
   .button01:hover {
     background-color: #a2163b; 
+  }
+
+  p {
+    color: white;
   }
