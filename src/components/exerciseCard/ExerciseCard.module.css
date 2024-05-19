@@ -1,4 +1,4 @@
-.userCardDiv{
+.exerciseCardDiv{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,15 +11,20 @@
     width: 250px;
     height: 80px;
     border-radius: 15px;
+    cursor: pointer;
 }
 
-.userName{
+.exerciseCardDiv:hover {
+    background-color: rgb(52, 51, 51);
+}
+
+.exerciseName{
     font-size: 20px;
     font-weight: bold;
     margin: 0;
 }
 
-.streak{
+.status{
     font-size: 16px;
     margin: 0;
 }
