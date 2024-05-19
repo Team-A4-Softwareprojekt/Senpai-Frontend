@@ -25,9 +25,11 @@ function Modal({header, text}){
                 
                     <div onClick= {toggleModal} className= {styles.overlay}></div>
                         <div className= {styles.content}>
-                        <h2>{header}</h2>
-                        <p>{text}</p>
-                        <button className= {styles.button} onClick= {toggleModal} >Close</button>
+                            <h2>{header}</h2>
+                            <p>{text}</p>
+                            <div className={styles.buttonContainer}>
+                                <button className={styles.button} onClick={toggleModal}>Close</button>
+                        </div>
                     </div>
                 </div>   
             )}

@@ -8,14 +8,18 @@ import { Link } from 'react-router-dom';
 */
 function SelectCard({ buttonText, imageUrl, linkTo, modalHeader, modalText}){
     return(
-        <div >
+        <div className={styles.selectCardContainer}>
             <Link to={linkTo}>
-            <button className= {styles.selectButton}>
-            <img className= {styles.selectCardImg} src= {imageUrl} alt="Image Description" />
-            <h1> {buttonText} </h1>
-            </button>
+                <button className={styles.selectButton}>
+                    <img className={styles.selectCardImg} src={imageUrl} alt="Image Description" />
+                    <h1> {buttonText} </h1>
+                </button>
             </Link>
-            <Modal header = {modalHeader} text = {modalText}></Modal>
+            <div className={styles.questionMarkContainer}>
+                <Modal header={modalHeader} text={modalText}>
+                    <button className={styles.questionMarkButton}>?</button>
+                </Modal>
+            </div>
         </div>
     );
 }
