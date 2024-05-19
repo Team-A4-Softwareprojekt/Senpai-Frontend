@@ -4,7 +4,9 @@ import SelectCard from '../../components/selectCard/SelectCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
 import manipulationImg from '../../assets/manipulation.png';
 import limitationImg from '../../assets/limitation.png';
-import accountIcon from '../../assets/accountIcon.png';
+import React from 'react';
+import HomeButton from '../../components/homeButton/HomeButton';
+import AccountButton from '../../components/accountButton/AccountButton';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +18,11 @@ function codeBattlePage() {
 
     const navigate = useNavigate();
     
-    const handleClick = () => {
+    const handleHomeClick = () => {
+        navigate('/select');
+    };
+
+    const handleAccountClick = () => {
         navigate('/account');
     };
 
@@ -26,27 +32,30 @@ function codeBattlePage() {
                 Choose your battle
             </h1>
             <div className= {styles2.cardsGridContainer}>      
-                <SelectCard buttonText= "Buzzer" imageUrl={buzzerImg} linkTo={"*"}
+                <SelectCard 
+                    buttonText= "Buzzer"
+                    imageUrl={buzzerImg} 
+                    linkTo={"*"}
                     modalHeader= "Buzzer" 
                     modalText = "Compete against another player. Answer questions by pressing a buzzer in a limited time."
                     className= {styles2.selectCard}/>
-                <SelectCard buttonText= "Manipulation" imageUrl={manipulationImg} linkTo={"*"}
+                <SelectCard 
+                    buttonText= "Manipulation" 
+                    imageUrl={manipulationImg} 
+                    linkTo={"*"}
                     modalHeader = "Manipulation" 
                     modalText = "Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
                     className= {styles2.selectCard}/>
-                <SelectCard buttonText= "Limitation" imageUrl={limitationImg} linkTo={"*"}
+                <SelectCard 
+                    buttonText= "Limitation" 
+                    imageUrl={limitationImg} 
+                    linkTo={"*"}
                     modalHeader= "Limitation" 
                     modalText= "Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
                     className= {styles2.selectCard}/>
             </div>
-            <div className= {styles2.accountButtonContainer}>
-                <button className= {styles2.accountButton} onClick={handleClick}>
-                    Account
-                    <img className= {styles2.accountIcon} src= {accountIcon} alt= "Account Icon"></img>
-                </button>
-                
-            </div>
-            
+            <HomeButton handleClick={handleHomeClick} />
+            <AccountButton handleClick={handleAccountClick} />
         </div>
         
     );

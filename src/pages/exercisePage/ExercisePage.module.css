@@ -20,32 +20,21 @@
     scroll-padding-block-start: 125%;
 }
 
-p {
+.exercisesHeader {
+    font-size: 28px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.searchInput {
     font-size: 20px;
+    margin: 10px;
+    border-radius: 8px;
 }
 
 input {
     font-size: 20px;
     margin: 10px;
     border-radius: 8px;
-}
-
-.accountButtonContainer {
-    position: absolute;
-    top: 10px; /* Abstand vom oberen Rand */
-    right: 10px; /* Abstand vom rechten Rand */
-}
-
-.accountButton {
-    font-size: 18px; /* Schriftgröße des Buttons */
-    padding: 10px 15px; /* Innenabstand des Buttons */
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-}
-
-.accountIcon {
-    width: 25px; /* Breite des Icons */
-    height: 25px; /* Höhe des Icons */
-    margin-left: 5px; /* Abstand zwischen Text und Icon */
 }

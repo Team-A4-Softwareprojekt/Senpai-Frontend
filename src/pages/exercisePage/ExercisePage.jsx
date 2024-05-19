@@ -1,7 +1,9 @@
 import styles from '../General.module.css';
 import styles2 from './ExercisePage.module.css';
 import ExerciseCard from '../../components/exerciseCard/ExerciseCard.jsx';
-import accountIcon from '../../assets/accountIcon.png';
+import React from 'react';
+import HomeButton from '../../components/homeButton/HomeButton';
+import AccountButton from '../../components/accountButton/AccountButton';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -9,26 +11,23 @@ function ExercisePage() {
 
     const navigate = useNavigate();
     
-    const handleClick = () => {
+    const handleHomeClick = () => {
+        navigate('/select');
+    };
+
+    const handleAccountClick = () => {
         navigate('/account');
     };
 
     return (
         <>
-        <div className={styles2.accountButtonContainer}>
-                <button className={styles2.accountButton} onClick={handleClick}>
-                    Account
-                    <img className={styles2.accountIcon} src={accountIcon} alt="Account Icon" />
-                </button>
-            </div>
-            
+        <HomeButton handleClick={handleHomeClick} />
+        <AccountButton handleClick={handleAccountClick} />
+
         <div className={styles2.exercisesDiv}>
-            <div className= {styles2.userDiv}>
-                <p>Exercises</p>
-                <input type="text" placeholder="Search exercise"/>  
-                
-            </div>
-            
+                <p className={styles2.exercisesHeader}>Exercises</p>
+                <input className={styles2.searchInput} type="text" placeholder="Search exercise"/>
+             
             <div className={styles2.exerciseList}>
                 
                 <ExerciseCard 

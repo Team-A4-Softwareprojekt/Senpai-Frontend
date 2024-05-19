@@ -4,7 +4,9 @@ import SelectCard from '../../components/selectCard/SelectCard.jsx';
 import codeChallengeImg from '../../assets/codeChallenge.jpg';
 import codeBattleImg from '../../assets/codeBattle.jpg';
 import codeExerciseImg from '../../assets/codeExercise.jpg';
-import accountIcon from '../../assets/accountIcon.png';
+import React from 'react';
+import HomeButton from '../../components/homeButton/HomeButton';
+import AccountButton from '../../components/accountButton/AccountButton';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -16,14 +18,18 @@ function codeSenpaiPage() {
 
     const navigate = useNavigate();
     
-    const handleClick = () => {
+    const handleHomeClick = () => {
+        navigate('/select');
+    };
+
+    const handleAccountClick = () => {
         navigate('/account');
     };
 
     return( 
         <div>
             <h1>
-                Choose Your Form Of Training
+                Choose your form of training
             </h1>
             <div className= {styles2.cardsGridContainer}>      
                 <SelectCard buttonText= "Daily Challenge" imageUrl={codeChallengeImg} linkTo={"/select/code/dailyChallenge"}
@@ -39,13 +45,8 @@ function codeSenpaiPage() {
                     modalText= "Work on complex tasks in different categories and receive individual feedback from experienced tutors to deepen your understanding."
                     className= {styles2.selectCard}/>
             </div>
-            <div className= {styles2.accountButtonContainer}>
-                <button className= {styles.button01} onClick={handleClick}>
-                    Account
-                    <img className= {styles2.accountIcon} src= {accountIcon} alt= "0"></img>
-                </button>
-                
-            </div>
+            <HomeButton handleClick={handleHomeClick} />
+            <AccountButton handleClick={handleAccountClick} />
             
         </div>
         
