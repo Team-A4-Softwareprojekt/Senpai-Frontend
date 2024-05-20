@@ -4,8 +4,9 @@ import styles2 from './DailyChallengePage.module.css';
 import FillInTheBlankText from '../../components/fillInTheBlankText/FillInTheBlankText.jsx';
 
 function DailyChallengePage() {
-    const text = "Das ist ein Beispieltext, in dem einige Wörter fehlen.";
-    const blankIndices = [2, 5, 7]; // Die Indizes der Wörter, die ausgelassen werden sollen
+    const text = "This is an example Text, where some words are missing";
+    const blankIndices = [2, 5, 7];
+    
     return (
         <div>
             <h1>Daily Challenge</h1>

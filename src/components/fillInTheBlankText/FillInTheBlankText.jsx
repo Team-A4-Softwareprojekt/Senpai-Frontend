@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../../pages/General.module.css';
 
 // FillInTheBlankText component
 function FillInTheBlankText({ text, blankIndices }) {
@@ -8,17 +9,20 @@ function FillInTheBlankText({ text, blankIndices }) {
   const [correct, setCorrect] = useState(Array(blankIndices.length).fill(false));
   const [incorrect, setIncorrect] = useState(Array(blankIndices.length).fill(false));
 
+  // Handle input change
   const handleChange = (e, idx) => {
     const newInputs = [...inputs];
     newInputs[idx] = e.target.value;
     setInputs(newInputs);
   };
 
+  // Handle check button click
   const handleCheck = (idx) => {
     const newShow = [...show];
     const newCorrect = [...correct];
     const newIncorrect = [...incorrect];
 
+    // Check if the input is correct
     if (inputs[idx] === words[blankIndices[idx]]) {
       newShow[idx] = true;
       newCorrect[idx] = true;
@@ -64,7 +68,8 @@ function FillInTheBlankText({ text, blankIndices }) {
       </p>
       {blankIndices.map((_, idx) => (
         <div key={idx}>
-          <button onClick={() => handleCheck(idx)}>Check {idx + 1}</button>
+          <button onClick={() => handleCheck(idx)} className = {styles.button01}>Check {idx + 1}
+          </button>
         </div>
       ))}
     </div>
