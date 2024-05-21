@@ -1,10 +1,21 @@
 import styles from '../General.module.css';
 import styles2 from './AccountSettingsPage.module.css';
 import UserCard from '../../components/userCard/UserCard.jsx';
+import React from 'react';
+import HomeButton from '../../components/homeButton/HomeButton';
+import { useNavigate } from 'react-router-dom';
 
 function AccountSettingsPage() {
+
+    const navigate = useNavigate();
+    
+    const handleHomeClick = () => {
+        navigate('/select');
+    };
+
     return (
         <>
+        <HomeButton handleClick={handleHomeClick} />
         <div className={styles2.accountDiv}>
             <div className= {styles2.userDiv}>
                 <p>Name: Max Mustermann</p>
@@ -56,9 +67,7 @@ function AccountSettingsPage() {
                     <button className={styles.button01}>Delete Account</button>
                 </div>
             </footer>
-
             
-
         </div>
         
         </>

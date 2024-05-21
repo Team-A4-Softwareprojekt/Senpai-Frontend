@@ -1,0 +1,18 @@
+.homeButtonContainer {
+    position: absolute;
+    top: 10px; /* Abstand vom oberen Rand */
+    left: 10px; /* Abstand vom rechten Rand */
+  }
+  
+  .homeButton {
+    padding: 10px 15px; /* Innenabstand des Buttons */
+    display: flex;
+    align-items: center;
+  }
+  
+  .homeIcon {
+    width: 25px; /* Breite des Icons */
+    height: 25px; /* Höhe des Icons */
+    transform: scale(1.5); /* Skalieren des Icons */
+  }
+  
