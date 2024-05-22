@@ -1,15 +1,16 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path from 'path';
+
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware zum Servieren der statischen Dateien
-app.use(express.static(path.join(__dirname, 'dist')));
+const buildPath = path.join(process.cwd(), 'dist');
 
-// Route für die index.html im Root-Verzeichnis
+app.use(express.static(buildPath));
+
 app.get('*', (req, res) => {
-    //res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-    res.sendFile(path.join(__dirname, 'index.html'));
+    const indexPath = path.join(buildPath, 'index.html');
+    res.sendFile(indexPath);
 });
 
 app.listen(port, () => {
