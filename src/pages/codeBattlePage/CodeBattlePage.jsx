@@ -11,7 +11,7 @@ import AccountButton from '../../components/accountButton/AccountButton';
 import { useNavigate } from 'react-router-dom';
 
 //const express = require('express');
-import {connectSocket, startBuzzerQueue, disconnectSocket} from '../../socket.js';
+import {startBuzzerQueue, disconnectSocket} from '../../socket.js';
 
 /*
 This is the code battle page that holds an account button, amount of lives and three different
@@ -46,7 +46,7 @@ function codeBattlePage() {
                     modalHeader= "Buzzer" 
                     modalText = "Compete against another player. Answer questions by pressing a buzzer in a limited time."
                     className= {styles2.selectCard}
-                    onclick={onBuzzerClick}
+                    handleClick={onBuzzerClick}
                 />
                 <SelectCard 
                     buttonText= "Manipulation" 

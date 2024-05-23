@@ -2,8 +2,11 @@
 import io from 'socket.io-client';
 
 const URL = 'https://senpai-development.onrender.com/';
+//const URL = 'http://localhost:3000/'; //für das lokale Testen
+
 const socket = io(URL, {
-    autoConnect: false, // Delay connection until manually initiated
+    withCredentials: true,
+    autoConnect: true// Dies ermöglicht das Senden von Cookies mit jeder Anfrage
 });
 
 // Handle successful connection
@@ -26,15 +29,8 @@ socket.on('Buzzer_GameFound', (data) => {
 
 // Function to start the buzzer queue
 const startBuzzerQueue = () => {
-    socket.emit('Buzzer_Queue', () => {
-        console.log('Buzzer queue started');
-    });
-};
-
-// Function to manually connect the socket
-const connectSocket = () => {
-    socket.connect()
-    console.log("test");
+    console.log("Geh rein junge");
+    socket.emit('Buzzer_Queue');
 };
 
 // Function to manually disconnect the socket
@@ -43,4 +39,4 @@ const disconnectSocket = () => {
 };
 
 // Export the socket instance, and control functions
-export {connectSocket, startBuzzerQueue, disconnectSocket};
+export {startBuzzerQueue, disconnectSocket};
