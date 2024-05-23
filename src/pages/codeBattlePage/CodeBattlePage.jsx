@@ -11,7 +11,7 @@ import AccountButton from '../../components/accountButton/AccountButton';
 import { useNavigate } from 'react-router-dom';
 
 //const express = require('express');
-import startBuzzerQueue from '../../socket.js';
+import {connectSocket, startBuzzerQueue, disconnectSocket} from '../../socket.js';
 
 /*
 This is the code battle page that holds an account button, amount of lives and three different

@@ -11,9 +11,13 @@ import CodeBattlePage from "./pages/codeBattlePage/CodeBattlePage.jsx";
 import ExercisePage from "./pages/exercisePage/ExercisePage.jsx";
 import ExerciseTaskPage from "./pages/exerciseTaskPage/ExerciseTaskPage.jsx";
 import NoPage from "./pages/noPage/NoPage.jsx";
+import {connectSocket, startBuzzerQueue, disconnectSocket} from './socket.js';
 
 function App() {
-  
+
+  connectSocket();
+  console.log("APP");
+
   return (
     <div>
       <BrowserRouter>
