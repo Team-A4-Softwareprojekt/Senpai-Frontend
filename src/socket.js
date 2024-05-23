@@ -1,7 +1,7 @@
 // socket.js
 import io from 'socket.io-client';
 
-const URL = 'http://senpai-development.onrender.com/';
+const URL = 'https://senpai-development.onrender.com/';
 const socket = io(URL);
 
 
