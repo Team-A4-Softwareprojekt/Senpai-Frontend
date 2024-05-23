@@ -46,6 +46,11 @@ function LoginPage() {
             .then(data => {
                 console.log('Response from server:', data); // Anzeige der Antwort in der Konsole
                 // Hier kannst du die Antwort in deiner Anwendungslogik weiterverarbeiten oder anzeigen
+                if (data == 'true') {
+                    navigate("/select");
+                } else {
+                    alert('Login failed');
+                }
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
