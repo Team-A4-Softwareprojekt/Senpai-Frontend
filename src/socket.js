@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 const URL = 'https://senpai-development.onrender.com/';
 const socket = io(URL);
 
+socket.connect();
 
 socket.on('connect', () => {
     console.log("Connected to server");
