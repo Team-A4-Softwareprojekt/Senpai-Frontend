@@ -10,6 +10,9 @@ import AccountButton from '../../components/accountButton/AccountButton';
 
 import { useNavigate } from 'react-router-dom';
 
+import { startBuzzerQueue } from '../../socket';
+
+
 /*
 This is the code battle page that holds an account button, amount of lives and three different
 game modes to choose from. Each game mode has a modal with the basic explanation of the mode
@@ -25,6 +28,10 @@ function codeBattlePage() {
     const handleAccountClick = () => {
         navigate('/account');
     };
+
+    const onBuzzerClick = () => {
+        startBuzzerQueue();
+    }
 
     return( 
         <div>
