@@ -45,7 +45,9 @@ function codeBattlePage() {
                     linkTo={"*"}
                     modalHeader= "Buzzer" 
                     modalText = "Compete against another player. Answer questions by pressing a buzzer in a limited time."
-                    className= {styles2.selectCard}/>
+                    className= {styles2.selectCard}
+                    onclick={onBuzzerClick}
+                />
                 <SelectCard 
                     buttonText= "Manipulation" 
                     imageUrl={manipulationImg} 
