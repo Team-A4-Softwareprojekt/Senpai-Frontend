@@ -29,6 +29,10 @@ function codeBattlePage() {
         navigate('/account');
     };
 
+    const handleBuzzerClick = () => {
+        navigate('/codebattle/buzzer');
+    };
+
     const onBuzzerClick = () => {
         startBuzzerQueue();
     }
@@ -42,7 +46,7 @@ function codeBattlePage() {
                 <SelectCard 
                     buttonText= "Buzzer"
                     imageUrl={buzzerImg} 
-                    linkTo={"*"}
+                    linkTo={"/codebattle/buzzer"}
                     modalHeader= "Buzzer" 
                     modalText = "Compete against another player. Answer questions by pressing a buzzer in a limited time."
                     className= {styles2.selectCard}
