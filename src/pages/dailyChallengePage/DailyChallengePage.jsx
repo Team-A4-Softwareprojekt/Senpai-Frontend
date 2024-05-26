@@ -8,10 +8,16 @@ function DailyChallengePage() {
     const blankIndices = [2, 5, 7];
     
     return (
-        <div>
-            <h1>Daily Challenge</h1>
+        <>
+        <div className = {styles2.text} >
+            <h1>This is todays Daily Challenge</h1>
+            <p className = {styles2.motivationText}>Challenge yourself! Put your skills to the test.</p>
+        </div>
+        <div className={styles2.fillInTheBlanksDiv}>
             <FillInTheBlankText text={text} blankIndices={blankIndices} />
         </div>
+        </>
+        
     );
 }   
 export default DailyChallengePage;
