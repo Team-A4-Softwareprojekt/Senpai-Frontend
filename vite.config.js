@@ -13,6 +13,13 @@ export default defineConfig({
   server: {
     mimeTypes: {
       '.jsx': 'text/javascript',
-    },
+    }
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    parallel: true,
+    setupFiles: ['./vitest.setup.js']
+  }
 });
+
