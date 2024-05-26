@@ -6,13 +6,13 @@ import senpaiBackground from "../../assets/senpaiStartPage.jpg";
 /*
 This is the start page with the title and a button to move on
 */
-function StartPage(props){
+function StartPage(){ //(props)
     // UseNavigate is used to switch between pages
     const navigate = useNavigate();
 
     // Navigates to the login page
     const handleClick = () => {
-        props.checkClick(); //just for testing
+        //props.checkClick();
         navigate("./login");
     };
 
