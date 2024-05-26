@@ -1,5 +1,5 @@
-import { describe, it} from 'vitest'; // Import von ViTest
-import { render, screen } from '@testing-library/react'; // Import der render-Funktion von @testing-library/react
+import { describe, it, vi} from 'vitest'; // Import von ViTest
+import {fireEvent, render, screen} from '@testing-library/react'; // Import der render-Funktion von @testing-library/react
 import StartPage from '../src/pages/startPage/StartPage';
 
 import {MemoryRouter} from "react-router-dom"; // Import der zu testenden Komponente
@@ -32,6 +32,22 @@ test('renders "Senpai" text',  async () => {
 describe("StartPage", () => {
     it("renders the Start page", ()=>{
         render(<MemoryRouter><StartPage/></MemoryRouter>);
+        expect(screen.getByText("Senpai")).toBeInTheDocument();
+        expect(screen.getByText("Start Your Journey")).toBeInTheDocument();
         screen.debug();
     });
+
+
+    it("should emit clicked page", () => {
+        const aClick = vi.fn();
+        render(<MemoryRouter>
+            <StartPage
+                checkClick={aClick}
+            />
+        </MemoryRouter>);
+        fireEvent.click(screen.getByTestId("startButton"));
+        expect(aClick).toHaveBeenCalled();
+    });
+
+
 });

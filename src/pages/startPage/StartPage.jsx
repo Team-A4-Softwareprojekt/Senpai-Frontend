@@ -6,12 +6,13 @@ import senpaiBackground from "../../assets/senpaiStartPage.jpg";
 /*
 This is the start page with the title and a button to move on
 */
-function StartPage(){
+function StartPage(props){
     // UseNavigate is used to switch between pages
     const navigate = useNavigate();
 
     // Navigates to the login page
     const handleClick = () => {
+        props.checkClick(); //just for testing
         navigate("./login");
     };
 
@@ -21,7 +22,7 @@ function StartPage(){
             <div className= {styles2.startDiv}>
                 <h1>Senpai</h1>
                 <div>
-                    <button className={styles.button01} onClick={handleClick}>
+                    <button data-testid="startButton" className={styles.button01} onClick={handleClick}>
                         Start Your Journey
                     </button> 
                 </div>
