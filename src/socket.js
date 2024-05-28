@@ -98,4 +98,4 @@ const disconnectSocket = () => {
 };
 
 // Export the socket instance, and control functions
-export {startBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket};
+export {socket, startBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket};
