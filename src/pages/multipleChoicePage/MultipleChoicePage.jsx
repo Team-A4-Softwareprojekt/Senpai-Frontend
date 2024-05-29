@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 import styles from './MultipleChoicePage.module.css';
+import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
+
+var question_global;
+var aanswer_global;
+var banswer_global;
+var canswer_global;
+var danswer_global;
 
 const MultipleChoicePage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -12,11 +19,22 @@ const MultipleChoicePage = () => {
     alert(`You selected: ${selectedAnswer}`);
   };
 
+  socket.on('SHOW_QUESTION_MULTIPLE_CHOICE', (question) => {
+    console.log('Received question:', question);
+    const {questionLocal, aanswer, banswer, canswer, danswer} = question;
+    question_global = questionLocal;
+    aanswer_global = aanswer;
+    banswer_global = banswer;
+    canswer_global = canswer;
+    danswer_global = danswer;
+  }); 
+  
+
   return (
     <div className={styles.container}>
       <div className={styles.questionBox}>
         <div className={styles.questionContent}>
-          Hier steht die Fragestellung und ggfs. ein Bild mit Code zum Zeigen
+          {question_global};
         </div>
       </div>
       <form className={styles.form}>
@@ -27,7 +45,7 @@ const MultipleChoicePage = () => {
             checked={selectedAnswer === 'Antwort 1'} 
             onChange={handleAnswerChange} 
           />
-          Antwort 1
+          {aanswer_global};
         </label>
         <label className={styles.answerOption}>
           <input 
@@ -36,7 +54,7 @@ const MultipleChoicePage = () => {
             checked={selectedAnswer === 'Antwort 2'} 
             onChange={handleAnswerChange} 
           />
-          Antwort 2
+          {banswer_global};
         </label>
         <label className={styles.answerOption}>
           <input 
@@ -45,7 +63,7 @@ const MultipleChoicePage = () => {
             checked={selectedAnswer === 'Antwort 3'} 
             onChange={handleAnswerChange} 
           />
-          Antwort 3
+          {canswer_global};
         </label>
         <label className={styles.answerOption}>
           <input 
@@ -54,7 +72,7 @@ const MultipleChoicePage = () => {
             checked={selectedAnswer === 'Antwort 4'} 
             onChange={handleAnswerChange} 
           />
-          Antwort 4
+          {danswer_global};
         </label>
         <button type="button" onClick={handleSubmit} className={styles.submitButton}>
           Confirm

@@ -11,6 +11,7 @@ import CodeBattlePage from "./pages/codeBattlePage/CodeBattlePage.jsx";
 import ExercisePage from "./pages/exercisePage/ExercisePage.jsx";
 import ExerciseTaskPage from "./pages/exerciseTaskPage/ExerciseTaskPage.jsx";
 import MultipleChoicePage from './pages/multipleChoicePage/MultipleChoicePage.jsx';
+import GapTextPage from './pages/buzzerPage/gapTextPage/GapTextPage.jsx';
 import NoPage from "./pages/noPage/NoPage.jsx";
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
           <Route path="/select/code/codeBattle" element={<CodeBattlePage/>}/>
           <Route path="/select/code/exercise" element={<ExercisePage/>}/>
           <Route path="/exercise/:exerciseName" element={<ExerciseTaskPage />} />
-          <Route path="/codebattle/buzzer" element={<MultipleChoicePage />} />
+          <Route path="/codebattle/buzzer/multiplechoice" element={<MultipleChoicePage />} />
+          <Route path="/codebattle/buzzer/gaptext" element={<GapTextPage />} />
           <Route path="/account" element={<AccountSettingsPage/>}/>
           <Route path="*" element={<NoPage/>} />
         </Routes>

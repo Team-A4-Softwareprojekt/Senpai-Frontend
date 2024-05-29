@@ -20,17 +20,8 @@ socket.on('disconnect', (reason) => {
     // Attempt reconnection logic if needed
 });
 
-// Handle custom event when a game is found
-socket.on('Buzzer_GameFound', (data) => {
-    console.log('Game found', data);
-    // Implement logic to show the next screen when data is true
-});
 
-// Handle showing the question
-socket.on('SHOW_QUESTION', (question) => {
-    console.log('New question received:', question);
-    // Implement logic to display the question on the UI
-});
+
 
 // Handle timer updates
 socket.on('TIMER', (timeLeft) => {
@@ -74,6 +65,11 @@ const startBuzzerQueue = () => {
     socket.emit('Buzzer_Queue');
 };
 
+const leaveBuzzerQueue = () => {
+    console.log("Leaving buzzer queue");
+    socket.emit('Leave_Buzzer_Queue');
+};
+
 // Function to send AWAIT_QUESTION event
 const requestQuestion = () => {
     console.log("Requesting a question");
@@ -98,4 +94,4 @@ const disconnectSocket = () => {
 };
 
 // Export the socket instance, and control functions
-export {socket, startBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket};
+export {socket, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket};
