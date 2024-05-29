@@ -31,7 +31,7 @@ function codeBattlePage() {
 
         const handleQuestionType = (table) => {
             console.log('From table:', table);
-            if (table == 'multiplechoicequestion') {
+            if (table === 'multiplechoicequestion') {
                 navigate('/codebattle/buzzer/multiplechoice');
             } else {
                 navigate('/codebattle/buzzer/gaptext');

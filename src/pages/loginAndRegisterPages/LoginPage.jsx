@@ -16,8 +16,8 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
 
-    const url = 'https://senpai-server.onrender.com/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
-    //const url = 'http://localhost:3000/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
+    //const url = 'https://senpai-server.onrender.com/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
+    const url = 'http://localhost:3000/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
 
     // functions for updating the input formula
     const handlePasswordChange = (event) => {
