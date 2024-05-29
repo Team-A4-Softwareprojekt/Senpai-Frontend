@@ -21,7 +21,7 @@ function codeBattlePage() {
     
     const navigate = useNavigate();
     const [isPopupVisible, setIsPopupVisible] = useState(false);
-
+    
     useEffect(() => {
         const handleGameFound = (fullRoom) => {
             console.log('Game found', fullRoom);

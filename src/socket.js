@@ -29,11 +29,7 @@ socket.on('TIMER', (timeLeft) => {
     // Implement logic to update the timer on the UI
 });
 
-// Handle disabling the buzzer for the other player
-socket.on('DISABLE_BUZZER', () => {
-    console.log('Buzzer disabled for the other player');
-    // Implement logic to disable the buzzer button on the UI
-});
+
 
 // Handle prompt to pick an answer
 socket.on('PICK_ANSWER', () => {
