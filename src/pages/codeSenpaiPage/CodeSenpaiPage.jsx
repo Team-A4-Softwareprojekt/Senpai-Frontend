@@ -7,7 +7,7 @@ import codeExerciseImg from '../../assets/codeExercise.jpg';
 import React from 'react';
 import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
-
+import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
 import { useNavigate } from 'react-router-dom';
 
 /*
@@ -19,11 +19,15 @@ function codeSenpaiPage() {
     const navigate = useNavigate();
     
     const handleHomeClick = () => {
-        navigate('/select');
+        navigate('/select/code');
     };
 
     const handleAccountClick = () => {
         navigate('/account');
+    };
+
+    const handleChangeTopicClick = () => {
+        navigate('/select');
     };
 
     return( 
@@ -56,7 +60,7 @@ function codeSenpaiPage() {
             </div>
             <HomeButton handleClick={handleHomeClick} />
             <AccountButton handleClick={handleAccountClick} />
-            
+            <ChangeTopicButton handleClick={handleChangeTopicClick} />
         </div>
         
     );

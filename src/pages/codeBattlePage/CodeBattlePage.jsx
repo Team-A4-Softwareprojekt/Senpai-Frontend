@@ -7,10 +7,8 @@ import manipulationImg from '../../assets/manipulation.png';
 import limitationImg from '../../assets/limitation.png';
 import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
-
+import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
 import { useNavigate } from 'react-router-dom';
-
-//const express = require('express');
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 
 /*
@@ -51,11 +49,15 @@ function codeBattlePage() {
     }, [navigate]);
     
     const handleHomeClick = () => {
-        navigate('/select');
+        navigate('/select/code');
     };
 
     const handleAccountClick = () => {
         navigate('/account');
+    };
+
+    const handleChangeTopicClick = () => {
+        navigate('/select');
     };
 
     const onBuzzerClick = () => {
@@ -117,6 +119,7 @@ function codeBattlePage() {
             </div>
             <HomeButton handleClick={handleHomeClick} />
             <AccountButton handleClick={handleAccountClick} />
+            <ChangeTopicButton handleClick={handleChangeTopicClick} />
 
             {isPopupVisible && (
                 <>
