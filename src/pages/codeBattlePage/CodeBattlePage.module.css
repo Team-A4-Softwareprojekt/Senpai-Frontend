@@ -61,6 +61,14 @@
     font-size: 20px;
 }
 
+.popupContent h2 {
+    margin: 10px;
+}
+
+.popupContent .highlighted {
+    color: #ff6666; /* Hellrote Farbe */
+}
+
 .popupContent button {
     font-size: 18px; /* Schriftgröße des Buttons */
     padding: 10px 15px; /* Innenabstand des Buttons */

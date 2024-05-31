@@ -21,6 +21,7 @@ function codeBattlePage() {
     
     const navigate = useNavigate();
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [selectedGameMode, setSelectedGameMode] = useState('');
     
     useEffect(() => {
         const handleGameFound = (fullRoom) => {
@@ -59,12 +60,25 @@ function codeBattlePage() {
 
     const onBuzzerClick = () => {
         startBuzzerQueue();
+        setSelectedGameMode('Buzzer');
+        setIsPopupVisible(true); // Show the popup
+    };
+
+    const onManipulationClick = () => {
+        setSelectedGameMode('Manipulation');
+        setIsPopupVisible(true); // Show the popup
+    };
+
+    const onLimitationClick = () => {
+        setSelectedGameMode('Limitation');
         setIsPopupVisible(true); // Show the popup
     };
 
     const closePopup = () => {
+        if (selectedGameMode === 'Buzzer') {
+            leaveBuzzerQueue();
+        }
         setIsPopupVisible(false); // Hide the popup
-        leaveBuzzerQueue();
     };
 
     return( 
@@ -85,17 +99,21 @@ function codeBattlePage() {
                 <SelectCard 
                     buttonText= "Manipulation" 
                     imageUrl={manipulationImg} 
-                    linkTo={"*"}
+                    /*linkTo={"*"}*/
                     modalHeader = "Manipulation" 
                     modalText = "Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
-                    className= {styles2.selectCard}/>
+                    className= {styles2.selectCard}
+                    handleClick={onManipulationClick}
+                />
                 <SelectCard 
                     buttonText= "Limitation" 
                     imageUrl={limitationImg} 
-                    linkTo={"*"}
+                    /*linkTo={"*"}*/
                     modalHeader= "Limitation" 
                     modalText= "Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
-                    className= {styles2.selectCard}/>
+                    className= {styles2.selectCard}
+                    handleClick={onLimitationClick}
+                />
             </div>
             <HomeButton handleClick={handleHomeClick} />
             <AccountButton handleClick={handleAccountClick} />
@@ -105,6 +123,7 @@ function codeBattlePage() {
                     <div className={styles2.overlay} />
                     <div className={styles2.popup}>
                         <div className={styles2.popupContent}>
+                            <h2>Gamemode:&nbsp;<span className={styles2.highlighted}>{selectedGameMode}</span></h2>
                             <h2>Waiting for another player...</h2>
                             <button onClick={closePopup}>Cancel</button>
                         </div>
