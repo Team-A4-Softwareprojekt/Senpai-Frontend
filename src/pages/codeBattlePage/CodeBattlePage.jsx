@@ -67,12 +67,6 @@ function codeBattlePage() {
         leaveBuzzerQueue();
     };
 
-  
-
-      
-        
-        
-  
     return( 
         <div>
             <h1>
@@ -107,15 +101,17 @@ function codeBattlePage() {
             <AccountButton handleClick={handleAccountClick} />
 
             {isPopupVisible && (
-                <div className={styles2.popup}>
-                    <div className={styles2.popupContent}>
-                        <h2>Waiting for another player</h2>
-                        <button onClick={closePopup}>Cancel</button>
+                <>
+                    <div className={styles2.overlay} />
+                    <div className={styles2.popup}>
+                        <div className={styles2.popupContent}>
+                            <h2>Waiting for another player...</h2>
+                            <button onClick={closePopup}>Cancel</button>
+                        </div>
                     </div>
-                </div>
+                </>
             )}
-        </div>
-        
+        </div>  
     );
 }
 export default codeBattlePage;
