@@ -48,20 +48,37 @@ const MultipleChoicePage = () => {
             console.log('Buzzer disabled');
         };
 
-        const enableBuzzer=()=>{
+        const endBuzzerGame = (ownPoints, opponentPoints) => { 
+            console.log('Game ended');
+
+            if (ownPoints > opponentPoints) {
+              alert('You won! :' + ownPoints + ":" + opponentPoints);
+            }
+            else {
+              alert('enemy won! :' + opponentPoints + ":" + ownPoints);
+            }
+            socket.emit('CLOSE_LOBBY');
+            navigate('/select/code/codeBattle');
+            
+        };
+
+        const enableBuzzer = ()=>{
             setIsBuzzerDisabled(false);
+            setIsButtonDisabled(true);
             console.log('Buzzer enabled')
-        }
+        };
 
         const handleCorrectAnswer = () => {
             alert('Your Answer was Correct! You Win this Round!')
-            setIsButtonDisabled(true)
-        }
+            setIsButtonDisabled(true);
+            setIsBuzzerDisabled(false);
+        };
 
         const handleWrongAnswer = () => {
             alert('Your Answer was wrong! Its your Opponents turn now!')
             setIsButtonDisabled(true);
-        }
+            setIsBuzzerDisabled(true);
+        };
 
         const handleQuestionType = (table) => {
             console.log('From table:', table);
@@ -95,6 +112,8 @@ const MultipleChoicePage = () => {
 
         socket.on('END_ROUND', handleEndRound);
 
+        socket.on('END_BUZZER_GAME', endBuzzerGame);
+
         return () => {
             socket.off('SHOW_QUESTION_MULTIPLE_CHOICE', handleQuestion);
             socket.off('DISABLE_BUZZER', disableBuzzer);
@@ -103,6 +122,7 @@ const MultipleChoicePage = () => {
             socket.off('WRONG_ANSWER', handleWrongAnswer);
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
             socket.off('END_ROUND', handleEndRound);
+            socket.off('END_BUZZER_GAME', endBuzzerGame);
         };
 
     }, []);
