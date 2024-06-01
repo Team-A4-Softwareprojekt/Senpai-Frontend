@@ -25,7 +25,7 @@ function codeBattlePage() {
         const handleGameFound = (fullRoom) => {
             console.log('Game found', fullRoom);
             setIsPopupVisible(false); // Hide the popup
-            requestQuestion();
+            //requestQuestion();
         };
 
         const handleQuestionType = (table) => {

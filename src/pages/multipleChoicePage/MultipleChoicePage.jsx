@@ -90,12 +90,16 @@ const MultipleChoicePage = () => {
         };
 
         const handleEndRound = () =>{
-            requestQuestion();
+            //requestQuestion();
             setSelectedAnswer(null);
             setIsButtonDisabled(true);
             setIsBuzzerDisabled(false);
         }
 
+        const opponentDisconnected = () => {
+            //TODO: Zwischen-Screen der dir sagt, dass der Gegner das Spiel verlassen hat, du hast automatisch gewonnen.
+            navigate('/select/code/codeBattle');
+        }
         // Handle disabling the buzzer for the other player
 
         socket.on('SHOW_QUESTION_MULTIPLE_CHOICE', handleQuestion);
@@ -114,6 +118,8 @@ const MultipleChoicePage = () => {
 
         socket.on('END_BUZZER_GAME', endBuzzerGame);
 
+        socket.on('OPPONENT_DISCONNECTED', opponentDisconnected);
+
         return () => {
             socket.off('SHOW_QUESTION_MULTIPLE_CHOICE', handleQuestion);
             socket.off('DISABLE_BUZZER', disableBuzzer);
@@ -123,6 +129,7 @@ const MultipleChoicePage = () => {
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
             socket.off('END_ROUND', handleEndRound);
             socket.off('END_BUZZER_GAME', endBuzzerGame);
+            socket.off('OPPONENT_DISCONNECTED', opponentDisconnected)
         };
 
     }, []);
