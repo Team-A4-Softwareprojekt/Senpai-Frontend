@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './MultipleChoicePage.module.css';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import BuzzerButton from '../../components/buzzerButton/BuzzerButton.jsx';
+import PopUpWinner from '../../components/popUpWinner/PopUpWinner.jsx';
 import {useNavigate} from 'react-router-dom';
 
 //TODO: Debugging der Situationen, wenn spieler Falsch antworten. Solange immer beim ersten Buzzer korrekt geantwortet wird, funktioniert (eigentlich) alles ;)
@@ -11,6 +12,8 @@ const MultipleChoicePage = () => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [isBuzzerDisabled, setIsBuzzerDisabled] = useState(false);
+    const [winner, setWinner] = useState('');
+    const [isWinnerVisible, setIsWinnerVisible] = useState(false);
     console.log('On Site Load - isButtonDisabled: ' + isButtonDisabled);
     console.log('On Site Load - isBuzzerDisabled: '+ isBuzzerDisabled);
 
@@ -20,7 +23,7 @@ const MultipleChoicePage = () => {
 
     };
     const handleSubmit = () => {
-        alert(`You selected: ${selectedAnswer}`);
+        //alert(`You selected: ${selectedAnswer}`);
         socket.emit('COMPARE_ANSWER', selectedAnswer);
     };
 
@@ -69,7 +72,7 @@ const MultipleChoicePage = () => {
         };
 
         const handleCorrectAnswer = () => {
-            alert('Your Answer was Correct! You Win this Round!')
+            //alert('Your Answer was Correct! You Win this Round!')
             setIsButtonDisabled(true);
             setIsBuzzerDisabled(false);
         };
@@ -89,12 +92,18 @@ const MultipleChoicePage = () => {
             }
         };
 
-        const handleEndRound = () =>{
-            //requestQuestion();
-            setSelectedAnswer(null);
-            setIsButtonDisabled(true);
-            setIsBuzzerDisabled(false);
+        const handleEndRound = () => {
+            setWinner(socket.id);
+            setIsWinnerVisible(true);
+            setTimeout(() => {
+                setIsWinnerVisible(false);
+                setSelectedAnswer(null);
+                setIsButtonDisabled(true);
+                setIsBuzzerDisabled(false);
+                requestQuestion();
+            }, 2000);
         }
+
 
         const opponentDisconnected = () => {
             //TODO: Zwischen-Screen der dir sagt, dass der Gegner das Spiel verlassen hat, du hast automatisch gewonnen.
@@ -103,21 +112,13 @@ const MultipleChoicePage = () => {
         // Handle disabling the buzzer for the other player
 
         socket.on('SHOW_QUESTION_MULTIPLE_CHOICE', handleQuestion);
-
         socket.on('DISABLE_BUZZER', disableBuzzer);
-
         socket.on('ENABLE_BUZZER', enableBuzzer);
-
         socket.on('CORRECT_ANSWER', handleCorrectAnswer);
-
         socket.on('WRONG_ANSWER', handleWrongAnswer);
-
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
-
         socket.on('END_ROUND', handleEndRound);
-
         socket.on('END_BUZZER_GAME', endBuzzerGame);
-
         socket.on('OPPONENT_DISCONNECTED', opponentDisconnected);
 
         return () => {
@@ -186,6 +187,7 @@ const MultipleChoicePage = () => {
             </form>
 
             <BuzzerButton toggle={toggleButton} disabled={isBuzzerDisabled}/>
+            <PopUpWinner winner={winner} isVisible={isWinnerVisible} />
         </div>
     );
 };

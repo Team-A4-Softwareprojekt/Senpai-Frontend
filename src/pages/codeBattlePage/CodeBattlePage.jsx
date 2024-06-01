@@ -8,6 +8,7 @@ import limitationImg from '../../assets/limitation.png';
 import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
+import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
 import { useNavigate } from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 
@@ -121,18 +122,11 @@ function codeBattlePage() {
             <AccountButton handleClick={handleAccountClick} />
             <ChangeTopicButton handleClick={handleChangeTopicClick} />
 
-            {isPopupVisible && (
-                <>
-                    <div className={styles2.overlay} />
-                    <div className={styles2.popup}>
-                        <div className={styles2.popupContent}>
-                            <h2>Gamemode:&nbsp;<span className={styles2.highlighted}>{selectedGameMode}</span></h2>
-                            <h2>Waiting for another player...</h2>
-                            <button onClick={closePopup}>Cancel</button>
-                        </div>
-                    </div>
-                </>
-            )}
+            <PopUpQueue
+                isVisible={isPopupVisible}
+                selectedGameMode={selectedGameMode}
+                closePopup={closePopup}
+            />
         </div>  
     );
 }
