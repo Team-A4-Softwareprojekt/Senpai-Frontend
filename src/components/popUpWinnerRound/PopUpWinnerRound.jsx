@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './PopUpWinner.module.css';
+import styles from './PopUpWinnerRound.module.css';
 
-const PopUpWinner = ({ winner, isVisible }) => {
+const PopUpWinnerRound = ({ winner, isVisible }) => {
   if (!isVisible) {
     return null;
   }
@@ -11,9 +11,10 @@ const PopUpWinner = ({ winner, isVisible }) => {
     <div className={styles.overlay} />
     <div className={styles.popup}>
       <p>{winner} has won this round!</p>
+      <p>The correct answer was: </p>
     </div>
     </>
   );
 };
 
-export default PopUpWinner;
+export default PopUpWinnerRound;

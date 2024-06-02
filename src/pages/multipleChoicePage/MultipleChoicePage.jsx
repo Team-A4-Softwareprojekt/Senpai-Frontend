@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import styles from './MultipleChoicePage.module.css';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import BuzzerButton from '../../components/buzzerButton/BuzzerButton.jsx';
-import PopUpWinner from '../../components/popUpWinner/PopUpWinner.jsx';
+import PopUpWinnerRound from '../../components/popUpWinnerRound/PopUpWinnerRound.jsx';
+import PopUpWinnerGame from '../../components/popUpWinnerGame/PopUpWinnerGame.jsx';
 import {useNavigate} from 'react-router-dom';
 
 //TODO: Debugging der Situationen, wenn spieler Falsch antworten. Solange immer beim ersten Buzzer korrekt geantwortet wird, funktioniert (eigentlich) alles ;)
@@ -12,8 +13,10 @@ const MultipleChoicePage = () => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [isBuzzerDisabled, setIsBuzzerDisabled] = useState(false);
-    const [winner, setWinner] = useState('');
-    const [isWinnerVisible, setIsWinnerVisible] = useState(false);
+    const [winnerRound, setWinnerRound] = useState('');
+    const [winnerGame, setWinnerGame] = useState('');
+    const [isRoundWinnerVisible, setIsRoundWinnerVisible] = useState(false);
+    const [isGameWinnerVisible, setIsGameWinnerVisible] = useState(false);
     console.log('On Site Load - isButtonDisabled: ' + isButtonDisabled);
     console.log('On Site Load - isBuzzerDisabled: '+ isBuzzerDisabled);
 
@@ -39,7 +42,6 @@ const MultipleChoicePage = () => {
 
 
     useEffect(() => {
-
         
         const handleQuestion = (task) => {
             setQuestion(task);
@@ -49,20 +51,6 @@ const MultipleChoicePage = () => {
         const disableBuzzer = () => {
             setIsBuzzerDisabled(true);
             console.log('Buzzer disabled');
-        };
-
-        const endBuzzerGame = (ownPoints, opponentPoints) => { 
-            console.log('Game ended');
-
-            if (ownPoints > opponentPoints) {
-              alert('You won! :' + ownPoints + ":" + opponentPoints);
-            }
-            else {
-              alert('enemy won! :' + opponentPoints + ":" + ownPoints);
-            }
-            socket.emit('CLOSE_LOBBY');
-            navigate('/select/code/codeBattle');
-            
         };
 
         const enableBuzzer = ()=>{
@@ -92,18 +80,41 @@ const MultipleChoicePage = () => {
             }
         };
 
-        const handleEndRound = () => {
-            setWinner(socket.id);
-            setIsWinnerVisible(true);
+        const handleRoundEnd = () => {
+            setWinnerRound(socket.id);
+            setIsRoundWinnerVisible(true);
             setTimeout(() => {
-                setIsWinnerVisible(false);
+                setIsRoundWinnerVisible(false);
                 setSelectedAnswer(null);
                 setIsButtonDisabled(true);
                 setIsBuzzerDisabled(false);
-                requestQuestion();
             }, 2000);
         }
+        
+        const handleGameEnd = (ownPoints, opponentPoints) => { 
+            console.log('Game ended');
 
+            /*
+            if (ownPoints > opponentPoints) {
+              alert('You won! :' + ownPoints + ":" + opponentPoints);
+            }
+            else {
+              alert('enemy won! :' + opponentPoints + ":" + ownPoints);
+            }
+            */
+            setWinnerGame(socket.id);
+            setIsRoundWinnerVisible(false);
+            setIsGameWinnerVisible(true);
+
+            setTimeout(() => {
+                setIsGameWinnerVisible(false);
+                setSelectedAnswer(null);
+                setIsButtonDisabled(true);
+                setIsBuzzerDisabled(false);
+                socket.emit('CLOSE_LOBBY');
+                navigate('/select/code/codeBattle');
+            }, 3000);
+        };
 
         const opponentDisconnected = () => {
             //TODO: Zwischen-Screen der dir sagt, dass der Gegner das Spiel verlassen hat, du hast automatisch gewonnen.
@@ -117,8 +128,8 @@ const MultipleChoicePage = () => {
         socket.on('CORRECT_ANSWER', handleCorrectAnswer);
         socket.on('WRONG_ANSWER', handleWrongAnswer);
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
-        socket.on('END_ROUND', handleEndRound);
-        socket.on('END_BUZZER_GAME', endBuzzerGame);
+        socket.on('END_ROUND', handleRoundEnd);
+        socket.on('END_BUZZER_GAME', handleGameEnd);
         socket.on('OPPONENT_DISCONNECTED', opponentDisconnected);
 
         return () => {
@@ -128,8 +139,8 @@ const MultipleChoicePage = () => {
             socket.off('CORRECT_ANSWER', handleCorrectAnswer);
             socket.off('WRONG_ANSWER', handleWrongAnswer);
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
-            socket.off('END_ROUND', handleEndRound);
-            socket.off('END_BUZZER_GAME', endBuzzerGame);
+            socket.off('END_ROUND', handleRoundEnd);
+            socket.off('END_BUZZER_GAME', handleGameEnd);
             socket.off('OPPONENT_DISCONNECTED', opponentDisconnected)
         };
 
@@ -185,9 +196,12 @@ const MultipleChoicePage = () => {
                     Confirm
                 </button>
             </form>
-
+            
             <BuzzerButton toggle={toggleButton} disabled={isBuzzerDisabled}/>
-            <PopUpWinner winner={winner} isVisible={isWinnerVisible} />
+            {!isGameWinnerVisible && (
+                <PopUpWinnerRound winner={winnerRound} isVisible={isRoundWinnerVisible} />
+            )}
+            <PopUpWinnerGame winner={winnerRound} isVisible={isGameWinnerVisible} />
         </div>
     );
 };
