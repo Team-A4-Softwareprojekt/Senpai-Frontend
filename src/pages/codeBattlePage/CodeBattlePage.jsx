@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styles from '../General.module.css';
 import styles2 from './CodeBattlePage.module.css';
 import SelectCard from '../../components/selectCard/SelectCard.jsx';
@@ -11,12 +11,15 @@ import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicBut
 import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
 import { useNavigate } from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
+import {PlayerContext} from "../../context/playerContext.jsx";
 
 /*
 This is the code battle page that holds an account button, amount of lives and three different
 game modes to choose from. Each game mode has a modal with the basic explanation of the mode
 */
 function codeBattlePage() {
+
+    const { playerName } = useContext(PlayerContext);
     
     const navigate = useNavigate();
     const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -62,7 +65,7 @@ function codeBattlePage() {
     };
 
     const onBuzzerClick = () => {
-        startBuzzerQueue();
+        startBuzzerQueue(playerName);
         setSelectedGameMode('Buzzer');
         setIsPopupVisible(true); // Show the popup
     };

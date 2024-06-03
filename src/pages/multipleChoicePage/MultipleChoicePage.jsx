@@ -14,6 +14,7 @@ const MultipleChoicePage = () => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [isBuzzerDisabled, setIsBuzzerDisabled] = useState(false);
     const [winnerRound, setWinnerRound] = useState('');
+    const [solution, setSolution] = useState('');
     const [winnerGame, setWinnerGame] = useState('');
     const [isRoundWinnerVisible, setIsRoundWinnerVisible] = useState(false);
     const [isGameWinnerVisible, setIsGameWinnerVisible] = useState(false);
@@ -36,6 +37,7 @@ const MultipleChoicePage = () => {
      */
     const toggleButton = () => {
         setIsButtonDisabled(!isButtonDisabled);
+        setIsBuzzerDisabled(true);
         socket.emit('PLAYER_BUZZERED');
         console.log('isButtonDisabled: ' + isButtonDisabled);
     }
@@ -80,15 +82,16 @@ const MultipleChoicePage = () => {
             }
         };
 
-        const handleRoundEnd = () => {
-            setWinnerRound(socket.id);
+        const handleRoundEnd = (playerName, solution) => {
+            setWinnerRound(playerName);
+            setSolution(solution);
             setIsRoundWinnerVisible(true);
             setTimeout(() => {
                 setIsRoundWinnerVisible(false);
                 setSelectedAnswer(null);
                 setIsButtonDisabled(true);
                 setIsBuzzerDisabled(false);
-            }, 2000);
+            }, 3000);
         }
         
         const handleGameEnd = (ownPoints, opponentPoints) => { 
@@ -102,6 +105,7 @@ const MultipleChoicePage = () => {
               alert('enemy won! :' + opponentPoints + ":" + ownPoints);
             }
             */
+            //TODO: Gewinner richtig setzen
             setWinnerGame(socket.id);
             setIsRoundWinnerVisible(false);
             setIsGameWinnerVisible(true);
@@ -115,6 +119,20 @@ const MultipleChoicePage = () => {
                 navigate('/select/code/codeBattle');
             }, 3000);
         };
+        const displayRoundTime = (remainingSecondsRound) => {
+            //TODO: remainingSecondsRound müssen angezeigt werden im Screen
+            console.log(remainingSecondsRound)
+
+        }
+
+        const displayTurnTime = (remainingSecondsTurn) => {
+            //TODO: remainingSeconds müssen angezeigt werden im Screen
+            console.log(remainingSecondsTurn)
+        }
+
+        const triggerBuzzer = () => {
+            toggleButton();
+        }
 
         const opponentDisconnected = () => {
             //TODO: Zwischen-Screen der dir sagt, dass der Gegner das Spiel verlassen hat, du hast automatisch gewonnen.
@@ -131,6 +149,9 @@ const MultipleChoicePage = () => {
         socket.on('END_ROUND', handleRoundEnd);
         socket.on('END_BUZZER_GAME', handleGameEnd);
         socket.on('OPPONENT_DISCONNECTED', opponentDisconnected);
+        socket.on('BUZZER_TIMER_TICK', displayRoundTime);
+        socket.on('PLAYER_TURN_TIMER_TICK', displayTurnTime);
+        socket.on('TRIGGER_BUZZER', triggerBuzzer);
 
         return () => {
             socket.off('SHOW_QUESTION_MULTIPLE_CHOICE', handleQuestion);
@@ -141,7 +162,10 @@ const MultipleChoicePage = () => {
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
             socket.off('END_ROUND', handleRoundEnd);
             socket.off('END_BUZZER_GAME', handleGameEnd);
-            socket.off('OPPONENT_DISCONNECTED', opponentDisconnected)
+            socket.off('OPPONENT_DISCONNECTED', opponentDisconnected);
+            socket.off('BUZZER_TIMER_TICK', displayRoundTime);
+            socket.off('PLAYER_TURN_TIMER_TICK', displayTurnTime);
+            socket.off('TRIGGER_BUZZER', triggerBuzzer);
         };
 
     }, []);
@@ -199,7 +223,7 @@ const MultipleChoicePage = () => {
             
             <BuzzerButton toggle={toggleButton} disabled={isBuzzerDisabled}/>
             {!isGameWinnerVisible && (
-                <PopUpWinnerRound winner={winnerRound} isVisible={isRoundWinnerVisible} />
+                <PopUpWinnerRound winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution}/>
             )}
             <PopUpWinnerGame winner={winnerRound} isVisible={isGameWinnerVisible} />
         </div>

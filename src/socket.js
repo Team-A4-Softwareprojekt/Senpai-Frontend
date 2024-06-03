@@ -56,9 +56,9 @@ socket.on('END_GAME', () => {
 });
 
 // Function to start the buzzer queue
-const startBuzzerQueue = () => {
+const startBuzzerQueue = (playerName) => {
     console.log("Starting buzzer queue");
-    socket.emit('Buzzer_Queue');
+    socket.emit('Buzzer_Queue', playerName);
 };
 
 const leaveBuzzerQueue = () => {

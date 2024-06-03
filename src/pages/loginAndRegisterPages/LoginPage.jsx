@@ -1,7 +1,8 @@
 import styles from '../General.module.css';
 import styles2 from './LoginPage.module.css';
 import {useNavigate} from 'react-router-dom';
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {PlayerContext} from '../../context/playerContext';
 
 /*
 This is the login page that takes two inputs (username, password) 
@@ -15,6 +16,8 @@ function LoginPage() {
 
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const { setPlayerName } = useContext(PlayerContext);
+
 
     //const url = 'https://senpai-server.onrender.com/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
     const url = 'http://localhost:3000/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
@@ -42,12 +45,13 @@ function LoginPage() {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text(); // Die Antwort als Text lesen
+                return response.json(); // Die Antwort als Text lesen
             })
             .then(data => {
                 console.log('Response from server:', data); // Anzeige der Antwort in der Konsole
                 // Hier kannst du die Antwort in deiner Anwendungslogik weiterverarbeiten oder anzeigen
-                if (data == 'true') {
+                if (data.success == true) {
+                    setPlayerName(data.username);
                     navigate("/select");
                 } else {
                     alert('Login failed');
