@@ -1,33 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './MultipleChoicePage.module.css';
-import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
+import { socket } from '../../socket.js';
+import ConfirmButton from '../../components/confirmButton/ConfirmButton.jsx';
 import BuzzerButton from '../../components/buzzerButton/BuzzerButton.jsx';
 import PopUpWinnerRound from '../../components/popUpWinnerRound/PopUpWinnerRound.jsx';
 import PopUpWinnerGame from '../../components/popUpWinnerGame/PopUpWinnerGame.jsx';
-import {useNavigate} from 'react-router-dom';
+import {PlayerContext} from '../../context/playerContext';
+import { useNavigate } from 'react-router-dom';
 
 //TODO: Debugging der Situationen, wenn spieler Falsch antworten. Solange immer beim ersten Buzzer korrekt geantwortet wird, funktioniert (eigentlich) alles ;)
 const MultipleChoicePage = () => {
     const navigate = useNavigate();
     const [question, setQuestion] = useState([]);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    const [isBuzzerDisabled, setIsBuzzerDisabled] = useState(false);
-    const [winnerRound, setWinnerRound] = useState('');
+    const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(true);
+    const [isBuzzerButtonDisabled, setIsBuzzerButtonDisabled] = useState(false);
     const [solution, setSolution] = useState('');
+    const [winnerRound, setWinnerRound] = useState('');
     const [winnerGame, setWinnerGame] = useState('');
     const [isRoundWinnerVisible, setIsRoundWinnerVisible] = useState(false);
     const [isGameWinnerVisible, setIsGameWinnerVisible] = useState(false);
-    console.log('On Site Load - isButtonDisabled: ' + isButtonDisabled);
-    console.log('On Site Load - isBuzzerDisabled: '+ isBuzzerDisabled);
-
+    const [remainingSeconds, setRemainingSeconds] = useState(null);
 
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
-
     };
+
     const handleSubmit = () => {
-        //alert(`You selected: ${selectedAnswer}`);
         socket.emit('COMPARE_ANSWER', selectedAnswer);
     };
 
@@ -36,45 +35,39 @@ const MultipleChoicePage = () => {
      * The "CONFIRM" button gets enabled after Buzzing
      */
     const toggleButton = () => {
-        setIsButtonDisabled(!isButtonDisabled);
-        setIsBuzzerDisabled(true);
+        setIsConfirmButtonDisabled(!isConfirmButtonDisabled);
+        setIsBuzzerButtonDisabled(true);
         socket.emit('PLAYER_BUZZERED');
-        console.log('isButtonDisabled: ' + isButtonDisabled);
+        console.log('isButtonDisabled: ' + isConfirmButtonDisabled);
     }
 
-
     useEffect(() => {
-        
         const handleQuestion = (task) => {
             setQuestion(task);
-            console.log('Received question:', task);
         };
 
         const disableBuzzer = () => {
-            setIsBuzzerDisabled(true);
+            setIsBuzzerButtonDisabled(true);
             console.log('Buzzer disabled');
         };
 
-        const enableBuzzer = ()=>{
-            setIsBuzzerDisabled(false);
-            setIsButtonDisabled(true);
-            console.log('Buzzer enabled')
+        const enableBuzzer = () => {
+            setIsBuzzerButtonDisabled(false);
+            setIsConfirmButtonDisabled(true);
+            console.log('Buzzer enabled');
         };
 
         const handleCorrectAnswer = () => {
-            //alert('Your Answer was Correct! You Win this Round!')
-            setIsButtonDisabled(true);
-            setIsBuzzerDisabled(false);
+            setIsConfirmButtonDisabled(true);
+            setIsBuzzerButtonDisabled(false);
         };
 
         const handleWrongAnswer = () => {
-            alert('Your Answer was wrong! Its your Opponents turn now!')
-            setIsButtonDisabled(true);
-            setIsBuzzerDisabled(true);
+            setIsConfirmButtonDisabled(true);
+            setIsBuzzerButtonDisabled(true);
         };
 
         const handleQuestionType = (table) => {
-            console.log('From table:', table);
             if (table === 'multiplechoicequestion') {
                 navigate('/codebattle/buzzer/multiplechoice');
             } else {
@@ -86,26 +79,16 @@ const MultipleChoicePage = () => {
             setWinnerRound(playerName);
             setSolution(solution);
             setIsRoundWinnerVisible(true);
+            
             setTimeout(() => {
                 setIsRoundWinnerVisible(false);
                 setSelectedAnswer(null);
-                setIsButtonDisabled(true);
-                setIsBuzzerDisabled(false);
+                setIsConfirmButtonDisabled(true);
+                setIsBuzzerButtonDisabled(false);
             }, 3000);
         }
-        
-        const handleGameEnd = (ownPoints, opponentPoints) => { 
-            console.log('Game ended');
 
-            /*
-            if (ownPoints > opponentPoints) {
-              alert('You won! :' + ownPoints + ":" + opponentPoints);
-            }
-            else {
-              alert('enemy won! :' + opponentPoints + ":" + ownPoints);
-            }
-            */
-            //TODO: Gewinner richtig setzen
+        const handleGameEnd = (ownPoints, opponentPoints) => {
             setWinnerGame(socket.id);
             setIsRoundWinnerVisible(false);
             setIsGameWinnerVisible(true);
@@ -113,21 +96,21 @@ const MultipleChoicePage = () => {
             setTimeout(() => {
                 setIsGameWinnerVisible(false);
                 setSelectedAnswer(null);
-                setIsButtonDisabled(true);
-                setIsBuzzerDisabled(false);
+                setIsConfirmButtonDisabled(true);
+                setIsBuzzerButtonDisabled(false);
                 socket.emit('CLOSE_LOBBY');
                 navigate('/select/code/codeBattle');
             }, 3000);
         };
-        const displayRoundTime = (remainingSecondsRound) => {
-            //TODO: remainingSecondsRound müssen angezeigt werden im Screen
-            console.log(remainingSecondsRound)
 
+        const displayRoundTime = (remainingSecondsRound) => {
+            setRemainingSeconds(remainingSecondsRound);
+            console.log('Round time left:', remainingSecondsRound);
         }
 
         const displayTurnTime = (remainingSecondsTurn) => {
-            //TODO: remainingSeconds müssen angezeigt werden im Screen
-            console.log(remainingSecondsTurn)
+            setRemainingSeconds(remainingSecondsTurn);
+            console.log('Turn time left:', remainingSecondsTurn);
         }
 
         const triggerBuzzer = () => {
@@ -138,7 +121,6 @@ const MultipleChoicePage = () => {
             //TODO: Zwischen-Screen der dir sagt, dass der Gegner das Spiel verlassen hat, du hast automatisch gewonnen.
             navigate('/select/code/codeBattle');
         }
-        // Handle disabling the buzzer for the other player
 
         socket.on('SHOW_QUESTION_MULTIPLE_CHOICE', handleQuestion);
         socket.on('DISABLE_BUZZER', disableBuzzer);
@@ -167,15 +149,20 @@ const MultipleChoicePage = () => {
             socket.off('PLAYER_TURN_TIMER_TICK', displayTurnTime);
             socket.off('TRIGGER_BUZZER', triggerBuzzer);
         };
-
     }, []);
-
 
     return (
         <div className={styles.container}>
-            <div className={styles.questionBox}>
-                <div className={styles.questionContent}>
-                    <p> {question.question} </p>
+            <div className={styles.questionAndTimer}>
+                <div className={styles.questionBox}>
+                    <div className={styles.questionContent}>
+                        <p>{question.question}</p>
+                    </div>
+                    {remainingSeconds !== null && (
+                        <div className={styles.timer}>
+                            Time remaining: <span className={`${styles.seconds} ${remainingSeconds <= 5 ? styles.red : ''}`}>{remainingSeconds}s</span>
+                        </div>
+                    )}
                 </div>
             </div>
             <form className={styles.form}>
@@ -215,15 +202,13 @@ const MultipleChoicePage = () => {
                     />
                     {question.danswer}
                 </label>
-                <button type="button" disabled={isButtonDisabled} onClick={handleSubmit}
-                        className={styles.submitButton}>
-                    Confirm
-                </button>
+                <div className={styles.buttonRow}>
+                    <ConfirmButton isButtonDisabled={isConfirmButtonDisabled} handleSubmit={handleSubmit} />
+                    <BuzzerButton toggle={toggleButton} disabled={isBuzzerButtonDisabled} /> 
+                </div>
             </form>
-            
-            <BuzzerButton toggle={toggleButton} disabled={isBuzzerDisabled}/>
             {!isGameWinnerVisible && (
-                <PopUpWinnerRound winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution}/>
+                <PopUpWinnerRound winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution} />
             )}
             <PopUpWinnerGame winner={winnerRound} isVisible={isGameWinnerVisible} />
         </div>

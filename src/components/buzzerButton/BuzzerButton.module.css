@@ -1,0 +1,34 @@
+.buzzerButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #002c8b; 
+  border: 2px solid white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.buzzerButton:hover {
+  transform: scale(1.05);
+}
+
+.buzzerButton::after {
+  content: '';
+  width: 70%;
+  height: 70%;
+  background-color: #ff0000; /* Dunkelblaue Farbe */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.buzzerButton:disabled {
+  background-color: #cccccc; /* ausgegraute Farbe */
+  cursor: not-allowed;
+}
