@@ -41,9 +41,9 @@ function codeSenpaiPage() {
         const handleQuestionType = (table) => {
             console.log('From table:', table);
             if (table === 'multiplechoicequestion') {
-                // navigate('/codebattle/buzzer/multiplechoice');
+                navigate('/select/code/dailyChallenge/multipleChoice');
             } else {
-                navigate('/select/code/dailyChallenge');
+                navigate('/select/code/dailyChallenge/gapText');
             }
         };
         //socket.on('RECEIVE_QUESTION_MULTIPLE_CHOICE',handleQuestionMultipleChoice );

@@ -4,7 +4,7 @@ import FillInTheBlankText from '../../components/fillInTheBlankText/FillInTheBla
 import { socket, requestQuestion } from '../../socket.js';
 import { useEffect, useState } from 'react';
 
-function DailyChallengePage() {
+function DailyChallengeGTPage() {
     const blankIndices = [];
     const [question, setQuestion] = useState(null);
 
@@ -36,4 +36,4 @@ function DailyChallengePage() {
     );
 }
 
-export default DailyChallengePage;
+export default DailyChallengeGTPage;
