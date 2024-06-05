@@ -43,7 +43,7 @@ socket.on('WAIT_FOR_OPPONENT', () => {
     // Implement logic to display a waiting message or spinner on the UI
 });
 
-// Handle game result
+ // Handle game result
 socket.on('RESULT', (result) => {
     console.log('Game result:', result);
     // Implement logic to display the result to the player
@@ -72,6 +72,11 @@ const requestQuestion = () => {
     socket.emit('AWAIT_QUESTION');
 };
 
+const requestDailyChallengeQuestion = () => {
+    console.log("Requesting a daily question");
+    socket.emit('REQUEST_DAILY_CHALLENGE_QUESTION');
+};
+
 // Function to send PLAYER_BUZZERED event
 const playerBuzzed = () => {
     console.log("Player buzzed");
@@ -90,4 +95,4 @@ const disconnectSocket = () => {
 };
 
 // Export the socket instance, and control functions
-export {socket, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket};
+export {socket, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket, requestDailyChallengeQuestion};

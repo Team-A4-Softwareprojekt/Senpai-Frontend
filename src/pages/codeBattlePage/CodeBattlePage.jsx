@@ -44,7 +44,7 @@ function codeBattlePage() {
         // Register the event listeners
         socket.on('Buzzer_GameFound', handleGameFound);
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
-
+        
         // Clean up the listeners when the component is unmounted
         return () => {
             socket.off('Buzzer_GameFound', handleGameFound);
