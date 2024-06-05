@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import StartPage from "./pages/startPage/StartPage.jsx";
 import LoginPage from "./pages/loginAndRegisterPages/LoginPage.jsx";
 import RegisterPage from "./pages/loginAndRegisterPages/RegisterPage.jsx";
@@ -11,30 +11,35 @@ import CodeBattlePage from "./pages/codeBattlePage/CodeBattlePage.jsx";
 import ExercisePage from "./pages/exercisePage/ExercisePage.jsx";
 import ExerciseTaskPage from "./pages/exerciseTaskPage/ExerciseTaskPage.jsx";
 import MultipleChoicePage from './pages/multipleChoicePage/MultipleChoicePage.jsx';
+import GapTextPage from './pages/buzzerPage/gapTextPage/GapTextPage.jsx';
 import NoPage from "./pages/noPage/NoPage.jsx";
+import { PlayerProvider } from './context/playerContext';
 
 function App() {
-  
-  return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<StartPage/>} />
-          <Route path="/login" element={<LoginPage/>} />
-          <Route path="/register" element={<RegisterPage/>} />
-          <Route path="/select" element={<SelectLearningContent/>}/>
-          <Route path="/select/code" element={<CodeSenpaiPage/>}/>
-          <Route path="/select/code/dailyChallenge" element={<DailyChallengePage/>}/>
-          <Route path="/select/code/codeBattle" element={<CodeBattlePage/>}/>
-          <Route path="/select/code/exercise" element={<ExercisePage/>}/>
-          <Route path="/exercise/:exerciseName" element={<ExerciseTaskPage />} />
-          <Route path="/codebattle/buzzer" element={<MultipleChoicePage />} />
-          <Route path="/account" element={<AccountSettingsPage/>}/>
-          <Route path="*" element={<NoPage/>} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+
+    return (
+        <div>
+            <PlayerProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<StartPage/>}/>
+                        <Route path="/login" element={<LoginPage/>}/>
+                        <Route path="/register" element={<RegisterPage/>}/>
+                        <Route path="/select" element={<SelectLearningContent/>}/>
+                        <Route path="/select/code" element={<CodeSenpaiPage/>}/>
+                        <Route path="/select/code/dailyChallenge" element={<DailyChallengePage/>}/>
+                        <Route path="/select/code/codeBattle" element={<CodeBattlePage/>}/>
+                        <Route path="/select/code/exercise" element={<ExercisePage/>}/>
+                        <Route path="/exercise/:exerciseName" element={<ExerciseTaskPage/>}/>
+                        <Route path="/codebattle/buzzer/multiplechoice" element={<MultipleChoicePage/>}/>
+                        <Route path="/codebattle/buzzer/gaptext" element={<GapTextPage/>}/>
+                        <Route path="/account" element={<AccountSettingsPage/>}/>
+                        <Route path="*" element={<NoPage/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </PlayerProvider>
+        </div>
+    );
 }
 
 export default App;

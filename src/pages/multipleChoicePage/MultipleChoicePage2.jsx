@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-//import axios from 'axios';
-import { io } from 'socket.io-client';
+import { socket, requestQuestion, compareAnswer } from '../../socket.js';
 import styles from './MultipleChoicePage.module.css';
 
 const MultipleChoicePage = () => {
@@ -8,24 +7,30 @@ const MultipleChoicePage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [timeLeft, setTimeLeft] = useState(15);
-  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3000'); // replace with your server URL
-    setSocket(newSocket);
+    requestQuestion();
 
-    newSocket.on('question', (data) => {
+    socket.on('SHOW_QUESTION', (data) => {
       setQuestionData(data);
       setTimeLeft(15);
       setSelectedAnswer(null);
       setFeedback(null);
     });
 
-    newSocket.on('result', (data) => {
+    socket.on('RESULT', (data) => {
       setFeedback(data.message);
     });
 
-    return () => newSocket.close();
+    socket.on('TIMER', (time) => {
+      setTimeLeft(time);
+    });
+
+    return () => {
+      socket.off('SHOW_QUESTION');
+      socket.off('RESULT');
+      socket.off('TIMER');
+    };
   }, []);
 
   useEffect(() => {
@@ -46,7 +51,7 @@ const MultipleChoicePage = () => {
       setFeedback('Time is up! No answer selected.');
       return;
     }
-    socket.emit('submit-answer', { answer: selectedAnswer, timeTaken: 15 - timeLeft });
+    compareAnswer({ answer: selectedAnswer, timeTaken: 15 - timeLeft });
   };
 
   if (!questionData) {
@@ -83,3 +88,4 @@ const MultipleChoicePage = () => {
 };
 
 export default MultipleChoicePage;
+
