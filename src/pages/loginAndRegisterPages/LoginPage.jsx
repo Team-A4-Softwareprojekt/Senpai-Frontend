@@ -16,8 +16,9 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
 
-    const url = 'https://senpai-server.onrender.com/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
+    //const url = 'https://senpai-server.onrender.com/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
     //const url = 'http://localhost:3000/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
+    const url = 'http://localhost:3000/login';
 
     // functions for updating the input formula
     const handlePasswordChange = (event) => {
@@ -37,17 +38,24 @@ function LoginPage() {
         console.log('Eingegebener Username:', username);
         console.log('Eingegebenes Passwort:', password);
 
-        fetch(url)
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text(); // Die Antwort als Text lesen
+                return response.json(); // Die Antwort als JSON lesen
             })
             .then(data => {
                 console.log('Response from server:', data); // Anzeige der Antwort in der Konsole
                 // Hier kannst du die Antwort in deiner Anwendungslogik weiterverarbeiten oder anzeigen
-                if (data == 'true') {
+                if (data.success == true) {
+                    //setPlayerName(data.username);
                     navigate("/select");
                 } else {
                     alert('Login failed');
@@ -57,7 +65,6 @@ function LoginPage() {
                 console.error('There was a problem with the fetch operation:', error);
             });
 
-        //navigate("/select");
     }
 
     return (
