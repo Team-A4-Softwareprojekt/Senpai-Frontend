@@ -3,12 +3,13 @@ import styles from './MultipleChoicePage.module.css';
 import { socket } from '../../socket.js';
 import ConfirmButton from '../../components/confirmButton/ConfirmButton.jsx';
 import BuzzerButton from '../../components/buzzerButton/BuzzerButton.jsx';
-import PopUpWinnerRound from '../../components/popUpWinnerRound/PopUpWinnerRound.jsx';
-import PopUpWinnerGame from '../../components/popUpWinnerGame/PopUpWinnerGame.jsx';
+import PopUpRoundWinner from '../../components/popUpRoundWinner/PopUpRoundWinner.jsx';
+import PopUpGameWinner from '../../components/popUpGameWinner/PopUpGameWinner.jsx';
+import PopUpGameLoser from '../../components/popUpGameLoser/PopUpGameLoser.jsx';
 import {PlayerContext} from '../../context/playerContext';
 import { useNavigate } from 'react-router-dom';
 
-//TODO: Debugging der Situationen, wenn spieler Falsch antworten. Solange immer beim ersten Buzzer korrekt geantwortet wird, funktioniert (eigentlich) alles ;)
+//TODO: Debugging der Situationen, wenn Spieler falsch antworten. Solange immer beim ersten Buzzer korrekt geantwortet wird, funktioniert (eigentlich) alles ;)
 const MultipleChoicePage = () => {
     const navigate = useNavigate();
     const [question, setQuestion] = useState([]);
@@ -18,9 +19,13 @@ const MultipleChoicePage = () => {
     const [solution, setSolution] = useState('');
     const [winnerRound, setWinnerRound] = useState('');
     const [winnerGame, setWinnerGame] = useState('');
+    const [loserGame, setLoserGame] = useState('');
+    const [isGameLoserVisible, setIsGameLoserVisible] = useState(false);
     const [isRoundWinnerVisible, setIsRoundWinnerVisible] = useState(false);
     const [isGameWinnerVisible, setIsGameWinnerVisible] = useState(false);
     const [remainingSeconds, setRemainingSeconds] = useState(null);
+    const [ownPoints, setOwnPoints] = useState(0);
+    const [opponentPoints, setOpponentPoints] = useState(0);
 
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
@@ -88,19 +93,23 @@ const MultipleChoicePage = () => {
             }, 3000);
         }
 
-        const handleGameEnd = (ownPoints, opponentPoints) => {
-            setWinnerGame(socket.id);
-            setIsRoundWinnerVisible(false);
-            setIsGameWinnerVisible(true);
+        const handleGameEnd = (ownPointsReceived, opponentPointsReceived) => {
+            console.log('Received own points:', ownPointsReceived);
+            console.log('Received opponent points:', opponentPointsReceived);
 
-            setTimeout(() => {
-                setIsGameWinnerVisible(false);
-                setSelectedAnswer(null);
-                setIsConfirmButtonDisabled(true);
-                setIsBuzzerButtonDisabled(false);
-                socket.emit('CLOSE_LOBBY');
-                navigate('/select/code/codeBattle');
-            }, 3000);
+            setOwnPoints(ownPointsReceived);
+            setOpponentPoints(opponentPointsReceived);
+        
+            if (ownPointsReceived > opponentPointsReceived) {
+                setWinnerGame(socket.id);
+                setIsGameWinnerVisible(true);
+            } else {
+                setLoserGame(socket.id);
+                setIsGameLoserVisible(true);
+            }
+            setSelectedAnswer(null);
+            setIsConfirmButtonDisabled(true);
+            setIsBuzzerButtonDisabled(false);
         };
 
         const displayRoundTime = (remainingSecondsRound) => {
@@ -153,6 +162,10 @@ const MultipleChoicePage = () => {
 
     return (
         <div className={styles.container}>
+            <div className={styles.scores}>
+                <div>Your Points: {ownPoints}</div>
+                <div>Opponent's Points: {opponentPoints}</div>
+            </div>
             <div className={styles.questionAndTimer}>
                 <div className={styles.questionBox}>
                     <div className={styles.questionContent}>
@@ -207,10 +220,11 @@ const MultipleChoicePage = () => {
                     <BuzzerButton toggle={toggleButton} disabled={isBuzzerButtonDisabled} /> 
                 </div>
             </form>
-            {!isGameWinnerVisible && (
-                <PopUpWinnerRound winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution} />
+            {!isGameWinnerVisible && !isGameLoserVisible && (
+            <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution} />
             )}
-            <PopUpWinnerGame winner={winnerRound} isVisible={isGameWinnerVisible} />
+            <PopUpGameWinner winner={winnerRound} isVisible={isGameWinnerVisible} />
+            <PopUpGameLoser loser={winnerRound} isVisible={isGameLoserVisible} />
         </div>
     );
 };

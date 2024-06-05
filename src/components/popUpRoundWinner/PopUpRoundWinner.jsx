@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './PopUpWinnerRound.module.css';
+import styles from './PopUpRoundWinner.module.css';
 
-const PopUpWinnerRound = ({ winner, isVisible, solution }) => {
+const PopUpRoundWinner = ({ winner, isVisible, solution }) => {
   if (!isVisible) {
     return null;
   }
@@ -17,4 +17,4 @@ const PopUpWinnerRound = ({ winner, isVisible, solution }) => {
   );
 };
 
-export default PopUpWinnerRound;
+export default PopUpRoundWinner;
