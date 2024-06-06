@@ -12,6 +12,7 @@ import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
 import { useNavigate } from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
+import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 
 /*
 This is the code battle page that holds an account button, amount of lives and three different
@@ -20,16 +21,19 @@ game modes to choose from. Each game mode has a modal with the basic explanation
 function codeBattlePage() {
 
     const { playerName } = useContext(PlayerContext);
+    const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
     
     const navigate = useNavigate();
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
+    const [countdown, setCountdown] = useState(10);
     
     useEffect(() => {
         const handleGameFound = (fullRoom) => {
             console.log('Game found', fullRoom);
             setIsPopupVisible(false); // Hide the popup
-            //requestQuestion();
+            //TODO: Wenn das Game gefunden wurde, kann der Countdown screen angezeigt werden
+            // Wenn der Countdown screen abgelaufen ist, soll die Frage angefragt werden
         };
 
         const handleQuestionType = (table) => {
@@ -41,14 +45,32 @@ function codeBattlePage() {
             }
         };
 
+        const handleStartCountdown = (countdown) => {
+            console.log('Countdown started', countdown);
+            setCountdown(countdown);
+
+        };
+
+        const handleSetQuestion = (question) => {
+            console.log(question);
+            setBuzzerQuestion(question);
+            console.log(buzzerQuestion);
+        };
+
+
+
         // Register the event listeners
         socket.on('Buzzer_GameFound', handleGameFound);
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
+        socket.on('BUZZER_COUNTDOWN', handleStartCountdown);
+        socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
 
         // Clean up the listeners when the component is unmounted
         return () => {
             socket.off('Buzzer_GameFound', handleGameFound);
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
+            socket.off('BUZZER_COUNTDOWN', handleStartCountdown);
+            socket.off('SET_BUZZER_QUESTION', handleSetQuestion)
         };
     }, [navigate]);
     

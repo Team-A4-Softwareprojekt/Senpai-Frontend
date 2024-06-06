@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styles from './MultipleChoicePage.module.css';
 import { socket } from '../../socket.js';
 import ConfirmButton from '../../components/confirmButton/ConfirmButton.jsx';
@@ -8,6 +8,7 @@ import PopUpGameWinner from '../../components/popUpGameWinner/PopUpGameWinner.js
 import PopUpGameLoser from '../../components/popUpGameLoser/PopUpGameLoser.jsx';
 import {PlayerContext} from '../../context/playerContext';
 import { useNavigate } from 'react-router-dom';
+import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 
 //TODO: Debugging der Situationen, wenn Spieler falsch antworten. Solange immer beim ersten Buzzer korrekt geantwortet wird, funktioniert (eigentlich) alles ;)
 const MultipleChoicePage = () => {
@@ -26,6 +27,8 @@ const MultipleChoicePage = () => {
     const [remainingSeconds, setRemainingSeconds] = useState(null);
     const [ownPoints, setOwnPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
+    const { playerName } = useContext(PlayerContext);
+    const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
 
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
@@ -47,9 +50,6 @@ const MultipleChoicePage = () => {
     }
 
     useEffect(() => {
-        const handleQuestion = (task) => {
-            setQuestion(task);
-        };
 
         const disableBuzzer = () => {
             setIsBuzzerButtonDisabled(true);
@@ -80,11 +80,17 @@ const MultipleChoicePage = () => {
             }
         };
 
-        const handleRoundEnd = (playerName, solution) => {
+        const handleRoundEnd = (playerName, solution, ownPointsReceived, opponentPointsReceived ) => {
             setWinnerRound(playerName);
             setSolution(solution);
             setIsRoundWinnerVisible(true);
-            
+
+            console.log('Received own points:', ownPointsReceived);
+            console.log('Received opponent points:', opponentPointsReceived);
+
+            setOwnPoints(ownPointsReceived);
+            setOpponentPoints(opponentPointsReceived);
+
             setTimeout(() => {
                 setIsRoundWinnerVisible(false);
                 setSelectedAnswer(null);
@@ -99,12 +105,12 @@ const MultipleChoicePage = () => {
 
             setOwnPoints(ownPointsReceived);
             setOpponentPoints(opponentPointsReceived);
-        
+
             if (ownPointsReceived > opponentPointsReceived) {
-                setWinnerGame(socket.id);
+                setWinnerGame(playerName);
                 setIsGameWinnerVisible(true);
             } else {
-                setLoserGame(socket.id);
+                setLoserGame(playerName);
                 setIsGameLoserVisible(true);
             }
             setSelectedAnswer(null);
@@ -131,7 +137,12 @@ const MultipleChoicePage = () => {
             navigate('/select/code/codeBattle');
         }
 
-        socket.on('SHOW_QUESTION_MULTIPLE_CHOICE', handleQuestion);
+        const handleSetQuestion = (question) => {
+            console.log(question);
+            setBuzzerQuestion(question);
+            console.log(buzzerQuestion);
+        };
+
         socket.on('DISABLE_BUZZER', disableBuzzer);
         socket.on('ENABLE_BUZZER', enableBuzzer);
         socket.on('CORRECT_ANSWER', handleCorrectAnswer);
@@ -143,9 +154,9 @@ const MultipleChoicePage = () => {
         socket.on('BUZZER_TIMER_TICK', displayRoundTime);
         socket.on('PLAYER_TURN_TIMER_TICK', displayTurnTime);
         socket.on('TRIGGER_BUZZER', triggerBuzzer);
+        socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
 
         return () => {
-            socket.off('SHOW_QUESTION_MULTIPLE_CHOICE', handleQuestion);
             socket.off('DISABLE_BUZZER', disableBuzzer);
             socket.off('ENABLE_BUZZER', enableBuzzer);
             socket.off('CORRECT_ANSWER', handleCorrectAnswer);
@@ -157,6 +168,7 @@ const MultipleChoicePage = () => {
             socket.off('BUZZER_TIMER_TICK', displayRoundTime);
             socket.off('PLAYER_TURN_TIMER_TICK', displayTurnTime);
             socket.off('TRIGGER_BUZZER', triggerBuzzer);
+            socket.off('SET_BUZZER_QUESTION', handleSetQuestion);
         };
     }, []);
 
@@ -169,7 +181,7 @@ const MultipleChoicePage = () => {
             <div className={styles.questionAndTimer}>
                 <div className={styles.questionBox}>
                     <div className={styles.questionContent}>
-                        <p>{question.question}</p>
+                        <p>{buzzerQuestion.question}</p>
                     </div>
                     {remainingSeconds !== null && (
                         <div className={styles.timer}>
@@ -186,7 +198,7 @@ const MultipleChoicePage = () => {
                         checked={selectedAnswer === 'A'}
                         onChange={handleAnswerChange}
                     />
-                    {question.aanswer}
+                    {buzzerQuestion.aanswer}
                 </label>
                 <label className={styles.answerOption}>
                     <input
@@ -195,7 +207,7 @@ const MultipleChoicePage = () => {
                         checked={selectedAnswer === 'B'}
                         onChange={handleAnswerChange}
                     />
-                    {question.banswer}
+                    {buzzerQuestion.banswer}
                 </label>
                 <label className={styles.answerOption}>
                     <input
@@ -204,7 +216,7 @@ const MultipleChoicePage = () => {
                         checked={selectedAnswer === 'C'}
                         onChange={handleAnswerChange}
                     />
-                    {question.canswer}
+                    {buzzerQuestion.canswer}
                 </label>
                 <label className={styles.answerOption}>
                     <input
@@ -213,7 +225,7 @@ const MultipleChoicePage = () => {
                         checked={selectedAnswer === 'D'}
                         onChange={handleAnswerChange}
                     />
-                    {question.danswer}
+                    {buzzerQuestion.danswer}
                 </label>
                 <div className={styles.buttonRow}>
                     <ConfirmButton isButtonDisabled={isConfirmButtonDisabled} handleSubmit={handleSubmit} />
@@ -223,8 +235,8 @@ const MultipleChoicePage = () => {
             {!isGameWinnerVisible && !isGameLoserVisible && (
             <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution} />
             )}
-            <PopUpGameWinner winner={winnerRound} isVisible={isGameWinnerVisible} />
-            <PopUpGameLoser loser={winnerRound} isVisible={isGameLoserVisible} />
+            <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} />
+            <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} />
         </div>
     );
 };
