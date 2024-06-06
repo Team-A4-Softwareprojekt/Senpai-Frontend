@@ -3,25 +3,38 @@ import styles from '../../pages/General.module.css';
 import styles2 from './FillInTheBlankText.module.css';
 import Modal from '../modal/Modal.jsx';
 
-// FillInTheBlankText component
 function FillInTheBlankText({ text, blankIndices }) {
   const [inputs, setInputs] = useState(Array(blankIndices.length).fill(''));
   const [words, setWords] = useState(text.split(' '));
   const [show, setShow] = useState(false);
   const [results, setResults] = useState(Array(blankIndices.length).fill(false));
+  const [firstAttempt, setFirstAttempt] = useState(true);
+  const [isWinner, setIsWinner] = useState(false);
 
-  // Handle input change
   const handleChange = (e, idx) => {
     const newInputs = [...inputs];
     newInputs[idx] = e.target.value;
     setInputs(newInputs);
   };
 
-  // Handle check button click
   const handleCheck = () => {
     const newResults = blankIndices.map((index, idx) => inputs[idx] === words[index]);
-    setShow(true);
     setResults(newResults);
+    setShow(true);
+
+    if (firstAttempt) {
+      const allCorrect = newResults.every(result => result);
+      if (allCorrect) {
+        setIsWinner(true);
+        window.alert('Congratulations! You have answered all correctly on your first attempt!');
+        // Add any additional logic for winning, such as notifying the server or updating the UI
+      } else {
+        window.alert('Not all answers are correct. Please try again.');
+      }
+      setFirstAttempt(false);
+    } else {
+      window.alert('Check your answers and try again.');
+    }
   };
 
   return (
@@ -42,7 +55,7 @@ function FillInTheBlankText({ text, blankIndices }) {
                         ? 'lightgreen'
                         : 'lightcoral'
                       : 'transparent',
-                    color: 'white',  // Set the text color to white
+                    color: 'white',
                   }}
                 />{' '}
               </span>
@@ -56,11 +69,12 @@ function FillInTheBlankText({ text, blankIndices }) {
         <button onClick={handleCheck} className={styles.button01}>
           Check
         </button>
-        <div className = {styles2.modal}>
-          <Modal header = 'Fill In The Blank Text' 
-            text = 'Please fill in the blanks with the correct words. Once you have filled in all the blanks, click the Check button to see if your answers are correct. Correct answers will be highlighted in green, while incorrect answers will be highlighted in red.' > </Modal>
+        <div className={styles2.modal}>
+          <Modal
+            header='Fill In The Blank Text'
+            text='Please fill in the blanks with the correct words. Once you have filled in all the blanks, click the Check button to see if your answers are correct. Correct answers will be highlighted in green, while incorrect answers will be highlighted in red.'
+          />
         </div>
-        
       </div>
     </div>
   );
