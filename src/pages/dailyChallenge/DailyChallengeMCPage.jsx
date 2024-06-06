@@ -1,27 +1,35 @@
 import styles from '../General.module.css';
 import styles2 from './DailyChallengePage.module.css';
-import FillInTheBlankText from '../../components/fillInTheBlankText/FillInTheBlankText.jsx';
-import { socket, requestQuestion } from '../../socket.js';
 import { useEffect, useState } from 'react';
+import { socket } from '../../socket.js';
 import ConfirmButton from '../../components/confirmButton/ConfirmButton.jsx';
 import BuzzerButton from '../../components/buzzerButton/BuzzerButton.jsx';
 
-
 function DailyChallengeMCPage() {
-    const blankIndices = [];
     const [question, setQuestion] = useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState('');
+    const [solution, setSolution] = useState('');
+    const [winnerRound, setWinnerRound] = useState('');
+    const [isRoundWinnerVisible, setIsRoundWinnerVisible] = useState(false);
 
     useEffect(() => {
-        const handleQuestionMultipleChoice = (question) => {  
+        const handleQuestionMultipleChoice = (question) => {
             console.log('Received question', question);
             setQuestion(question);
         };
 
+        const handleRoundEnd = (playerName, solution) => {
+            setWinnerRound(playerName);
+            setSolution(solution);
+            setIsRoundWinnerVisible(true);
+        };
+
         socket.on('RECEIVE_QUESTION_MULTIPLE_CHOICE', handleQuestionMultipleChoice);
+        socket.on('END_ROUND', handleRoundEnd);
 
         return () => {
             socket.off('RECEIVE_QUESTION_MULTIPLE_CHOICE', handleQuestionMultipleChoice);
+            socket.off('END_ROUND', handleRoundEnd);
         };
     }, []);
 
@@ -31,10 +39,6 @@ function DailyChallengeMCPage() {
 
     const handleSubmit = () => {
         // handle form submission
-    };
-
-    const toggleButton = () => {
-        // handle toggle button action
     };
 
     if (!question) {
@@ -50,7 +54,7 @@ function DailyChallengeMCPage() {
                     </div>
                 </div>
             </div>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <label className={styles.answerOption}>
                     <input
                         type="radio"
@@ -89,9 +93,14 @@ function DailyChallengeMCPage() {
                 </label>
                 <div className={styles.buttonRow}>
                     <ConfirmButton isButtonDisabled={false} handleSubmit={handleSubmit} />
-                    <BuzzerButton toggle={toggleButton} disabled={false} />
                 </div>
             </form>
+            {isRoundWinnerVisible && (
+                <div className={styles.roundEndInfo}>
+                    <p>Winner of the round: {winnerRound}</p>
+                    <p>Solution: {solution}</p>
+                </div>
+            )}
         </div>
     );
 }
