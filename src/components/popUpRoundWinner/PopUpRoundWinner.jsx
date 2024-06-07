@@ -8,11 +8,20 @@ const PopUpRoundWinner = ({ winner, isVisible, solution }) => {
 
   return (
     <>
-    <div className={styles.overlay} />
-    <div className={styles.popup}>
-      <p>{winner} has won this round!</p>
-      <p>The correct answer was: {solution} </p>
-    </div>
+      <div className={styles.overlay} />
+      <div className={styles.popup}>
+        {winner === 'unentschieden' ? (
+          <>
+            <p>Nobody has answered correctly!</p>
+            <p>The correct answer was: {solution}</p>
+          </>
+        ) : (
+          <>
+            <p><span className={styles.winner}>{winner}</span> has won this round!</p>
+            <p>The correct answer was: <span className={styles.solution}>{solution}</span></p>
+          </>
+        )}
+      </div>
     </>
   );
 };

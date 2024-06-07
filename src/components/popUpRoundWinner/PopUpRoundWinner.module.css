@@ -24,4 +24,13 @@
     border: 1px solid rgba(255, 255, 255, 0.3); /* Neue Grenze */
     z-index: 100;
 }
-  
+
+.winner {
+    color: #FFD700;
+    font-weight: bold;
+}
+
+.solution {
+    color: #FFD700;
+    font-weight: bold;
+}

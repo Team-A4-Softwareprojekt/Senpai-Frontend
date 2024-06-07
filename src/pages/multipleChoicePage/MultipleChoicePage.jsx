@@ -31,6 +31,7 @@ const MultipleChoicePage = () => {
     const [opponentPoints, setOpponentPoints] = useState(0);
     const { playerName } = useContext(PlayerContext);
     const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
+    const [buzzerMessage, setBuzzerMessage] = useState(null);
 
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
@@ -47,6 +48,7 @@ const MultipleChoicePage = () => {
     const toggleButton = () => {
         setIsConfirmButtonDisabled(!isConfirmButtonDisabled);
         setIsBuzzerButtonDisabled(true);
+        setBuzzerMessage("You buzzered first, it's your turn!");
         socket.emit('PLAYER_BUZZERED');
         console.log('isButtonDisabled: ' + isConfirmButtonDisabled);
     }
@@ -72,6 +74,18 @@ const MultipleChoicePage = () => {
         const handleWrongAnswer = () => {
             setIsConfirmButtonDisabled(true);
             setIsBuzzerButtonDisabled(true);
+            setBuzzerMessage("Your answer was wrong, it's your opponent's turn now!");
+            socket.emit('WRONG_ANSWER_PENALTY');
+        };
+
+        const handleOpponentBuzzered = () => {
+            setBuzzerMessage("The opponent buzzered first, you were too slow!");
+        };
+
+        const handleOpponentWrongAnswer = () => {
+            setBuzzerMessage("Your opponent's answer was wrong, it's your turn now!");
+            setIsConfirmButtonDisabled(true);
+            setIsBuzzerButtonDisabled(false);
         };
 
         const handleQuestionType = (table) => {
@@ -85,6 +99,7 @@ const MultipleChoicePage = () => {
         const handleRoundEnd = (playerName, solution, ownPointsReceived, opponentPointsReceived ) => {
             setWinnerRound(playerName);
             setSolution(solution);
+            setBuzzerMessage(false);
             setIsRoundWinnerVisible(true);
 
             console.log('Received own points:', ownPointsReceived);
@@ -159,6 +174,8 @@ const MultipleChoicePage = () => {
         socket.on('PLAYER_TURN_TIMER_TICK', displayTurnTime);
         socket.on('TRIGGER_BUZZER', triggerBuzzer);
         socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
+        socket.on('OPPONENT_BUZZERED', handleOpponentBuzzered);
+        socket.on('OPPONENT_WRONG_ANSWER', handleOpponentWrongAnswer);
 
         return () => {
             socket.off('DISABLE_BUZZER', disableBuzzer);
@@ -173,14 +190,16 @@ const MultipleChoicePage = () => {
             socket.off('PLAYER_TURN_TIMER_TICK', displayTurnTime);
             socket.off('TRIGGER_BUZZER', triggerBuzzer);
             socket.off('SET_BUZZER_QUESTION', handleSetQuestion);
+            socket.off('OPPONENT_BUZZERED', handleOpponentBuzzered);
+            socket.off('OPPONENT_WRONG_ANSWER', handleOpponentWrongAnswer);
         };
     }, []);
 
     return (
         <div className={styles.container}>
             <div className={styles.scores}>
-                <div>Your Points: {ownPoints}</div>
-                <div>Opponent's Points: {opponentPoints}</div>
+                <div>Your Points: <span className={styles.ownPointsValue}>{ownPoints}</span></div>
+                <div>Opponent's Points: <span className={styles.opponentPointsValue}>{opponentPoints}</span></div>
             </div>
             <div className={styles.questionAndTimer}>
                 <div className={styles.questionBox}>
@@ -236,6 +255,11 @@ const MultipleChoicePage = () => {
                     <BuzzerButton toggle={toggleButton} disabled={isBuzzerButtonDisabled} /> 
                 </div>
             </form>
+            {buzzerMessage && (
+                <div className={styles.message}>
+                    {buzzerMessage}
+                </div>
+            )}
             {!isGameWinnerVisible && !isGameLoserVisible && (
                 <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution} />
             )}
