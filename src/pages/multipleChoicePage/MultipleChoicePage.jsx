@@ -7,6 +7,7 @@ import PopUpRoundWinner from '../../components/popUpRoundWinner/PopUpRoundWinner
 import PopUpGameWinner from '../../components/popUpGameWinner/PopUpGameWinner.jsx';
 import PopUpGameLoser from '../../components/popUpGameLoser/PopUpGameLoser.jsx';
 import PopUpTie from '../../components/popUpTie/PopUpTie.jsx';
+import ScoresRound from '../../components/scoresRound/ScoresRound.jsx';
 import {PlayerContext} from '../../context/playerContext';
 import { useNavigate } from 'react-router-dom';
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
@@ -96,7 +97,7 @@ const MultipleChoicePage = () => {
             }
         };
 
-        const handleRoundEnd = (playerName, solution, ownPointsReceived, opponentPointsReceived ) => {
+        const handleRoundEnd = (playerName, solution, ownPointsReceived, opponentPointsReceived) => {
             setWinnerRound(playerName);
             setSolution(solution);
             setBuzzerMessage(false);
@@ -197,10 +198,7 @@ const MultipleChoicePage = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.scores}>
-                <div>Your Points: <span className={styles.ownPointsValue}>{ownPoints}</span></div>
-                <div>Opponent's Points: <span className={styles.opponentPointsValue}>{opponentPoints}</span></div>
-            </div>
+            <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
             <div className={styles.questionAndTimer}>
                 <div className={styles.questionBox}>
                     <div className={styles.questionContent}>
@@ -263,9 +261,9 @@ const MultipleChoicePage = () => {
             {!isGameWinnerVisible && !isGameLoserVisible && (
                 <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution} />
             )}
-            <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} />
-            <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} />
-            <PopUpTie winner={winnerGame} isVisible={isTieVisible} />
+            <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
+            <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
+            <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
         </div>
     );
 };

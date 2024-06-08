@@ -14,7 +14,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    max-width: 300px;
+    max-width: 350px;
     padding: 20px;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Neue Farben */
     border-radius: 10px; /* Runde Ecken */
@@ -22,4 +22,24 @@
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.3); /* Neue Grenze */
     z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ensure children are centered */
+}
+
+.message {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 1.0em;
+    font-weight: bold;
+    color: #fff;   
+}
+
+.playerWithBorder {
+    border: 2px solid white; /* Weiße Umrandung */
+    border-radius: 10px; /* Optional: Runde Ecken */
+}
+
+.name {
+    color: #FFD700;
 }
