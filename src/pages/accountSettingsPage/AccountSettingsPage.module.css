@@ -1,28 +1,147 @@
-
 .accountDiv {
-    position: absolute;
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 70%;
+}
+
+.container {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px; /* Ensure all containers have the same height */
+    width: 280px;
+}
+
+.heading {
+    color: black;
+    font-size: 1.5em;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.infoRow strong {
+    width: 40%;
+    font-size: 1.1em;
+}
+
+.infoRow span {
+    width: 75%;
+    text-align: left;
+    font-size: 1.1em;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 20px;
+}
+
+.button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    width: 230px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #218838;
+}
+
+.friendPopup {
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
-    border: 3px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    padding: 20px;
     border-radius: 10px;
-    border : 3px solid white;   
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .friendList {
-    max-height: 47vh;
+    max-height: 400px;
+    max-width: 250px;
     overflow-y: auto;
-    scrollbar-width: none;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
 }
 
-
-p {
-    font-size: 20px;
+.friendList::-webkit-scrollbar {
+    width: 8px;
 }
 
-input {
-    font-size: 20px;
-    margin: 10px;
-    border-radius: 8px;
+.friendList::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.closeButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    width: 100px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.closeButton:hover {
+    background-color: #c82333;
+}
+
+.blurBackground {
+    filter: blur(5px);
 }

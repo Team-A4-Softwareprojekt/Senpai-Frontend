@@ -5,8 +5,9 @@ import styles from './PopUpGameWinner.module.css';
 import ConfirmButton from '../confirmButton/ConfirmButton.jsx';
 import { useNavigate } from 'react-router-dom';
 import { socket } from '../../socket.js';
+import ScoresFinal from '../scoresFinal/ScoresFinal';
 
-const PopUpGameWinner = ({ winner, isVisible }) => {
+const PopUpGameWinner = ({ winner, isVisible, ownPoints, opponentPoints }) => {
   const navigate = useNavigate();
 
   if (!isVisible) {
@@ -26,9 +27,13 @@ const PopUpGameWinner = ({ winner, isVisible }) => {
           autoplay
           loop
           src={animationData}
-          style={{ height: '300px', width: '300px' }}
+          style={{ height: '350px', width: '350px' }}
+          className={styles.playerWithBorder}
         />
-        <p>Congratulations {winner}, you won this match!</p>
+        <ScoresFinal ownPoints={ownPoints} opponentPoints={opponentPoints} />
+        <div className={styles.message}>
+          Congratulations <span className={styles.name}>{winner}</span>, you won this match!
+        </div>
         <ConfirmButton buttonText="Nice!" handleSubmit={handleWinnerConfirm} />
       </div>
     </>

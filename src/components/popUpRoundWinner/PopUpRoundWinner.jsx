@@ -13,7 +13,7 @@ const PopUpRoundWinner = ({ winner, isVisible, solution }) => {
         {winner === 'unentschieden' ? (
           <>
             <p>Nobody has answered correctly!</p>
-            <p>The correct answer was: {solution}</p>
+            <p>The correct answer was: <span className={styles.solution}>{solution}</span></p>
           </>
         ) : (
           <>
