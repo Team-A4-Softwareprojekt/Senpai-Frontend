@@ -1,14 +1,17 @@
 import styles from './AccountSettingsPage.module.css';
 import UserCard from '../../components/userCard/UserCard.jsx';
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HomeButton from '../../components/homeButton/HomeButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { PlayerContext } from '../../context/playerContext';
 
 function AccountSettingsPage() {
     const navigate = useNavigate();
-    const { playerData } = useContext(PlayerContext);
+    const location = useLocation();
+    const { playerName, playerData, setPlayerData } = useContext(PlayerContext);
     const [showFriendPopup, setShowFriendPopup] = useState(false);
+
+    const url = 'http://localhost:3000/loadAccountData';
 
     const handleHomeClick = () => {
         navigate('/select');

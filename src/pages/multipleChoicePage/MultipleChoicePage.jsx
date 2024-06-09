@@ -76,7 +76,7 @@ const MultipleChoicePage = () => {
             setIsConfirmButtonDisabled(true);
             setIsBuzzerButtonDisabled(true);
             setBuzzerMessage("Your answer was wrong, it's your opponent's turn now!");
-            socket.emit('WRONG_ANSWER_PENALTY');
+            //socket.emit('WRONG_ANSWER_PENALTY');
         };
 
         const handleOpponentBuzzered = () => {
@@ -84,9 +84,12 @@ const MultipleChoicePage = () => {
         };
 
         const handleOpponentWrongAnswer = () => {
-            setBuzzerMessage("Your opponent's answer was wrong, it's your turn now!");
-            setIsConfirmButtonDisabled(true);
-            setIsBuzzerButtonDisabled(false);
+            setBuzzerMessage("Your opponent's answer was wrong, it's your turn now! You don't need to Buzzer. Just Confirm your Answer!");
+
+            setIsConfirmButtonDisabled(false);
+            setIsBuzzerButtonDisabled(true);
+            socket.emit('PLAYER_BUZZERED');
+            console.log("Handle Opponent Wrong Answer")
         };
 
         const handleQuestionType = (table) => {
