@@ -33,7 +33,7 @@ function DailyChallengeGTPage() {
         </div>
         {question && question.completedtext ? (
             <div className={styles2.fillInTheBlanksDiv}>
-                <FillInTheBlankText text={question.completedtext} blankIndices={blankIndices} />
+                <FillInTheBlankText text={question.completedtext} blankIndices={blankIndices} allowHelp= {true}/>
             </div>
         ) : (
             <div className={styles2.fillInTheBlanksDiv}>

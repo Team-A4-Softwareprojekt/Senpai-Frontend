@@ -3,7 +3,7 @@ import styles from '../../pages/General.module.css';
 import styles2 from './FillInTheBlankText.module.css';
 import Modal from '../modal/Modal.jsx';
 
-function FillInTheBlankText({ text, blankIndices }) {
+function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   const [inputs, setInputs] = useState(Array(blankIndices.length).fill(''));
   const [words, setWords] = useState(text.split(' '));
   const [show, setShow] = useState(false);
@@ -75,16 +75,15 @@ function FillInTheBlankText({ text, blankIndices }) {
         <button onClick={handleCheck} className={styles.button01}>
           Check
         </button>
-        <button onClick={handleHelp} className={styles.button01}>
-          Help
-        </button>
+        {allowHelp && (
+          <button onClick={handleHelp} className={styles.button01}>
+            Help
+          </button>
+        )}
         <div className={styles2.modal}>
           <Modal
             header='Fill In The Blank Text'
-            text='Please fill in the blanks with the correct words. 
-            Once you have filled in all the blanks, click the Check button to see if your answers are correct. 
-            Correct answers will be highlighted in green, while incorrect answers will be highlighted in red.
-            If you need help, click the Help button to reveal the correct answers. Good luck!'
+            text='Please fill in the blanks with the correct words. Once you have filled in all the blanks, click the Check button to see if your answers are correct. Correct answers will be highlighted in green, while incorrect answers will be highlighted in red.'
           />
         </div>
       </div>
