@@ -6,18 +6,23 @@ import Modal from '../modal/Modal.jsx';
 function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   const [inputs, setInputs] = useState(Array(blankIndices.length).fill(''));
   const [words, setWords] = useState(text.split(' '));
+  
+  // Set initial state for modal
   const [show, setShow] = useState(false);
+  // Set initial state for results
   const [results, setResults] = useState(Array(blankIndices.length).fill(false));
   const [firstAttempt, setFirstAttempt] = useState(true);
   const [isWinner, setIsWinner] = useState(false);
   const [helpUsed, setHelpUsed] = useState(false);
 
+  // Function to handle changes in the input fields
   const handleChange = (e, idx) => {
     const newInputs = [...inputs];
     newInputs[idx] = e.target.value;
     setInputs(newInputs);
   };
 
+  // Function to handle checking the answers
   const handleCheck = () => {
     const newResults = blankIndices.map((index, idx) => inputs[idx] === words[index]);
     setResults(newResults);
@@ -48,6 +53,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
         {words.map((word, index) => {
           if (blankIndices.includes(index)) {
             const blankIdx = blankIndices.indexOf(index);
+            // Display the input field if the word is a blank
             return (
               <span key={index}>
                 <input
@@ -56,6 +62,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
                   onChange={(e) => handleChange(e, blankIdx)}
                   placeholder={helpUsed ? words[index] : ''}
                   style={{
+                    // Highlight the correct and incorrect answers
                     backgroundColor: show
                       ? results[blankIdx]
                         ? 'lightgreen'
@@ -67,6 +74,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
               </span>
             );
           } else {
+            // Display the word as is if it is not a blank
             return <span key={index}>{word} </span>;
           }
         })}
