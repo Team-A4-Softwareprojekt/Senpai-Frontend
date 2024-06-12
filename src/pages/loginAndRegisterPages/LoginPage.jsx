@@ -21,7 +21,8 @@ function LoginPage() {
 
 
     //const url = 'https://senpai-server.onrender.com/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
-    const url = 'http://localhost:3000/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
+    //const url = 'http://localhost:3000/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
+    const url = 'http://localhost:3000/login';
 
     // functions for updating the input formula
     const handlePasswordChange = (event) => {
@@ -41,12 +42,18 @@ function LoginPage() {
         console.log('Eingegebener Username:', username);
         console.log('Eingegebenes Passwort:', password);
 
-        fetch(url)
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json(); // Die Antwort als Text lesen
+                return response.json(); // Die Antwort als JSON lesen
             })
             .then(data => {
                 console.log('Response from server:', data); // Anzeige der Antwort in der Konsole
