@@ -5,8 +5,8 @@ import {useContext, useState} from "react";
 import {PlayerContext} from '../../context/playerContext';
 
 /*
-This is the login page that takes two inputs (username, password) 
-and has a button to confirm the login process. The page also has two hyperlinks that link to 
+This is the login page that takes two inputs (username, password)
+and has a button to confirm the login process. The page also has two hyperlinks that link to
 the register page and the forgot password page
 */
 function LoginPage() {
@@ -16,7 +16,8 @@ function LoginPage() {
 
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    const { setPlayerName } = useContext(PlayerContext);
+    const [loginError, setLoginError] = useState('');
+    const { playerName, setPlayerName } = useContext(PlayerContext);
 
 
     //const url = 'https://senpai-server.onrender.com/login?username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
@@ -36,7 +37,7 @@ function LoginPage() {
     // Navigates to the selectlearningcontent page
     const handleLogin = (event) => {
         event.preventDefault();
-
+        setLoginError(''); // Clear previous errors
         console.log('Eingegebener Username:', username);
         console.log('Eingegebenes Passwort:', password);
 
@@ -54,14 +55,12 @@ function LoginPage() {
                     setPlayerName(data.username);
                     navigate("/select");
                 } else {
-                    alert('Login failed');
+                    setLoginError("Invalid username or password")
                 }
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
-
-        //navigate("/select");
     }
 
     return (
@@ -81,6 +80,7 @@ function LoginPage() {
                     </div>
 
                 </form>
+                {loginError && <div className={styles2.error}>{loginError}</div>}
                 <div className={styles2.additionalLinks}>
                     <a href="/register" className={styles2.link}>Register</a>
                     <span className={styles2.separator}> | </span> {/* Separator between links */}

@@ -8,6 +8,7 @@
     padding: 10px 15px; /* Innenabstand des Buttons */
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   
   .homeIcon {

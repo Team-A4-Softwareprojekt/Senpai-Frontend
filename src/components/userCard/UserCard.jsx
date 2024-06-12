@@ -1,11 +1,10 @@
-import styles from '../../pages/General.module.css';
-import styles2 from './UserCard.module.css';
+import styles from './UserCard.module.css';
 
-function UserCard({ userName, userEmail, userStreak }) {
+function UserCard({ userName, userStreak }) {
   return (
-    <div className= {styles2.userCardDiv}>
-      <h1 className = {styles2.userName}>{userName}</h1>
-      <p className= {styles2.streak}>Streak: {userStreak}</p>
+    <div className= {styles.userCardDiv}>
+      <h1 className = {styles.userName}>{userName}</h1>
+      <p className= {styles.streak}>Streak: {userStreak}</p>
     </div>
   );
 }  
