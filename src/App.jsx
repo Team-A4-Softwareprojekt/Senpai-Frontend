@@ -15,30 +15,33 @@ import MultipleChoicePage from './pages/multipleChoicePage/MultipleChoicePage.js
 import GapTextPage from './pages/buzzerPage/gapTextPage/GapTextPage.jsx';
 import NoPage from "./pages/noPage/NoPage.jsx";
 import { PlayerProvider } from './context/playerContext';
+import {BuzzerQuestionProvider} from "./context/buzzerQuestionContext.jsx";
 
 function App() {
 
     return (
         <div>
-            <PlayerProvider>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<StartPage/>}/>
-                        <Route path="/login" element={<LoginPage/>}/>
-                        <Route path="/register" element={<RegisterPage/>}/>
-                        <Route path="/select" element={<SelectLearningContent/>}/>
-                        <Route path="/select/code" element={<CodeSenpaiPage/>}/>
-                        <Route path="/select/code/dailyChallenge/gapText" element={<DailyChallengeGTPage/>}/>
-                        <Route path="/select/code/dailyChallenge/multipleChoice" element={<DailyChallengeMCPage/>}/>
-                        <Route path="/select/code/codeBattle" element={<CodeBattlePage/>}/>
-                        <Route path="/select/code/exercise" element={<ExercisePage/>}/>
-                        <Route path="/exercise/:exerciseName" element={<ExerciseTaskPage/>}/>
-                        <Route path="/codebattle/buzzer/multiplechoice" element={<MultipleChoicePage/>}/>
-                        <Route path="/codebattle/buzzer/gaptext" element={<GapTextPage/>}/>
-                        <Route path="/account" element={<AccountSettingsPage/>}/>
-                        <Route path="*" element={<NoPage/>}/>
-                    </Routes>
-                </BrowserRouter>
+            <PlayerProvider>           
+                <BuzzerQuestionProvider>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path="/" element={<StartPage />} />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/register" element={<RegisterPage />} />
+                            <Route path="/select" element={<SelectLearningContent />} />
+                            <Route path="/select/code" element={<CodeSenpaiPage />} />
+                            <Route path="/select/code/dailyChallenge/gapText" element={<DailyChallengeGTPage/>}/>
+                            <Route path="/select/code/dailyChallenge/multipleChoice" element={<DailyChallengeMCPage/>}/>
+                            <Route path="/select/code/codeBattle" element={<CodeBattlePage />} />
+                            <Route path="/select/code/exercise" element={<ExercisePage />} />
+                            <Route path="/exercise/:exerciseName" element={<ExerciseTaskPage />} />
+                            <Route path="/codebattle/buzzer/multiplechoice" element={<MultipleChoicePage />} />
+                            <Route path="/codebattle/buzzer/gaptext" element={<GapTextPage />} />
+                            <Route path="/account" element={<AccountSettingsPage />} />
+                            <Route path="*" element={<NoPage />} />
+                        </Routes>
+                    </BrowserRouter>
+                </BuzzerQuestionProvider>
             </PlayerProvider>
         </div>
     );
