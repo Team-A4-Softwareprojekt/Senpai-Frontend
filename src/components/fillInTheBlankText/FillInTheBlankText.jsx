@@ -3,25 +3,48 @@ import styles from '../../pages/General.module.css';
 import styles2 from './FillInTheBlankText.module.css';
 import Modal from '../modal/Modal.jsx';
 
-// FillInTheBlankText component
-function FillInTheBlankText({ text, blankIndices }) {
+function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   const [inputs, setInputs] = useState(Array(blankIndices.length).fill(''));
   const [words, setWords] = useState(text.split(' '));
+  
+  // Set initial state for modal
   const [show, setShow] = useState(false);
+  // Set initial state for results
   const [results, setResults] = useState(Array(blankIndices.length).fill(false));
+  const [firstAttempt, setFirstAttempt] = useState(true);
+  const [isWinner, setIsWinner] = useState(false);
+  const [helpUsed, setHelpUsed] = useState(false);
 
-  // Handle input change
+  // Function to handle changes in the input fields
   const handleChange = (e, idx) => {
     const newInputs = [...inputs];
     newInputs[idx] = e.target.value;
     setInputs(newInputs);
   };
 
-  // Handle check button click
+  // Function to handle checking the answers
   const handleCheck = () => {
     const newResults = blankIndices.map((index, idx) => inputs[idx] === words[index]);
-    setShow(true);
     setResults(newResults);
+    setShow(true);
+
+    if (firstAttempt) {
+      const allCorrect = newResults.every(result => result);
+      if (allCorrect) {
+        setIsWinner(true);
+        window.alert('Congratulations! You have answered all correctly on your first attempt!');
+        // Add any additional logic for winning, such as notifying the server or updating the UI
+      } else {
+        window.alert('Not all answers are correct. Please try again.');
+      }
+      setFirstAttempt(false);
+    } else {
+      window.alert('Check your answers and try again.');
+    }
+  };
+
+  const handleHelp = () => {
+    setHelpUsed(!helpUsed);
   };
 
   return (
@@ -30,24 +53,28 @@ function FillInTheBlankText({ text, blankIndices }) {
         {words.map((word, index) => {
           if (blankIndices.includes(index)) {
             const blankIdx = blankIndices.indexOf(index);
+            // Display the input field if the word is a blank
             return (
               <span key={index}>
                 <input
                   type="text"
                   value={inputs[blankIdx]}
                   onChange={(e) => handleChange(e, blankIdx)}
+                  placeholder={helpUsed ? words[index] : ''}
                   style={{
+                    // Highlight the correct and incorrect answers
                     backgroundColor: show
                       ? results[blankIdx]
                         ? 'lightgreen'
                         : 'lightcoral'
                       : 'transparent',
-                    color: 'white',  // Set the text color to white
+                    color: 'white',
                   }}
                 />{' '}
               </span>
             );
           } else {
+            // Display the word as is if it is not a blank
             return <span key={index}>{word} </span>;
           }
         })}
@@ -56,11 +83,17 @@ function FillInTheBlankText({ text, blankIndices }) {
         <button onClick={handleCheck} className={styles.button01}>
           Check
         </button>
-        <div className = {styles2.modal}>
-          <Modal header = 'Fill In The Blank Text' 
-            text = 'Please fill in the blanks with the correct words. Once you have filled in all the blanks, click the Check button to see if your answers are correct. Correct answers will be highlighted in green, while incorrect answers will be highlighted in red.' > </Modal>
+        {allowHelp && (
+          <button onClick={handleHelp} className={styles.button01}>
+            Help
+          </button>
+        )}
+        <div className={styles2.modal}>
+          <Modal
+            header='Fill In The Blank Text'
+            text='Please fill in the blanks with the correct words. Once you have filled in all the blanks, click the Check button to see if your answers are correct. Correct answers will be highlighted in green, while incorrect answers will be highlighted in red.'
+          />
         </div>
-        
       </div>
     </div>
   );

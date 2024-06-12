@@ -6,7 +6,8 @@ import RegisterPage from "./pages/loginAndRegisterPages/RegisterPage.jsx";
 import SelectLearningContent from "./pages/selectLearningContent/SelectLearningContent.jsx";
 import CodeSenpaiPage from "./pages/codeSenpaiPage/CodeSenpaiPage.jsx";
 import AccountSettingsPage from "./pages/accountSettingsPage/AccountSettingsPage.jsx";
-import DailyChallengePage from "./pages/dailyChallengePage/DailyChallengePage.jsx";
+import DailyChallengeGTPage from "./pages/dailyChallenge/DailyChallengeGTPage.jsx";
+import DailyChallengeMCPage from "./pages/dailyChallenge/DailyChallengeMCPage.jsx";
 import CodeBattlePage from "./pages/codeBattlePage/CodeBattlePage.jsx";
 import ExercisePage from "./pages/exercisePage/ExercisePage.jsx";
 import ExerciseTaskPage from "./pages/exerciseTaskPage/ExerciseTaskPage.jsx";
@@ -20,7 +21,7 @@ function App() {
 
     return (
         <div>
-            <PlayerProvider>
+            <PlayerProvider>           
                 <BuzzerQuestionProvider>
                     <BrowserRouter>
                         <Routes>
@@ -29,7 +30,8 @@ function App() {
                             <Route path="/register" element={<RegisterPage />} />
                             <Route path="/select" element={<SelectLearningContent />} />
                             <Route path="/select/code" element={<CodeSenpaiPage />} />
-                            <Route path="/select/code/dailyChallenge" element={<DailyChallengePage />} />
+                            <Route path="/select/code/dailyChallenge/gapText" element={<DailyChallengeGTPage/>}/>
+                            <Route path="/select/code/dailyChallenge/multipleChoice" element={<DailyChallengeMCPage/>}/>
                             <Route path="/select/code/codeBattle" element={<CodeBattlePage />} />
                             <Route path="/select/code/exercise" element={<ExercisePage />} />
                             <Route path="/exercise/:exerciseName" element={<ExerciseTaskPage />} />
