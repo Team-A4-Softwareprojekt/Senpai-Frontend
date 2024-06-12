@@ -12,7 +12,6 @@ import {PlayerContext} from '../../context/playerContext';
 import { useNavigate } from 'react-router-dom';
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 
-//TODO: Debugging der Situationen, wenn Spieler falsch antworten. Solange immer beim ersten Buzzer korrekt geantwortet wird, funktioniert (eigentlich) alles ;)
 const MultipleChoicePage = () => {
     const navigate = useNavigate();
     const [question, setQuestion] = useState([]);

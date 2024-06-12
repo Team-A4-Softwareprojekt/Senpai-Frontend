@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from '../General.module.css';
 import styles2 from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
+import {URL} from 'url.js';
 
 function RegisterPage() {
     const navigate = useNavigate();
@@ -14,9 +15,11 @@ function RegisterPage() {
     const [securityQuestions, setSecurityQuestions] = useState([]);
     const [errors, setErrors] = useState({});
 
+    const url = URL + 'security-questions';
+
     // Fetch security questions from the server
     useEffect(() => {
-        fetch('http://localhost:3000/security-questions')
+        fetch(url)
             .then(response => response.json())
             .then(data => setSecurityQuestions(data))
             .catch(error => console.error('Error:', error));
@@ -49,7 +52,7 @@ function RegisterPage() {
             return;
         }
 
-        const url = 'http://localhost:3000/register';
+        const url = URL + 'register';
         const data = { username, email, password, securityQuestion, securityAnswer };
 
         fetch(url, {

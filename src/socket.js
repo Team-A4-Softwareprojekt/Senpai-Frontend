@@ -1,8 +1,6 @@
 // socket.js
 import io from 'socket.io-client';
-
-const URL = 'https://senpai-development.onrender.com/';
-//const URL = 'http://localhost:3000/'; //für das lokale Testen
+import {URL} from 'url.js';
 
 const socket = io(URL, {
     withCredentials: true,
@@ -20,16 +18,11 @@ socket.on('disconnect', (reason) => {
     // Attempt reconnection logic if needed
 });
 
-
-
-
 // Handle timer updates
 socket.on('TIMER', (timeLeft) => {
     console.log('Time left:', timeLeft);
     // Implement logic to update the timer on the UI
 });
-
-
 
 // Handle prompt to pick an answer
 socket.on('PICK_ANSWER', () => {
@@ -95,4 +88,4 @@ const disconnectSocket = () => {
 };
 
 // Export the socket instance, and control functions
-export {socket, URL, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket, requestDailyChallengeQuestion};
+export {socket, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket, requestDailyChallengeQuestion};

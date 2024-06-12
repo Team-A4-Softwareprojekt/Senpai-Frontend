@@ -34,8 +34,6 @@ function codeBattlePage() {
             console.log('Game found', fullRoom);
             setIsPopUpQueueVisible(false); // Hide the popup
             setIsPopUpCountdownVisible(true);
-            //TODO: Wenn das Game gefunden wurde, kann der Countdown screen angezeigt werden
-            // Wenn der Countdown screen abgelaufen ist, soll die Frage angefragt werden
         };
 
         const handleQuestionType = (table) => {

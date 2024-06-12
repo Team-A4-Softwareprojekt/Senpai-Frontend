@@ -1,5 +1,6 @@
 import {expect, test} from 'vitest';
-import {socket, URL} from "../src/socket.js";
+import {socket} from "../src/socket.js";
+import {URL} from "url.js";
 
 test('the URL should be the Render URL', () => {
     console.log(URL)

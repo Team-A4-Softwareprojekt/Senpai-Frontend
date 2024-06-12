@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles2 from './AccountButton.module.css';
 import accountIcon from '../../assets/accountIcon.png';
 import { PlayerContext } from '../../context/playerContext';
+import {URL} from 'url.js';
 
 const AccountButton = () => {
     const navigate = useNavigate();
@@ -16,9 +17,7 @@ const AccountButton = () => {
 
     const loadPlayerData = () => {
 
-        const url = 'http://localhost:3000/loadAccountData';
-
-        return fetch(url, {
+        return fetch(URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
