@@ -15,7 +15,7 @@ function RegisterPage() {
     const [securityQuestions, setSecurityQuestions] = useState([]);
     const [errors, setErrors] = useState({});
 
-    const url = URL + 'security-questions';
+    const url = URL + '/security-questions';
 
     // Fetch security questions from the server
     useEffect(() => {
@@ -52,7 +52,7 @@ function RegisterPage() {
             return;
         }
 
-        const url = URL + 'register';
+        const url = URL + '/register';
         const data = { username, email, password, securityQuestion, securityAnswer };
 
         fetch(url, {
