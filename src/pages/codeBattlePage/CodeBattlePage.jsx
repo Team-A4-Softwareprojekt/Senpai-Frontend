@@ -125,11 +125,11 @@ function codeBattlePage() {
                 <SelectCard 
                     buttonText= "Manipulation" 
                     imageUrl={manipulationImg} 
-                    /*linkTo={"*"}*/
+                    linkTo={"/codebattle/manipulation"}
                     modalHeader = "Manipulation" 
                     modalText = "Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
                     className= {styles.selectCard}
-                    handleClick={onManipulationClick}
+                    //handleClick={onManipulationClick}
                 />
                 <SelectCard 
                     buttonText= "Limitation" 

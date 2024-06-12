@@ -1,0 +1,56 @@
+pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-left: 3px solid #ccc;
+    margin: 20px;
+    overflow: auto;
+    border-radius: 5px;
+}
+
+.title {
+    color: white;
+    font-size: 2rem;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    border: 2px solid white;
+    padding: 10px;
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
+
+.runButton {
+    display: block;
+    margin-left: auto;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
+
+.runButton:hover {
+    background-color: #224d24;
+}
+
+.editor {
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.languageDropdownContainer {
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+    margin: 20px;
+}
+
+.languageDropdown {
+    padding: 5px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
