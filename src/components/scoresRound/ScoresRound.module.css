@@ -1,0 +1,29 @@
+.scores {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 1.2em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .scores div {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .ownPointsValue {
+    color: #28A745;
+    font-weight: bold;
+  }
+  
+  .opponentPointsValue {
+    color: red;
+    font-weight: bold;
+  }
+  

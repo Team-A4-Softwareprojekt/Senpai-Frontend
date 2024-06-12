@@ -1,0 +1,81 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.popup {
+    border: 3px solid white; /* Weißer Rahmen */
+    position: fixed; /* Position fixed für zentrierte Ausrichtung */
+    top: 50%; /* Zentriert vertikal */
+    left: 50%; /* Zentriert horizontal */
+    transform: translate(-50%, -50%); /* Verschiebt das Popup genau in die Mitte */
+    width: 25%;
+    height: 25%;
+    min-width: 425px; /* Mindestbreite */
+    min-height: 200px; /* Mindesthöhe */
+    background-color: rgba(0, 0, 0, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    margin-top: 200px; /* Abstand zu den SelectCards */
+    pointer-events: auto; /* Macht das Popup interaktiv */
+}
+
+.popupContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.popupContent h2 {
+    margin: 10px;
+}
+
+.popupContent .highlighted {
+    color: #ff6666; /* Hellrote Farbe */
+}
+
+.popupContent button {
+    font-size: 18px; /* Schriftgröße des Buttons */
+    padding: 10px 15px; /* Innenabstand des Buttons */
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    margin-top: 10px; /* Abstand zum Text */
+    cursor: pointer;
+}
+
+/* Animation for dots */
+.dots {
+    display: inline-block;
+}
+
+.dot {
+    opacity: 0;
+    animation: blink 3s infinite;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 1s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 2s;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}

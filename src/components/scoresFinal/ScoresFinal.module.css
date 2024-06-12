@@ -1,0 +1,41 @@
+.scores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 1.0rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: fit-content; /* Passt die Breite an die Größe von "Final Score" an */
+}
+  
+.finalScore {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px; /* Abstand zwischen "Final Score" und den Punkten */
+}
+  
+.points {
+    display: flex;
+    justify-content: center;
+}
+  
+.ownPointsValue {
+    color: #28A745;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+  
+.opponentPointsValue {
+    color: red;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+  
+.colon {
+    font-size: 1.2rem; 
+}

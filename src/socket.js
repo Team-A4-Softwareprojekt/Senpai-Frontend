@@ -1,8 +1,8 @@
 // socket.js
 import io from 'socket.io-client';
 
-//const URL = 'https://senpai-development.onrender.com/';
-const URL = 'http://localhost:3000/'; //für das lokale Testen
+const URL = 'https://senpai-development.onrender.com/';
+//const URL = 'http://localhost:3000/'; //für das lokale Testen
 
 const socket = io(URL, {
     withCredentials: true,
@@ -20,17 +20,8 @@ socket.on('disconnect', (reason) => {
     // Attempt reconnection logic if needed
 });
 
-// Handle custom event when a game is found
-socket.on('Buzzer_GameFound', (data) => {
-    console.log('Game found', data);
-    // Implement logic to show the next screen when data is true
-});
 
-// Handle showing the question
-socket.on('SHOW_QUESTION', (question) => {
-    console.log('New question received:', question);
-    // Implement logic to display the question on the UI
-});
+
 
 // Handle timer updates
 socket.on('TIMER', (timeLeft) => {
@@ -38,11 +29,7 @@ socket.on('TIMER', (timeLeft) => {
     // Implement logic to update the timer on the UI
 });
 
-// Handle disabling the buzzer for the other player
-socket.on('DISABLE_BUZZER', () => {
-    console.log('Buzzer disabled for the other player');
-    // Implement logic to disable the buzzer button on the UI
-});
+
 
 // Handle prompt to pick an answer
 socket.on('PICK_ANSWER', () => {
@@ -56,7 +43,7 @@ socket.on('WAIT_FOR_OPPONENT', () => {
     // Implement logic to display a waiting message or spinner on the UI
 });
 
-// Handle game result
+ // Handle game result
 socket.on('RESULT', (result) => {
     console.log('Game result:', result);
     // Implement logic to display the result to the player
@@ -69,15 +56,25 @@ socket.on('END_GAME', () => {
 });
 
 // Function to start the buzzer queue
-const startBuzzerQueue = () => {
+const startBuzzerQueue = (playerName) => {
     console.log("Starting buzzer queue");
-    socket.emit('Buzzer_Queue');
+    socket.emit('Buzzer_Queue', playerName);
+};
+
+const leaveBuzzerQueue = () => {
+    console.log("Leaving buzzer queue");
+    socket.emit('Leave_Buzzer_Queue');
 };
 
 // Function to send AWAIT_QUESTION event
 const requestQuestion = () => {
     console.log("Requesting a question");
     socket.emit('AWAIT_QUESTION');
+};
+
+const requestDailyChallengeQuestion = () => {
+    console.log("Requesting a daily question");
+    socket.emit('REQUEST_DAILY_CHALLENGE_QUESTION');
 };
 
 // Function to send PLAYER_BUZZERED event
@@ -98,4 +95,4 @@ const disconnectSocket = () => {
 };
 
 // Export the socket instance, and control functions
-export {startBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket};
+export {socket, URL, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket, requestDailyChallengeQuestion};
