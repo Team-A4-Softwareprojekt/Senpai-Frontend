@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ConfirmButton.module.css';
 
-const ConfirmButton = ({ isButtonDisabled, handleSubmit }) => {
+const ConfirmButton = ({ isButtonDisabled, handleSubmit, buttonText }) => {
     return (
         <button 
             type="button" 
@@ -9,7 +9,7 @@ const ConfirmButton = ({ isButtonDisabled, handleSubmit }) => {
             onClick={handleSubmit}
             className={styles.submitButton}
         >
-            Confirm
+            {buttonText || 'Confirm'}
         </button>
     );
 };

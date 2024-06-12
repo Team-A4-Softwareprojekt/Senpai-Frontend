@@ -2,9 +2,9 @@ import styles from '../General.module.css';
 import styles2 from './SelectLearningContent.module.css';
 import SelectCard from '../../components/selectCard/SelectCard';
 import codeSenpaiImage from '../../assets/codeSenpai.jpg';
-import medSenpaiImage from '../../assets/medSenpai.jpg';
-import mathSenpaiImage from '../../assets/mathSenpai.jpg';
-import gymSenpaiImage from '../../assets/gymSenpai.jpg';
+import medSenpaiImage from '../../assets/medSenpai.png';
+import mathSenpaiImage from '../../assets/mathSenpai.png';
+import gymSenpaiImage from '../../assets/gymSenpai.png';
 
 function SelectLearningContent(){
     return(
