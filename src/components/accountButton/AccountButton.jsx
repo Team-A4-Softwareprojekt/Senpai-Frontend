@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styles2 from './AccountButton.module.css';
 import accountIcon from '../../assets/accountIcon.png';
 import { PlayerContext } from '../../context/playerContext';
-import {URL} from 'url.js';
+import {URL} from '../../../url.js';
 
 const AccountButton = () => {
+    const url = URL;
     const navigate = useNavigate();
     const { playerName, setPlayerData } = useContext(PlayerContext);
 
@@ -17,7 +18,7 @@ const AccountButton = () => {
 
     const loadPlayerData = () => {
 
-        return fetch(URL, {
+        return fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

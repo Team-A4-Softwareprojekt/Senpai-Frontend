@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from '../General.module.css';
 import styles2 from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
-import {URL} from 'url.js';
+import {URL} from '../../../url.js';
 
 function RegisterPage() {
     const navigate = useNavigate();

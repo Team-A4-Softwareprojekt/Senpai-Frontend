@@ -1,6 +1,6 @@
 // socket.js
 import io from 'socket.io-client';
-import {URL} from 'url.js';
+import {URL} from '../url.js';
 
 const socket = io(URL, {
     withCredentials: true,

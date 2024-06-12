@@ -3,7 +3,7 @@ import styles2 from './LoginPage.module.css';
 import {useNavigate} from 'react-router-dom';
 import {useContext, useState} from "react";
 import {PlayerContext} from '../../context/playerContext';
-import {URL} from 'url.js';
+import {URL} from '../../../url.js';
 
 /*
 This is the login page that takes two inputs (username, password)
