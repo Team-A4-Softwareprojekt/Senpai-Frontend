@@ -5,11 +5,18 @@ import React, { useState } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
+import HomeButton from '../../components/homeButton/HomeButton';
+import {useNavigate} from 'react-router-dom';
 
 function ManipulationPage() {
+  const navigate = useNavigate();
   const [code, setCode] = useState('console.log("Hello, World!")');
   const [output, setOutput] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
+
+  const handleHomeClick = () => {
+    navigate('/select/code');
+};
 
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -86,13 +93,14 @@ function ManipulationPage() {
           readOnly={languages.find((lang) => lang.value === selectedLanguage).disabled}
         />
         <button onClick={executeCode} className={styles2.runButton}>
-          Run
+          Submit
         </button>
       </div>
       <div>
         <h2>Output:</h2>
         <pre>{output}</pre> {/* Display output here */}
       </div>
+      <HomeButton handleClick={handleHomeClick} />
     </>
   );
 }
