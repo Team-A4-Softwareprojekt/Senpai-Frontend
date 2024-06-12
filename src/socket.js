@@ -1,8 +1,8 @@
 // socket.js
 import io from 'socket.io-client';
 
-//const URL = 'https://senpai-development.onrender.com/';
-const URL = 'http://localhost:3000/'; //für das lokale Testen
+const URL = 'https://senpai-development.onrender.com/';
+//const URL = 'http://localhost:3000/'; //für das lokale Testen
 
 const socket = io(URL, {
     withCredentials: true,
@@ -95,4 +95,4 @@ const disconnectSocket = () => {
 };
 
 // Export the socket instance, and control functions
-export {socket, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket, requestDailyChallengeQuestion};
+export {socket, URL, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket, requestDailyChallengeQuestion};
