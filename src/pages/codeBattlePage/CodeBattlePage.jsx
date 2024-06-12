@@ -4,6 +4,8 @@ import SelectCard from '../../components/selectCard/SelectCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
 import manipulationImg from '../../assets/manipulation.png';
 import limitationImg from '../../assets/limitation.png';
+import redHeart from '../../assets/redHeart.jpg';
+import emptyHeart from '../../assets/emptyHeart.jpg';
 import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
@@ -20,7 +22,7 @@ game modes to choose from. Each game mode has a modal with the basic explanation
 */
 function codeBattlePage() {
 
-    const { playerName } = useContext(PlayerContext);
+    const { playerName, playerData } = useContext(PlayerContext);
     const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
     
     const navigate = useNavigate();
@@ -107,11 +109,27 @@ function codeBattlePage() {
         setIsPopUpQueueVisible(false); // Hide the popup
     };
 
+    // Function to render hearts based on player lives
+    const renderHearts = () => {
+        const hearts = [];
+        for (let i = 0; i < 3; i++) {
+            if (i < playerData.lives) {
+                hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.heart} />);
+            } else {
+                hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.heart} />);
+            }
+        }
+        return hearts;
+    };
+
     return( 
         <div>
             <h1>
                 Choose your battle
             </h1>
+            <div className={styles.heartsContainer}>
+                {renderHearts()}
+            </div>
             <div className= {styles.cardsGridContainer}>      
                 <SelectCard 
                     buttonText= "Buzzer"

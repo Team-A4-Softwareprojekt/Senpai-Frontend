@@ -22,3 +22,15 @@
     text-overflow: ellipsis; /* Truncate text if it overflows */
     white-space: nowrap; /* Prevent text from wrapping */
 }
+
+.heartsContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Add some space below the hearts */
+}
+
+.heart {
+    width: 30px; /* Adjust the size of the hearts */
+    height: 30px;
+    margin: 0 5px; /* Add some space between the hearts */
+}
