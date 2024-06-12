@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import styles from '../General.module.css';
-import styles2 from './CodeBattlePage.module.css';
+import styles from './CodeBattlePage.module.css';
 import SelectCard from '../../components/selectCard/SelectCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
 import manipulationImg from '../../assets/manipulation.png';
@@ -9,9 +8,11 @@ import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
 import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
-import { useNavigate } from 'react-router-dom';
+import PopUpCountdown from '../../components/popUpCountdown/PopUpCountdown.jsx';
+import {useNavigate} from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
+import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 
 /*
 This is the code battle page that holds an account button, amount of lives and three different
@@ -20,16 +21,21 @@ game modes to choose from. Each game mode has a modal with the basic explanation
 function codeBattlePage() {
 
     const { playerName } = useContext(PlayerContext);
+    const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
     
     const navigate = useNavigate();
-    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isPopUpQueueVisible, setIsPopUpQueueVisible] = useState(false);
+    const [isPopUpCountdownVisible, setIsPopUpCountdownVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
+    const [countdown, setCountdown] = useState(null);
     
     useEffect(() => {
         const handleGameFound = (fullRoom) => {
             console.log('Game found', fullRoom);
-            setIsPopupVisible(false); // Hide the popup
-            //requestQuestion();
+            setIsPopUpQueueVisible(false); // Hide the popup
+            setIsPopUpCountdownVisible(true);
+            //TODO: Wenn das Game gefunden wurde, kann der Countdown screen angezeigt werden
+            // Wenn der Countdown screen abgelaufen ist, soll die Frage angefragt werden
         };
 
         const handleQuestionType = (table) => {
@@ -41,14 +47,30 @@ function codeBattlePage() {
             }
         };
 
+        const handleStartCountdown = (countdown) => {
+            console.log('Countdown started', countdown);
+            setCountdown(countdown);
+
+        };
+
+        const handleSetQuestion = (question) => {
+            console.log(question);
+            setBuzzerQuestion(question);
+            console.log(buzzerQuestion);
+        };
+
         // Register the event listeners
         socket.on('Buzzer_GameFound', handleGameFound);
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
+        socket.on('BUZZER_COUNTDOWN', handleStartCountdown);
+        socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
 
         // Clean up the listeners when the component is unmounted
         return () => {
             socket.off('Buzzer_GameFound', handleGameFound);
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
+            socket.off('BUZZER_COUNTDOWN', handleStartCountdown);
+            socket.off('SET_BUZZER_QUESTION', handleSetQuestion)
         };
     }, [navigate]);
     
@@ -67,24 +89,24 @@ function codeBattlePage() {
     const onBuzzerClick = () => {
         startBuzzerQueue(playerName);
         setSelectedGameMode('Buzzer');
-        setIsPopupVisible(true); // Show the popup
+        setIsPopUpQueueVisible(true); // Show the popup
     };
 
     const onManipulationClick = () => {
         setSelectedGameMode('Manipulation');
-        setIsPopupVisible(true); // Show the popup
+        setIsPopUpQueueVisible(true); // Show the popup
     };
 
     const onLimitationClick = () => {
         setSelectedGameMode('Limitation');
-        setIsPopupVisible(true); // Show the popup
+        setIsPopUpQueueVisible(true); // Show the popup
     };
 
     const closePopup = () => {
         if (selectedGameMode === 'Buzzer') {
             leaveBuzzerQueue();
         }
-        setIsPopupVisible(false); // Hide the popup
+        setIsPopUpQueueVisible(false); // Hide the popup
     };
 
     return( 
@@ -92,14 +114,14 @@ function codeBattlePage() {
             <h1>
                 Choose your battle
             </h1>
-            <div className= {styles2.cardsGridContainer}>      
+            <div className= {styles.cardsGridContainer}>      
                 <SelectCard 
                     buttonText= "Buzzer"
                     imageUrl={buzzerImg} 
                     /*linkTo={"/codebattle/buzzer"}*/
                     modalHeader= "Buzzer" 
                     modalText = "Compete against another player. Answer questions by pressing a buzzer in a limited time."
-                    className= {styles2.selectCard}
+                    className= {styles.selectCard}
                     handleClick={onBuzzerClick}
                 />
                 <SelectCard 
@@ -108,7 +130,7 @@ function codeBattlePage() {
                     /*linkTo={"*"}*/
                     modalHeader = "Manipulation" 
                     modalText = "Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
-                    className= {styles2.selectCard}
+                    className= {styles.selectCard}
                     handleClick={onManipulationClick}
                 />
                 <SelectCard 
@@ -117,7 +139,7 @@ function codeBattlePage() {
                     /*linkTo={"*"}*/
                     modalHeader= "Limitation" 
                     modalText= "Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
-                    className= {styles2.selectCard}
+                    className= {styles.selectCard}
                     handleClick={onLimitationClick}
                 />
             </div>
@@ -126,10 +148,16 @@ function codeBattlePage() {
             <ChangeTopicButton handleClick={handleChangeTopicClick} />
 
             <PopUpQueue
-                isVisible={isPopupVisible}
+                isVisible={isPopUpQueueVisible}
                 selectedGameMode={selectedGameMode}
                 closePopup={closePopup}
             />
+
+            <PopUpCountdown
+                isVisible={isPopUpCountdownVisible}
+                closePopup={() => setIsPopUpCountdownVisible(false)}
+                countdown={countdown} // Transfer countdown value to the component
+            />   
         </div>  
     );
 }
