@@ -26,11 +26,20 @@
 .heartsContainer {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px; /* Add some space below the hearts */
+    margin-bottom: 10px; /* Add some space below the hearts */
 }
 
 .heart {
-    width: 30px; /* Adjust the size of the hearts */
-    height: 30px;
+    width: 60px; /* Adjust the size of the hearts */
+    height: 60px;
     margin: 0 5px; /* Add some space between the hearts */
+    align-items: center;
+}
+
+.fullRedHeart {
+    width: 70px; /* Adjust the size of the hearts */
+    height: 70px;
+    margin: 0 5px; /* Add some space between the hearts */
+    vertical-align: middle; /* Vertically aligns the hearts */
+    transform: translateY(-5px); /* Move the heart slightly up */
 }
