@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styles from './CodeBattlePage.module.css';
 import SelectCard from '../../components/selectCard/SelectCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
@@ -9,17 +9,12 @@ import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
 import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
 import PopUpCountdown from '../../components/popUpCountdown/PopUpCountdown.jsx';
-import {useNavigate} from 'react-router-dom';
-import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
-import {PlayerContext} from "../../context/playerContext.jsx";
-import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
+import { useNavigate } from 'react-router-dom';
+import { socket, startBuzzerQueue, leaveBuzzerQueue, startManipulationQueue, leaveManipulationQueue } from '../../socket.js';
+import { PlayerContext } from "../../context/playerContext.jsx";
+import { BuzzerPlayerContext } from "../../context/buzzerQuestionContext.jsx";
 
-/*
-This is the code battle page that holds an account button, amount of lives and three different
-game modes to choose from. Each game mode has a modal with the basic explanation of the mode
-*/
-function codeBattlePage() {
-
+function CodeBattlePage() {
     const { playerName } = useContext(PlayerContext);
     const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
     
@@ -32,8 +27,16 @@ function codeBattlePage() {
     useEffect(() => {
         const handleGameFound = (fullRoom) => {
             console.log('Game found', fullRoom);
-            setIsPopUpQueueVisible(false); // Hide the popup
+            setIsPopUpQueueVisible(false);
             setIsPopUpCountdownVisible(true);
+        };
+
+        const handleGameFoundManipulation = (fullRoom) => {
+            console.log('Game found Manipulation', fullRoom);
+            //setIsPopUpQueueVisible(false);
+            //setIsPopUpCountdownVisible(true);
+            // TODO: Show the Countdown
+            navigate('/codebattle/manipulation');
         };
 
         const handleQuestionType = (table) => {
@@ -48,17 +51,16 @@ function codeBattlePage() {
         const handleStartCountdown = (countdown) => {
             console.log('Countdown started', countdown);
             setCountdown(countdown);
-
         };
 
         const handleSetQuestion = (question) => {
             console.log(question);
             setBuzzerQuestion(question);
-            console.log(buzzerQuestion);
         };
 
         // Register the event listeners
         socket.on('Buzzer_GameFound', handleGameFound);
+        socket.on('Manipulation_GameFound', handleGameFoundManipulation);
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
         socket.on('BUZZER_COUNTDOWN', handleStartCountdown);
         socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
@@ -66,12 +68,13 @@ function codeBattlePage() {
         // Clean up the listeners when the component is unmounted
         return () => {
             socket.off('Buzzer_GameFound', handleGameFound);
+            socket.off('Manipulation_GameFound', handleGameFoundManipulation);
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
             socket.off('BUZZER_COUNTDOWN', handleStartCountdown);
-            socket.off('SET_BUZZER_QUESTION', handleSetQuestion)
+            socket.off('SET_BUZZER_QUESTION', handleSetQuestion);
         };
-    }, [navigate]);
-    
+    }, [navigate, setBuzzerQuestion]);
+
     const handleHomeClick = () => {
         navigate('/select/code');
     };
@@ -87,57 +90,57 @@ function codeBattlePage() {
     const onBuzzerClick = () => {
         startBuzzerQueue(playerName);
         setSelectedGameMode('Buzzer');
-        setIsPopUpQueueVisible(true); // Show the popup
+        setIsPopUpQueueVisible(true);
     };
 
     const onManipulationClick = () => {
+        startManipulationQueue(playerName);
         setSelectedGameMode('Manipulation');
-        setIsPopUpQueueVisible(true); // Show the popup
+        //setIsPopUpQueueVisible(true);
     };
 
     const onLimitationClick = () => {
         setSelectedGameMode('Limitation');
-        setIsPopUpQueueVisible(true); // Show the popup
+        setIsPopUpQueueVisible(true);
     };
 
     const closePopup = () => {
         if (selectedGameMode === 'Buzzer') {
             leaveBuzzerQueue();
+        } else if (selectedGameMode === 'Manipulation') {
+            leaveManipulationQueue();
         }
-        setIsPopUpQueueVisible(false); // Hide the popup
+        setIsPopUpQueueVisible(false);
     };
 
-    return( 
+    return ( 
         <div>
-            <h1>
-                Choose your battle
-            </h1>
-            <div className= {styles.cardsGridContainer}>      
+            <h1>Choose your battle</h1>
+            <div className={styles.cardsGridContainer}>      
                 <SelectCard 
-                    buttonText= "Buzzer"
+                    buttonText="Buzzer"
                     imageUrl={buzzerImg} 
-                    /*linkTo={"/codebattle/buzzer"}*/
-                    modalHeader= "Buzzer" 
-                    modalText = "Compete against another player. Answer questions by pressing a buzzer in a limited time."
-                    className= {styles.selectCard}
+                    modalHeader="Buzzer" 
+                    modalText="Compete against another player. Answer questions by pressing a buzzer in a limited time."
+                    className={styles.selectCard}
                     handleClick={onBuzzerClick}
                 />
                 <SelectCard 
-                    buttonText= "Manipulation" 
-                    imageUrl={manipulationImg} 
-                    linkTo={"/codebattle/manipulation"}
-                    modalHeader = "Manipulation" 
-                    modalText = "Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
-                    className= {styles.selectCard}
-                    //handleClick={onManipulationClick}
+                    buttonText="Manipulation" 
+                    imageUrl={manipulationImg}
+                    //linkTo = "/codebattle/manipulation"
+                    modalHeader="Manipulation" 
+                    modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
+                    className={styles.selectCard}
+                    handleClick={onManipulationClick}
                 />
                 <SelectCard 
-                    buttonText= "Limitation" 
+                    buttonText="Limitation" 
                     imageUrl={limitationImg} 
-                    /*linkTo={"*"}*/
-                    modalHeader= "Limitation" 
-                    modalText= "Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
-                    className= {styles.selectCard}
+                    linkTo="*"
+                    modalHeader="Limitation" 
+                    modalText="Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
+                    className={styles.selectCard}
                     handleClick={onLimitationClick}
                 />
             </div>
@@ -159,4 +162,5 @@ function codeBattlePage() {
         </div>  
     );
 }
-export default codeBattlePage;
+
+export default CodeBattlePage;
