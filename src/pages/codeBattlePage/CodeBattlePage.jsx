@@ -1,9 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
 import styles from './CodeBattlePage.module.css';
-import SelectCard from '../../components/selectCard/SelectCard.jsx';
+import SelectGameCard from '../../components/selectGameCard/SelectGameCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
 import manipulationImg from '../../assets/manipulation.png';
 import limitationImg from '../../assets/limitation.png';
+import buzzerGrayImg from '../../assets/buzzerGray.png';
+import manipulationGrayImg from '../../assets/manipulationGray.png';
+import limitationGrayImg from '../../assets/limitationGray.png';
 import emptyHeart from '../../assets/emptyHeart.png';
 import redHeart from '../../assets/redHeart.png';
 import goldenHeart from '../../assets/goldenHeart.png';
@@ -12,6 +15,7 @@ import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
 import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
 import PopUpCountdown from '../../components/popUpCountdown/PopUpCountdown.jsx';
+import PopUpNoHearts from '../../components/popUpNoHearts/PopUpNoHearts.jsx';
 import {useNavigate} from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
@@ -29,6 +33,7 @@ function codeBattlePage() {
     const navigate = useNavigate();
     const [isPopUpQueueVisible, setIsPopUpQueueVisible] = useState(false);
     const [isPopUpCountdownVisible, setIsPopUpCountdownVisible] = useState(false);
+    const [isPopUpNoHeartsVisible, setIsPopUpNoHeartsVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
     const [countdown, setCountdown] = useState(null);
     
@@ -110,20 +115,27 @@ function codeBattlePage() {
         setIsPopUpQueueVisible(false); // Hide the popup
     };
 
+    const handleNoHeartsClick = () => {
+        console.log("No hearts click handled");
+        setIsPopUpNoHeartsVisible(true);
+    };
+
     // Function to render hearts based on player lives
     const renderHearts = () => {
         const hearts = [];
-        for (let i = 0; i < 3; i++) {
-            if (playerData.subscribed === true && i < playerData.lives) {
-                hearts.push(<img key={i} src={goldenHeart} alt="Golden Heart" className={styles.goldenHeart} />);
-            } else {
-                if (i < playerData.lives) {
-                    hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.fullRedHeart} />);
+        if (playerData && playerData.lives !== undefined) {
+            for (let i = 0; i < 3; i++) {
+                if (playerData.subscribed === true && i < playerData.lives) {
+                    hearts.push(<img key={i} src={goldenHeart} alt="Golden Heart" className={styles.goldenHeart} />);
                 } else {
-                    hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.emptyHeart} />);
+                    if (i < playerData.lives) {
+                        hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.fullRedHeart} />);
+                    } else {
+                        hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.emptyHeart} />);
+                    }
                 }
             }
-        }     
+        }
         return hearts;
     };
 
@@ -136,32 +148,32 @@ function codeBattlePage() {
                 {renderHearts()}
             </div>
             <div className= {styles.cardsGridContainer}>      
-                <SelectCard 
-                    buttonText= "Buzzer"
-                    imageUrl={buzzerImg} 
-                    /*linkTo={"/codebattle/buzzer"}*/
-                    modalHeader= "Buzzer" 
-                    modalText = "Compete against another player. Answer questions by pressing a buzzer in a limited time."
-                    className= {styles.selectCard}
+                <SelectGameCard 
+                    buttonText="Buzzer"
+                    imageUrl={playerData.lives > 0 ? buzzerImg : buzzerGrayImg}
                     handleClick={onBuzzerClick}
+                    handleNoHeartsClick={handleNoHeartsClick}
+                    lives={playerData.lives}
+                    modalHeader="Buzzer"
+                    modalText="Compete against another player. Answer questions by pressing a buzzer in a limited time."
                 />
-                <SelectCard 
-                    buttonText= "Manipulation" 
-                    imageUrl={manipulationImg} 
-                    /*linkTo={"*"}*/
-                    modalHeader = "Manipulation" 
-                    modalText = "Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
-                    className= {styles.selectCard}
+                <SelectGameCard 
+                    buttonText="Manipulation"
+                    imageUrl={playerData.lives > 0 ? manipulationImg : manipulationGrayImg}
                     handleClick={onManipulationClick}
+                    handleNoHeartsClick={handleNoHeartsClick}
+                    lives={playerData.lives}
+                    modalHeader="Manipulation"
+                    modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
                 />
-                <SelectCard 
-                    buttonText= "Limitation" 
-                    imageUrl={limitationImg} 
-                    /*linkTo={"*"}*/
-                    modalHeader= "Limitation" 
-                    modalText= "Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
-                    className= {styles.selectCard}
+                <SelectGameCard 
+                    buttonText="Limitation"
+                    imageUrl={playerData.lives > 0 ? limitationImg : limitationGrayImg}
                     handleClick={onLimitationClick}
+                    handleNoHeartsClick={handleNoHeartsClick}
+                    lives={playerData.lives}
+                    modalHeader="Limitation"
+                    modalText="Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
                 />
             </div>
             <HomeButton handleClick={handleHomeClick} />
@@ -178,7 +190,12 @@ function codeBattlePage() {
                 isVisible={isPopUpCountdownVisible}
                 closePopup={() => setIsPopUpCountdownVisible(false)}
                 countdown={countdown} // Transfer countdown value to the component
-            />   
+            />
+            
+            <PopUpNoHearts
+                isVisible={isPopUpNoHeartsVisible}
+                closePopup={() => setIsPopUpNoHeartsVisible(false)}
+            />
         </div>  
     );
 }
