@@ -115,12 +115,12 @@ function codeBattlePage() {
         const hearts = [];
         for (let i = 0; i < 3; i++) {
             if (playerData.subscribed === true && i < playerData.lives) {
-                hearts.push(<img key={i} src={goldenHeart} alt="Golden Heart" className={styles.heart} />);
+                hearts.push(<img key={i} src={goldenHeart} alt="Golden Heart" className={styles.goldenHeart} />);
             } else {
                 if (i < playerData.lives) {
                     hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.fullRedHeart} />);
                 } else {
-                    hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.heart} />);
+                    hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.emptyHeart} />);
                 }
             }
         }     
