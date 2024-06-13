@@ -13,17 +13,25 @@ import { useNavigate } from 'react-router-dom';
 import { socket, startBuzzerQueue, leaveBuzzerQueue, startManipulationQueue, leaveManipulationQueue } from '../../socket.js';
 import { PlayerContext } from "../../context/playerContext.jsx";
 import { BuzzerPlayerContext } from "../../context/buzzerQuestionContext.jsx";
+import { ManipulationPlayerContext } from "../../context/manipulationQuestionContext.jsx";
 
 function CodeBattlePage() {
     const { playerName } = useContext(PlayerContext);
     const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
-    
+    const { setManipulationQuestion } = useContext(ManipulationPlayerContext);
+
     const navigate = useNavigate();
     const [isPopUpQueueVisible, setIsPopUpQueueVisible] = useState(false);
     const [isPopUpCountdownVisible, setIsPopUpCountdownVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
     const [countdown, setCountdown] = useState(null);
     
+
+    const handleSetQuestionManipulation = (question) => {   
+        console.log(question);
+        setManipulationQuestion(question);
+    };
+
     useEffect(() => {
         const handleGameFound = (fullRoom) => {
             console.log('Game found', fullRoom);
@@ -33,9 +41,6 @@ function CodeBattlePage() {
 
         const handleGameFoundManipulation = (fullRoom) => {
             console.log('Game found Manipulation', fullRoom);
-            //setIsPopUpQueueVisible(false);
-            //setIsPopUpCountdownVisible(true);
-            // TODO: Show the Countdown
             navigate('/codebattle/manipulation');
         };
 
@@ -58,12 +63,15 @@ function CodeBattlePage() {
             setBuzzerQuestion(question);
         };
 
+        
+
         // Register the event listeners
         socket.on('Buzzer_GameFound', handleGameFound);
         socket.on('Manipulation_GameFound', handleGameFoundManipulation);
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
         socket.on('BUZZER_COUNTDOWN', handleStartCountdown);
         socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
+        socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
 
         // Clean up the listeners when the component is unmounted
         return () => {
@@ -72,8 +80,9 @@ function CodeBattlePage() {
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
             socket.off('BUZZER_COUNTDOWN', handleStartCountdown);
             socket.off('SET_BUZZER_QUESTION', handleSetQuestion);
+            socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
         };
-    }, [navigate, setBuzzerQuestion]);
+    }, [navigate, setManipulationQuestion]);
 
     const handleHomeClick = () => {
         navigate('/select/code');
@@ -96,7 +105,6 @@ function CodeBattlePage() {
     const onManipulationClick = () => {
         startManipulationQueue(playerName);
         setSelectedGameMode('Manipulation');
-        //setIsPopUpQueueVisible(true);
     };
 
     const onLimitationClick = () => {
@@ -128,7 +136,6 @@ function CodeBattlePage() {
                 <SelectCard 
                     buttonText="Manipulation" 
                     imageUrl={manipulationImg}
-                    //linkTo = "/codebattle/manipulation"
                     modalHeader="Manipulation" 
                     modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
                     className={styles.selectCard}
@@ -157,7 +164,7 @@ function CodeBattlePage() {
             <PopUpCountdown
                 isVisible={isPopUpCountdownVisible}
                 closePopup={() => setIsPopUpCountdownVisible(false)}
-                countdown={countdown} // Transfer countdown value to the component
+                countdown={countdown}
             />   
         </div>  
     );

@@ -1,22 +1,26 @@
-import styles from '../General.module.css';
-import styles2 from './ManipulationPage.module.css';
-
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import HomeButton from '../../components/homeButton/HomeButton';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { ManipulationPlayerContext } from '../../context/manipulationQuestionContext.jsx';
+
+import styles from '../General.module.css';
+import styles2 from './ManipulationPage.module.css';
 
 function ManipulationPage() {
   const navigate = useNavigate();
-  const [code, setCode] = useState('console.log("Hello, World!")');
-  const [output, setOutput] = useState('');
+  const [code, setCode] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
+  const { manipulationQuestion } = useContext(ManipulationPlayerContext);
+  const [output, setOutput] = useState('');
+  const [expectedOutput, setExpectedOutput] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
 
   const handleHomeClick = () => {
     navigate('/select/code');
-};
+  };
 
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -32,7 +36,7 @@ function ManipulationPage() {
       const consoleOutput = [];
       const originalConsoleLog = console.log;
       console.log = (...args) => {
-        consoleOutput.push(args.join(' '));
+        consoleOutput.push(args.join(''));
         originalConsoleLog(...args);
       };
 
@@ -45,6 +49,15 @@ function ManipulationPage() {
 
       // Set output state
       setOutput(consoleOutput.join('\n'));
+
+      // Check against expected output
+      if (manipulationQuestion && manipulationQuestion.outputtext.trim() === consoleOutput.join('').trim()) {
+        setAlertMessage('Well done! Output matches expected result.');
+        // Optionally, perform any actions when output matches
+        // Example: navigate to the next screen or update game state
+      } else {
+        setAlertMessage('Output does not match expected result.');
+      }
     } catch (error) {
       console.error('Error:', error);
       setOutput('Error occurred during code execution.');
@@ -58,6 +71,21 @@ function ManipulationPage() {
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
   };
+
+  useEffect(() => {
+    if (manipulationQuestion) {
+      setCode(manipulationQuestion.code);
+      setOutput('');
+      setExpectedOutput(manipulationQuestion.outputtext); // Set the expected output
+    }
+  }, [manipulationQuestion]);
+
+  useEffect(() => {
+    if (alertMessage) {
+      alert(alertMessage);
+      setAlertMessage('');
+    }
+  }, [alertMessage]);
 
   return (
     <>
