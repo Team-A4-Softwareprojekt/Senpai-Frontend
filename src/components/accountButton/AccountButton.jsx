@@ -6,7 +6,7 @@ import { PlayerContext } from '../../context/playerContext';
 import {URL} from '../../../url.js';
 
 const AccountButton = () => {
-    const url = URL;
+    const url = URL + "/loadAccountData";
     const navigate = useNavigate();
     const { playerName, setPlayerData } = useContext(PlayerContext);
 

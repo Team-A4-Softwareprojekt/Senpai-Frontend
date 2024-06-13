@@ -15,44 +15,50 @@
 .infoContainer {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: 70%;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px; 
 }
 
 .container {
     margin-bottom: 20px;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #ced4da;
     border-radius: 5px;
     background: #ffffff;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 150px; /* Ensure all containers have the same height */
-    width: 280px;
+    gap: 25px;
+    height: 148px;
+    width: 300px;
 }
 
 .heading {
     color: black;
-    font-size: 1.5em;
+    font-size: 25px;
+}
+
+.infoRowContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .infoRow {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin: 10px 0;
 }
 
 .infoRow strong {
     width: 40%;
-    font-size: 1.1em;
+    font-size: 20px;
 }
 
 .infoRow span {
     width: 75%;
     text-align: left;
-    font-size: 1.1em;
+    font-size: 20px;
 }
 
 .buttonContainer {
@@ -63,10 +69,10 @@
 }
 
 .button {
-    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px 20px;
     width: 230px;
-    height: 50px;
+    height: 59px;
     font-size: 18px;
     font-weight: bold;
     color: white;
@@ -80,18 +86,6 @@
     background-color: #218838;
 }
 
-.friendPopup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
-}
-
 .overlay {
     position: fixed;
     top: 0;
@@ -103,6 +97,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.friendPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
 }
 
 .friendList {
