@@ -9,7 +9,8 @@ import AccountSettingsPage from "./pages/accountSettingsPage/AccountSettingsPage
 import DailyChallengeGTPage from "./pages/dailyChallenge/DailyChallengeGTPage.jsx";
 import DailyChallengeMCPage from "./pages/dailyChallenge/DailyChallengeMCPage.jsx";
 import CodeBattlePage from "./pages/codeBattlePage/CodeBattlePage.jsx";
-import ManipulationPage from './pages/manipulationPage/ManipulationPage.jsx';
+import ManipulationP1Page from './pages/manipulationPage/ManipulationP1Page.jsx';
+import ManipulationP2Page from './pages/manipulationPage/ManipulationP2Page.jsx';
 import ExercisePage from "./pages/exercisePage/ExercisePage.jsx";
 import ExerciseTaskPage from "./pages/exerciseTaskPage/ExerciseTaskPage.jsx";
 import MultipleChoicePage from './pages/multipleChoicePage/MultipleChoicePage.jsx';
@@ -38,7 +39,8 @@ function App() {
                             <Route path="/exercise/:exerciseName" element={<ExerciseTaskPage />} />
                             <Route path="/codebattle/buzzer/multiplechoice" element={<MultipleChoicePage />} />
                             <Route path="/codebattle/buzzer/gaptext" element={<GapTextPage />} />
-                            <Route path="/codebattle/manipulation" element={<ManipulationPage />} />
+                            <Route path="/codebattle/manipulation/player1" element={<ManipulationP1Page />} />
+                            <Route path="/codebattle/manipulation/player2" element={<ManipulationP2Page />} />
                             <Route path="/account" element={<AccountSettingsPage />} />
                             <Route path="*" element={<NoPage />} />
                         </Routes>
