@@ -1,28 +1,24 @@
 import React from 'react';
-import Modal from '../modal/Modal';
-import styles from './SelectCard.module.css';
+import ModalGameSelection from '../modalGameSelection/ModalGameSelection';
+import styles from './SelectGameCard.module.css';
 import { Link } from 'react-router-dom';
 
-/*
- This is the selectcard component. The whole component is a link to another page
- The parameters are set when the component is initialized
-*/
-function SelectCard({ buttonText, imageUrl, linkTo, modalHeader, modalText, slides, handleClick}){
-    return(
+function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick }) {
+    return (
         <div className={styles.selectCardContainer}>
             <Link to={linkTo}>
                 <button className={styles.selectButton} onClick={handleClick}>
                     <img className={styles.selectCardImg} src={imageUrl} alt="Image Description" />
-                    <h1> {buttonText} </h1>
+                    <h1>{buttonText}</h1>
                 </button>
             </Link>
             <div className={styles.questionMarkContainer}>
-                <Modal header={modalHeader} text={modalText} slides={slides}>
+                <ModalGameSelection header={header} text={text} slides={slides}>
                     <button className={styles.questionMarkButton}>?</button>
-                </Modal>
+                </ModalGameSelection>
             </div>
         </div>
     );
 }
 
-export default SelectCard;
+export default SelectGameCard;

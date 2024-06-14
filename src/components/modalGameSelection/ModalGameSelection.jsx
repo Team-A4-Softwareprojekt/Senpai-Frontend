@@ -1,19 +1,13 @@
-import styles from './Modal.module.css';
+import styles from './ModalGameSelection.module.css';
 import React, { useState } from "react";
+import Slide from '../slide/Slide';
 
-/*
-This is a basic modal component that holds text and a close button
-The header and text parameters are set when the component is initialized
-*/
-function Modal({ header, text }) {
-
-    // Modal is a boolean and setModal is the setter function for the boolean
+function ModalGameSelection({ header, text, slides }) {
     const [modal, setModal] = useState(false);
 
-    // Simple toggle function that sets the boolean to the opposite when called
     const toggleModal = () => {
-        setModal(!modal)
-    }
+        setModal(!modal);
+    };
 
     return (
         <div>
@@ -21,21 +15,18 @@ function Modal({ header, text }) {
                 ?
             </button>
             {modal && (
-                <div className={styles.modal} >
-
+                <div className={styles.modal}>
                     <div onClick={toggleModal} className={styles.overlay}></div>
                     <div className={styles.content}>
-                        <h2>{header}</h2>
-                        <p>{text}</p>
+                        <Slide slides={slides} />
                         <div className={styles.buttonContainer}>
                             <button className={styles.button} onClick={toggleModal}>Close</button>
                         </div>
                     </div>
                 </div>
             )}
-
         </div>
     );
 }
 
-export default Modal;
+export default ModalGameSelection;
