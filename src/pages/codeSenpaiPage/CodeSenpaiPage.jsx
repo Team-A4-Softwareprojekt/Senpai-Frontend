@@ -1,6 +1,6 @@
 import styles from '../General.module.css';
 import styles2 from './CodeSenpaiPage.module.css';
-import SelectCard from '../../components/selectCard/SelectCard.jsx';
+import SelectContentCard from '../../components/selectContentCard/SelectContentCard.jsx';
 import codeChallengeImg from '../../assets/codeChallenge.jpg';
 import codeBattleImg from '../../assets/codeBattle.jpg';
 import codeExerciseImg from '../../assets/codeExercise.jpg';
@@ -61,7 +61,7 @@ function codeSenpaiPage() {
                 Choose your form of training
             </h1>
             <div className= {styles2.cardsGridContainer}>      
-                <SelectCard 
+                <SelectContentCard 
                     buttonText= "Daily Challenge"
                     imageUrl={codeChallengeImg}
                     /*linkTo={"/select/code/dailyChallenge"}*/
@@ -71,7 +71,7 @@ function codeSenpaiPage() {
                     handleClick = {handleDailyChallenge}
                     />
                     	
-                <SelectCard 
+                <SelectContentCard 
                     buttonText= "Code Battle"
                     imageUrl={codeBattleImg}
                     linkTo={"/select/code/codeBattle"}
@@ -79,7 +79,7 @@ function codeSenpaiPage() {
                     modalText = "Challenge yourself and compete with others in entertaining code duels to expand your knowledge in a playful way."
                     className= {styles2.selectCard}/>
                     
-                <SelectCard 
+                <SelectContentCard 
                     buttonText= "Exercise"
                     imageUrl={codeExerciseImg}
                     linkTo={"/select/code/exercise"}

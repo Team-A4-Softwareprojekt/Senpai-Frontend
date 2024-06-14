@@ -6,16 +6,16 @@ import { Link } from 'react-router-dom';
 function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick }) {
     return (
         <div className={styles.selectCardContainer}>
+            <h1 className={styles.buttonText}>{buttonText}</h1>
             <Link to={linkTo}>
                 <button className={styles.selectButton} onClick={handleClick}>
-                    <img className={styles.selectCardImg} src={imageUrl} alt="Image Description" />
-                    <h1>{buttonText}</h1>
+                    <div className={styles.imageContainer}>
+                        <img className={styles.selectCardImg} src={imageUrl} alt="Image Description" />
+                    </div>
                 </button>
             </Link>
             <div className={styles.questionMarkContainer}>
-                <ModalGameSelection header={header} text={text} slides={slides}>
-                    <button className={styles.questionMarkButton}>?</button>
-                </ModalGameSelection>
+                <ModalGameSelection header={header} text={text} slides={slides}/>
             </div>
         </div>
     );

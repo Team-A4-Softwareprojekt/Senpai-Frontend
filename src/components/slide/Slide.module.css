@@ -10,6 +10,16 @@
     border-radius: 10px;
 }
 
+.textContainer {
+    background-color: #132e63;
+    border: 2px solid gold;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 17px;
+}
+
 .navigationDots {
     display: flex;
     justify-content: center;

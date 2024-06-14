@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '../modal/Modal';
-import styles from './SelectCard.module.css';
+import styles from './SelectContentCard.module.css';
 import { Link } from 'react-router-dom';
 
 /*

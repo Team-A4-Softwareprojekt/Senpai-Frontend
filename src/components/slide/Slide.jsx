@@ -12,7 +12,9 @@ function Slide({ slides }) {
         <div className={styles.slideContainer}>
             <h2>{slides[currentSlide].header}</h2>
             <img src={slides[currentSlide].image} alt={slides[currentSlide].header} className={styles.image} />
-            <p>{slides[currentSlide].text}</p>
+            <div className={styles.textContainer}>
+                {slides[currentSlide].text}
+            </div>
             <div className={styles.navigationDots}>
                 {slides.map((_, index) => (
                     <span
