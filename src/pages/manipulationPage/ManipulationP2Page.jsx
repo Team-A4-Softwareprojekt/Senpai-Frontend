@@ -24,7 +24,8 @@ function ManipulationPage() {
   const [alertMessage, setAlertMessage] = useState('');
   const [currentPlayer, setCurrentPlayer] = useState(2);
   const [togglePlayer, setTogglePlayer] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true); // State for disabling editor and button
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [submissionAttempted, setSubmissionAttempted] = useState(false);
 
   const handleHomeClick = () => {
     navigate('/select/code');
@@ -35,10 +36,15 @@ function ManipulationPage() {
     { value: 'python', label: 'Python', disabled: true },
     { value: 'java', label: 'Java', disabled: true },
     { value: 'ruby', label: 'Ruby', disabled: true },
-    // Add more languages as needed
   ];
 
   const executeCode = () => {
+    if (submissionAttempted) {
+      return; // Prevent multiple submissions
+    }
+
+    setSubmissionAttempted(true);
+
     try {
       const consoleOutput = [];
       const originalConsoleLog = console.log;
@@ -52,12 +58,13 @@ function ManipulationPage() {
 
       console.log = originalConsoleLog;
 
-      setOutput(consoleOutput.join('\n'));
+      const resultOutput = consoleOutput.join('\n');
+      setOutput(resultOutput);
 
-      if (manipulationQuestion && manipulationQuestion.outputtext.trim() === consoleOutput.join('').trim()) {
+      if (manipulationQuestion && manipulationQuestion.outputtext.trim() === resultOutput.trim()) {
         setAlertMessage('Well done! Output matches expected result.');
       } else {
-        setAlertMessage('Output does not match expected result.');
+        setAlertMessage('Output does not match the expected result.');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -90,9 +97,8 @@ function ManipulationPage() {
       setOutput('');
       setExpectedOutput(manipulationQuestion.outputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);
-      // setIsDisabled(currentPlayer === 2); // Disable editor and button conditionally
     }
-  }, [manipulationQuestion, currentPlayer]);
+  }, [manipulationQuestion]);
 
   useEffect(() => {
     if (alertMessage) {
@@ -101,16 +107,14 @@ function ManipulationPage() {
     }
   }, [alertMessage]);
 
-  const handleInputManipulation = (code) => {
+  const handleInputManipulation = (data) => {
+    const { code } = data;
     console.log('Received code:', code);
-    setIsDisabled(false);
-    /*
     setCode(code);
     setInitialCode(code);
     setOutput('');
     setCharactersChanged(0);
-
-    */
+    setIsDisabled(false);
   };
 
   useEffect(() => {
@@ -158,20 +162,20 @@ function ManipulationPage() {
               editorProps={{ $blockScrolling: true }}
               value={code}
               style={{ width: '50vw', height: '300px' }}
-              readOnly={false} // Always set to false when visible
+              readOnly={false}
               className={styles2.enabledEditor}
             />
             <div className={styles2.footer}>
               <button
                 onClick={executeCode}
                 className={styles2.runButton}
-                disabled={isDisabled}
+                disabled={isDisabled || submissionAttempted} // Disable after submission attempt
               >
                 Submit
               </button>
               <Modal
                 header="This is the manipulation game mode"
-                text="In this game mode you have to manipulate the code so the output is not the same as the expected output. You have a limited number of characters you can change. If u have to wait, ur next goal is to fix the mistakes to get to the expected output. Good luck!"
+                text="In this game mode you have to manipulate the code so the output is not the same as the expected output. You have a limited number of characters you can change. If you have to wait, your next goal is to fix the mistakes to get to the expected output. Good luck!"
               />
             </div>
           </div>
@@ -179,13 +183,18 @@ function ManipulationPage() {
       )}
       <div>
         <h2 className={styles2.infoText}>
-          It's your turn
+          {isDisabled
+            ? 'Wait for the other player to finish...'
+            : `It's your turn. Change the code to achieve the desired output: ${expectedOutput}`
+          }
         </h2>
       </div>
-      <div>
-        <h2>Output:</h2>
-        <pre>{output}</pre>
-      </div>
+      {!isDisabled && (
+        <div>
+          <h2>Output:</h2>
+          <pre>{output}</pre>
+        </div>
+      )}
     </>
   );
 }

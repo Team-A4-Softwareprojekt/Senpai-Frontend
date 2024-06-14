@@ -18,11 +18,11 @@ function ManipulationPage() {
   const [code, setCode] = useState('');
   const [initialCode, setInitialCode] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
-  const [output, setOutput] = useState('');
   const [charactersLeft, setCharactersLeft] = useState(0);
   const [expectedOutput, setExpectedOutput] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
+  const [actionText, setActionText] = useState('');
 
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -36,36 +36,10 @@ function ManipulationPage() {
     navigate('/select/code');
   };
 
-  const executeCode = () => {
-    try {
-      const consoleOutput = [];
-      const originalConsoleLog = console.log;
-      console.log = (...args) => {
-        consoleOutput.push(args.join(''));
-        originalConsoleLog(...args);
-      };
-
-      const func = new Function(code);
-      func();
-
-      console.log = originalConsoleLog;
-
-      setOutput(consoleOutput.join('\n'));
-
-      socket.emit('SUMBIT_CHANGES_MANIPULATION', { code });
-
-      if (manipulationQuestion && manipulationQuestion.outputtext.trim() === consoleOutput.join('').trim()) {
-        setAlertMessage('Well done! Output matches expected result.');
-      } else {
-        setAlertMessage('Output does not match expected result.');
-      }
-
-      setShowEditor(false); // Hide editor after submission
-
-    } catch (error) {
-      console.error('Error:', error);
-      setOutput('Error occurred during code execution.');
-    }
+  const submitCode = () => {
+    socket.emit('SUBMIT_CHANGES_MANIPULATION', {code} );
+    setShowEditor(false); // Hide editor after submission
+    setActionText('Wait for the other player to submit their changes.');
   };
 
   const onChange = (newCode) => {
@@ -76,6 +50,7 @@ function ManipulationPage() {
     if (changeCount <= manipulationQuestion.permittedsymbols) {
       setCode(newCode);
       setCharactersLeft(manipulationQuestion.permittedsymbols - changeCount);
+      setActionText(`Change the code below. You have ${manipulationQuestion.permittedsymbols - changeCount} characters left. Change the code so the output is not: ${expectedOutput}`);
     } else {
       setAlertMessage('You have exceeded the permitted number of character changes.');
     }
@@ -89,9 +64,9 @@ function ManipulationPage() {
     if (manipulationQuestion) {
       setCode(manipulationQuestion.code);
       setInitialCode(manipulationQuestion.code);
-      setOutput('');
       setExpectedOutput(manipulationQuestion.outputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);
+      setActionText(`Change the code below. You have ${manipulationQuestion.permittedsymbols} characters left. Change the code so the output is not: ${manipulationQuestion.outputtext}`);
     }
   }, [manipulationQuestion]);
 
@@ -110,8 +85,7 @@ function ManipulationPage() {
       </header>
       <div>
         <h2 className={styles2.infoText}>
-          Change the code below. You have {charactersLeft} characters left.
-          Change the code so the output is not: {expectedOutput}
+          {actionText}
         </h2>
       </div>
       
@@ -128,7 +102,7 @@ function ManipulationPage() {
             readOnly={languages.find((lang) => lang.value === selectedLanguage).disabled}
           />
           <div className={styles2.footer}>
-            <button onClick={executeCode} className={styles2.runButton}>
+            <button onClick={submitCode} className={styles2.runButton}>
               Submit
             </button>
             <Modal
@@ -138,11 +112,6 @@ function ManipulationPage() {
           </div>
         </div>
       )}
-
-      <div>
-        <h2>Output:</h2>
-        <pre>{output}</pre>
-      </div>
 
       <HomeButton handleClick={handleHomeClick} />
     </>
