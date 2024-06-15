@@ -18,7 +18,7 @@ function Modal({ header, text }) {
     return (
         <div>
             <button onClick={toggleModal} className={styles.button}>
-                ?
+                Information
             </button>
             {modal && (
                 <div className={styles.modal} >

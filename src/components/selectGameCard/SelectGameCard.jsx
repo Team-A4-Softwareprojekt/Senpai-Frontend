@@ -9,9 +9,7 @@ function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, ha
             <h1 className={styles.buttonText}>{buttonText}</h1>
             <Link to={linkTo}>
                 <button className={styles.selectButton} onClick={handleClick}>
-                    <div className={styles.imageContainer}>
-                        <img className={styles.selectCardImg} src={imageUrl} alt="Image Description" />
-                    </div>
+                    <img className={styles.selectCardImg} src={imageUrl} alt="Image Description" />
                 </button>
             </Link>
             <div className={styles.questionMarkContainer}>

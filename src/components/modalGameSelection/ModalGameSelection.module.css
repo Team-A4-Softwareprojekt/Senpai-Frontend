@@ -42,10 +42,10 @@
 .button {
     font-size: 18px; /* Schriftgröße des Buttons */
     padding: 10px 15px; /* Innenabstand des Buttons */
+    margin-top: 15px;
     display: flex;
     align-items: center;
     font-weight: bold;
-    margin-top: 10px;
     cursor: pointer;
 }
 

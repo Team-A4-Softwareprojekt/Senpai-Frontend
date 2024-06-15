@@ -10,10 +10,10 @@ import { Link } from 'react-router-dom';
 function SelectCard({ buttonText, imageUrl, linkTo, modalHeader, modalText, slides, handleClick}){
     return(
         <div className={styles.selectCardContainer}>
+            <h1 className={styles.buttonText}>{buttonText}</h1>
             <Link to={linkTo}>
                 <button className={styles.selectButton} onClick={handleClick}>
                     <img className={styles.selectCardImg} src={imageUrl} alt="Image Description" />
-                    <h1> {buttonText} </h1>
                 </button>
             </Link>
             <div className={styles.questionMarkContainer}>
