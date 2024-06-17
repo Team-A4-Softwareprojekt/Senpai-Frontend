@@ -1,0 +1,49 @@
+.popupContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 300px;
+    max-width: 90%;
+    z-index: 1000;
+  }
+  
+  .popupContent {
+    text-align: center;
+  }
+  
+  .popupHeader {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .popupBody {
+    margin: 15px 0;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .benefitsList {
+    padding-left: 20px;
+    margin-top: 10px;
+    text-align: left;
+  }
+  
+  .popupButton {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .popupButton:hover {
+    background: #0056b3;
+  }
+  

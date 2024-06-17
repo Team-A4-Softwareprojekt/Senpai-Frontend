@@ -13,9 +13,11 @@ import goldenHeart from '../../assets/goldenHeart.png';
 import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
+import PremiumButton from '../../components/premiumButton/PremiumButton';
 import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
 import PopUpCountdown from '../../components/popUpCountdown/PopUpCountdown.jsx';
 import PopUpNoHearts from '../../components/popUpNoHearts/PopUpNoHearts.jsx';
+import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
 import {useNavigate} from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
@@ -35,6 +37,7 @@ function codeBattlePage() {
     const [isPopUpQueueVisible, setIsPopUpQueueVisible] = useState(false);
     const [isPopUpCountdownVisible, setIsPopUpCountdownVisible] = useState(false);
     const [isPopUpNoHeartsVisible, setIsPopUpNoHeartsVisible] = useState(false);
+    const [isPopUpBuyPremiumVisible, setIsPopUpBuyPremiumVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
     const [countdown, setCountdown] = useState(null);
     const [hearts, setHearts] = useState([]);
@@ -148,6 +151,10 @@ function codeBattlePage() {
         navigate('/select');
     };
 
+    const handleBuyPremiumClick = () => {
+        setIsPopUpBuyPremiumVisible(true);
+    };
+
     const onBuzzerClick = () => {
         startBuzzerQueue(playerName);
         setSelectedGameMode('Buzzer');
@@ -220,6 +227,7 @@ function codeBattlePage() {
             <HomeButton handleClick={handleHomeClick} />
             <AccountButton handleClick={handleAccountClick} />
             <ChangeTopicButton handleClick={handleChangeTopicClick} />
+            <PremiumButton handleClick={handleBuyPremiumClick}/>
 
             <PopUpQueue
                 isVisible={isPopUpQueueVisible}
@@ -236,6 +244,11 @@ function codeBattlePage() {
             <PopUpNoHearts
                 isVisible={isPopUpNoHeartsVisible}
                 closePopup={() => setIsPopUpNoHeartsVisible(false)}
+            />
+
+            <PopUpPremium
+                isVisible={isPopUpBuyPremiumVisible}
+                closePopUp={() => setIsPopUpBuyPremiumVisible(false)}
             />
         </div>  
     );
