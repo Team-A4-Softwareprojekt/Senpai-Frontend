@@ -20,6 +20,7 @@ import {useNavigate} from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
+import {URL} from '../../../url.js';
 
 /*
 This is the code battle page that holds an account button, amount of lives and three different
@@ -27,7 +28,7 @@ game modes to choose from. Each game mode has a modal with the basic explanation
 */
 function codeBattlePage() {
 
-    const { playerName, playerData } = useContext(PlayerContext);
+    const { playerName, playerData, setPlayerData } = useContext(PlayerContext);
     const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
     
     const navigate = useNavigate();
@@ -36,11 +37,43 @@ function codeBattlePage() {
     const [isPopUpNoHeartsVisible, setIsPopUpNoHeartsVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
     const [countdown, setCountdown] = useState(null);
+    const [hearts, setHearts] = useState([]);
+    const [loading, setLoading] = useState(true);
     
+    useEffect(() => {
+        const url = URL + "/loadAccountData";
+
+        const fetchPlayerData = async () => {
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ playerName })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                setPlayerData(data);
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPlayerData();
+    }, [playerName, setPlayerData]);
+
+
     useEffect(() => {
         const handleGameFound = (fullRoom) => {
             console.log('Game found', fullRoom);
-            setIsPopUpQueueVisible(false); // Hide the popup
+            setIsPopUpQueueVisible(false);
             setIsPopUpCountdownVisible(true);
         };
 
@@ -62,7 +95,6 @@ function codeBattlePage() {
         const handleSetQuestion = (question) => {
             console.log(question);
             setBuzzerQuestion(question);
-            console.log(buzzerQuestion);
         };
 
         // Register the event listeners
@@ -80,6 +112,30 @@ function codeBattlePage() {
         };
     }, [navigate]);
     
+    // Function to render hearts based on player lives
+    useEffect(() => {
+        const renderHearts = () => {
+            const hearts = [];
+            if (playerData && playerData.lives !== undefined) {
+                for (let i = 0; i < 3; i++) {
+                    if (playerData.subscribed === true && i < playerData.lives) {
+                        hearts.push(<img key={i} src={goldenHeart} alt="Golden Heart" className={styles.goldenHeart} />);
+                    } else {
+                        if (i < playerData.lives) {
+                            hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.fullRedHeart} />);
+                        } else {
+                            hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.emptyHeart} />);
+                        }
+                    }
+                }
+            }
+            return hearts;
+        };
+
+        setHearts(renderHearts());
+    }, [playerData]);
+
+
     const handleHomeClick = () => {
         navigate('/select/code');
     };
@@ -95,24 +151,24 @@ function codeBattlePage() {
     const onBuzzerClick = () => {
         startBuzzerQueue(playerName);
         setSelectedGameMode('Buzzer');
-        setIsPopUpQueueVisible(true); // Show the popup
+        setIsPopUpQueueVisible(true);
     };
 
     const onManipulationClick = () => {
         setSelectedGameMode('Manipulation');
-        setIsPopUpQueueVisible(true); // Show the popup
+        setIsPopUpQueueVisible(true);
     };
 
     const onLimitationClick = () => {
         setSelectedGameMode('Limitation');
-        setIsPopUpQueueVisible(true); // Show the popup
+        setIsPopUpQueueVisible(true);
     };
 
     const closePopup = () => {
         if (selectedGameMode === 'Buzzer') {
             leaveBuzzerQueue();
         }
-        setIsPopUpQueueVisible(false); // Hide the popup
+        setIsPopUpQueueVisible(false);
     };
 
     const handleNoHeartsClick = () => {
@@ -120,24 +176,9 @@ function codeBattlePage() {
         setIsPopUpNoHeartsVisible(true);
     };
 
-    // Function to render hearts based on player lives
-    const renderHearts = () => {
-        const hearts = [];
-        if (playerData && playerData.lives !== undefined) {
-            for (let i = 0; i < 3; i++) {
-                if (playerData.subscribed === true && i < playerData.lives) {
-                    hearts.push(<img key={i} src={goldenHeart} alt="Golden Heart" className={styles.goldenHeart} />);
-                } else {
-                    if (i < playerData.lives) {
-                        hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.fullRedHeart} />);
-                    } else {
-                        hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.emptyHeart} />);
-                    }
-                }
-            }
-        }
-        return hearts;
-    };
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return( 
         <div>
@@ -145,7 +186,7 @@ function codeBattlePage() {
                 Choose your battle
             </h1>
             <div className={styles.heartsContainer}>
-                {renderHearts()}
+                {hearts}
             </div>
             <div className= {styles.cardsGridContainer}>      
                 <SelectGameCard 

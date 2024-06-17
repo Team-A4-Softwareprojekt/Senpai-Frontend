@@ -4,7 +4,7 @@ export const PlayerContext = createContext();
 
 export const PlayerProvider = ({ children }) => {
     const [playerName, setPlayerName] = useState('');
-    const [playerData, setPlayerData] = useState({ subscribed: false, lives: 0 });
+    const [playerData, setPlayerData] = useState('');
 
     return (
         <PlayerContext.Provider value={{ playerName, setPlayerName, playerData, setPlayerData }}>
