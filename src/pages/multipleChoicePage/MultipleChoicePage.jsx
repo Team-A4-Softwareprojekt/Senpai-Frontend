@@ -51,7 +51,7 @@ const MultipleChoicePage = () => {
         setIsConfirmButtonDisabled(!isConfirmButtonDisabled);
         setIsBuzzerButtonDisabled(true);
 
-        setBuzzerMessage("You buzzered first, it's your turn!");
+        setBuzzerMessage("Du hast den Buzzer gedrückt. Bestätige deine Antwort!"); 
 
         socket.emit('PLAYER_BUZZERED');
         console.log('isButtonDisabled: ' + isConfirmButtonDisabled);
@@ -78,15 +78,17 @@ const MultipleChoicePage = () => {
         const handleWrongAnswer = () => {
             setIsConfirmButtonDisabled(true);
             setIsBuzzerButtonDisabled(true);
-            setBuzzerMessage("Your answer was wrong, it's your opponent's turn now!");
+            setBuzzerMessage("Deine Antwort war falsch. Jetzt ist dein Gegner dran!");
         };
 
         const handleOpponentBuzzered = () => {
-            setBuzzerMessage("The opponent buzzered first, you were too slow!");
+            if (buzzerMessage !== "Deine Antwort war falsch. Jetzt ist dein Gegner dran!") {
+                setBuzzerMessage("Dein Gegner hat den Buzzer schneller gedrückt!");
+            }
         };
 
         const handleOpponentWrongAnswer = () => {
-            setBuzzerMessage("Your opponent's answer was wrong, it's your turn now! You don't need to Buzzer. Just Confirm your Answer!");
+            setBuzzerMessage("Dein Gegner hat falsch geantwortet. Du kannst antworten!");
 
             setIsConfirmButtonDisabled(false);
             setIsBuzzerButtonDisabled(true);
@@ -105,7 +107,7 @@ const MultipleChoicePage = () => {
         const handleRoundEnd = (playerName, solution, ownPointsReceived, opponentPointsReceived) => {
             setWinnerRound(playerName);
             setSolution(solution);
-            setBuzzerMessage(false);
+            setBuzzerMessage(null);
             setIsRoundWinnerVisible(true);
 
             console.log('Received own points:', ownPointsReceived);
@@ -199,7 +201,7 @@ const MultipleChoicePage = () => {
             socket.off('OPPONENT_BUZZERED', handleOpponentBuzzered);
             socket.off('OPPONENT_WRONG_ANSWER', handleOpponentWrongAnswer);
         };
-    }, []);
+    }, [buzzerMessage]);
 
     return (
         <div className={styles.container}>
@@ -267,12 +269,9 @@ const MultipleChoicePage = () => {
             {!isGameWinnerVisible && !isGameLoserVisible && (
                 <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution}/>
             )}
-            <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints}
-                             opponentPoints={opponentPoints}/>
-            <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints}
-                            opponentPoints={opponentPoints}/>
-            <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints}
-                      opponentPoints={opponentPoints}/>
+            <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+            <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+            <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
         </div>
     );
 };
