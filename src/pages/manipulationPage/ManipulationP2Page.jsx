@@ -22,10 +22,13 @@ function ManipulationPage() {
   const [alertMessage, setAlertMessage] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [rightAnswer, setRightAnswer] = useState(false);
+  const { setManipulationQuestion } = useContext(ManipulationPlayerContext);
 
   const handleHomeClick = () => {
     navigate('/select/code');
   };
+
+  
 
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -109,11 +112,18 @@ function ManipulationPage() {
     navigate('/codebattle/manipulation/player1');
   };
 
+  const handleSetQuestionManipulation = (question) => {   
+    console.log(question);
+    setManipulationQuestion(question);
+  };
+
   useEffect(() => {
+    socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
     socket.on('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
     socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
 
     return () => {
+      socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
       socket.off('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
     };
