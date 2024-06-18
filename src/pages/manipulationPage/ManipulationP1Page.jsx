@@ -8,6 +8,7 @@ import { ManipulationPlayerContext } from '../../context/manipulationQuestionCon
 import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
 
+
 import styles from '../General.module.css';
 import styles2 from './ManipulationPage.module.css';
 
@@ -37,7 +38,7 @@ function ManipulationPage() {
   };
 
   const submitCode = () => {
-    socket.emit('SUBMIT_CHANGES_MANIPULATION', {code} );
+    socket.emit('SUBMIT_CHANGES_MANIPULATION', {code, expectedOutput} );
     setShowEditor(false); // Hide editor after submission
     setActionText('Wait for the other player to submit their changes.');
   };
@@ -77,6 +78,19 @@ function ManipulationPage() {
     }
   }, [alertMessage]);
 
+  const handleStartNewRound = () => {
+    console.log('Starting new round');
+    navigate('/codebattle/manipulation/player2');
+  };
+
+  useEffect(() => {
+    socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+
+    return () => {
+      socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+    };
+  }, []);
+  
   return (
     <>
       <header className={styles2.header}>

@@ -18,14 +18,10 @@ function ManipulationPage() {
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
   const { manipulationQuestion } = useContext(ManipulationPlayerContext);
   const [output, setOutput] = useState('');
-  const [charactersChanged, setCharactersChanged] = useState(0);
-  const [charactersLeft, setCharactersLeft] = useState(0);
   const [expectedOutput, setExpectedOutput] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
-  const [currentPlayer, setCurrentPlayer] = useState(2);
-  const [togglePlayer, setTogglePlayer] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [submissionAttempted, setSubmissionAttempted] = useState(false);
+  const [rightAnswer, setRightAnswer] = useState(false);
 
   const handleHomeClick = () => {
     navigate('/select/code');
@@ -39,12 +35,6 @@ function ManipulationPage() {
   ];
 
   const executeCode = () => {
-    if (submissionAttempted) {
-      return; // Prevent multiple submissions
-    }
-
-    setSubmissionAttempted(true);
-
     try {
       const consoleOutput = [];
       const originalConsoleLog = console.log;
@@ -52,38 +42,35 @@ function ManipulationPage() {
         consoleOutput.push(args.join(''));
         originalConsoleLog(...args);
       };
-
+  
+      // Create a new function from the latest code
       const func = new Function(code);
       func();
-
+  
       console.log = originalConsoleLog;
-
+  
       const resultOutput = consoleOutput.join('\n');
       setOutput(resultOutput);
-
-      if (manipulationQuestion && manipulationQuestion.outputtext.trim() === resultOutput.trim()) {
+  
+      console.log('Output:', resultOutput);
+      console.log('Output expected:', expectedOutput);
+      if (resultOutput == expectedOutput) {
         setAlertMessage('Well done! Output matches expected result.');
+        setRightAnswer(true);
       } else {
         setAlertMessage('Output does not match the expected result.');
+        setRightAnswer(false);
       }
     } catch (error) {
-      console.error('Error:', error);
-      setOutput('Error occurred during code execution.');
+        setAlertMessage('Output does not match the expected result');
+        setRightAnswer(false);
     }
+    socket.emit('ROUND_END_MANIPULATION', rightAnswer);
+
   };
 
   const onChange = (newCode) => {
-    const initialLength = initialCode.length;
-    const currentLength = newCode.length;
-    const changeCount = Math.abs(currentLength - initialLength);
-
-    if (changeCount <= manipulationQuestion.permittedsymbols) {
-      setCode(newCode);
-      setCharactersChanged(changeCount);
-      setCharactersLeft(manipulationQuestion.permittedsymbols - changeCount);
-    } else {
-      setAlertMessage('You have exceeded the permitted number of character changes.');
-    }
+    setCode(newCode);
   };
 
   const handleLanguageChange = (event) => {
@@ -95,8 +82,8 @@ function ManipulationPage() {
       setCode(manipulationQuestion.code);
       setInitialCode(manipulationQuestion.code);
       setOutput('');
+      console.log('Expected output:', manipulationQuestion.outputtext);
       setExpectedOutput(manipulationQuestion.outputtext);
-      setCharactersLeft(manipulationQuestion.permittedsymbols);
     }
   }, [manipulationQuestion]);
 
@@ -108,20 +95,27 @@ function ManipulationPage() {
   }, [alertMessage]);
 
   const handleInputManipulation = (data) => {
-    const { code } = data;
+    const { code , answer } = data;
     console.log('Received code:', code);
+    setExpectedOutput(answer);
     setCode(code);
     setInitialCode(code);
     setOutput('');
-    setCharactersChanged(0);
     setIsDisabled(false);
+  };
+
+  const handleStartNewRound = () => {
+    console.log('Starting new round');
+    navigate('/codebattle/manipulation/player1');
   };
 
   useEffect(() => {
     socket.on('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
+    socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
 
     return () => {
       socket.off('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
+      socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
     };
   }, []);
 
@@ -161,15 +155,13 @@ function ManipulationPage() {
               name="UNIQUE_ID_OF_EDITOR"
               editorProps={{ $blockScrolling: true }}
               value={code}
-              style={{ width: '50vw', height: '300px' }}
-              readOnly={false}
+              style={{ width: '50vw', height: '300px'}}
               className={styles2.enabledEditor}
             />
             <div className={styles2.footer}>
               <button
                 onClick={executeCode}
                 className={styles2.runButton}
-                disabled={isDisabled || submissionAttempted} // Disable after submission attempt
               >
                 Submit
               </button>
@@ -200,3 +192,5 @@ function ManipulationPage() {
 }
 
 export default ManipulationPage;
+
+
