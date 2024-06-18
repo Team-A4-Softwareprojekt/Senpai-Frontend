@@ -10,7 +10,7 @@
     border: 4px solid #FFD700;;
     width: 300px;
     max-width: 100%;
-    z-index: 1002;
+    z-index: 1004;
 }
 
 .popupContent {
@@ -29,5 +29,5 @@
     width: 100%;
     height: 100%;
     background: rgba(49,49,49,0.8);
-    z-index: 1001;
+    z-index: 1003;
 }
