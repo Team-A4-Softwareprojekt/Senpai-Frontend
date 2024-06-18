@@ -24,6 +24,7 @@ function ManipulationPage() {
   const [alertMessage, setAlertMessage] = useState('');
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
   const [actionText, setActionText] = useState('');
+  const [codeTest, setCodeTest] = useState('');
 
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -38,7 +39,10 @@ function ManipulationPage() {
   };
 
   const submitCode = () => {
-    socket.emit('SUBMIT_CHANGES_MANIPULATION', {code, expectedOutput} );
+
+    let codeWithTest = code + '\n' + codeTest; // Concatenate code and codeTest with a newline
+
+    socket.emit('SUBMIT_CHANGES_MANIPULATION', { code: codeWithTest, expectedOutput });
     setShowEditor(false); // Hide editor after submission
     setActionText('Wait for the other player to submit their changes.');
   };
@@ -63,7 +67,14 @@ function ManipulationPage() {
 
   useEffect(() => {
     if (manipulationQuestion) {
-      setCode(manipulationQuestion.code);
+      let codeLines = manipulationQuestion.code.split('\n');
+      let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
+      let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+
+      setCode(codeExceptLastLine);
+      setCodeTest(codeTest);
+      console.log('Code test:', codeTest);
+      
       setInitialCode(manipulationQuestion.code);
       setExpectedOutput(manipulationQuestion.outputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);

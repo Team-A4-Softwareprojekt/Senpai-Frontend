@@ -23,6 +23,7 @@ function ManipulationPage() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [rightAnswer, setRightAnswer] = useState(false);
   const { setManipulationQuestion } = useContext(ManipulationPlayerContext);
+  const [codeTest, setCodeTest] = useState('');
 
   const handleHomeClick = () => {
     navigate('/select/code');
@@ -38,6 +39,7 @@ function ManipulationPage() {
   ];
 
   const executeCode = () => {
+
     try {
       const consoleOutput = [];
       const originalConsoleLog = console.log;
@@ -45,9 +47,11 @@ function ManipulationPage() {
         consoleOutput.push(args.join(''));
         originalConsoleLog(...args);
       };
-  
+      let codeLines = manipulationQuestion.code.split('\n');
+      
+      let codeTest = codeLines[codeLines.length - 1]; // Get the last line
       // Create a new function from the latest code
-      const func = new Function(code);
+      const func = new Function(code + '\n' + codeTest);
       func();
   
       console.log = originalConsoleLog;
@@ -82,10 +86,13 @@ function ManipulationPage() {
 
   useEffect(() => {
     if (manipulationQuestion) {
-      setCode(manipulationQuestion.code);
+      let codeLines = manipulationQuestion.code.split('\n');
+      let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
+      let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+      setCode(codeExceptLastLine);
+      setCodeTest(codeTest);
       setInitialCode(manipulationQuestion.code);
       setOutput('');
-      console.log('Expected output:', manipulationQuestion.outputtext);
       setExpectedOutput(manipulationQuestion.outputtext);
     }
   }, [manipulationQuestion]);
@@ -100,8 +107,12 @@ function ManipulationPage() {
   const handleInputManipulation = (data) => {
     const { code , answer } = data;
     console.log('Received code:', code);
+    let codeLines = manipulationQuestion.code.split('\n');
+    let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
+    let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+    setCode(codeExceptLastLine);
+    setCodeTest(codeTest);
     setExpectedOutput(answer);
-    setCode(code);
     setInitialCode(code);
     setOutput('');
     setIsDisabled(false);
