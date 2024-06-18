@@ -39,21 +39,31 @@ function ManipulationPage() {
   ];
 
   const executeCode = () => {
-
     try {
       const consoleOutput = [];
       const originalConsoleLog = console.log;
+  
+      // Temporarily override console.log
       console.log = (...args) => {
-        consoleOutput.push(args.join(''));
+        consoleOutput.push(args.join(' '));
         originalConsoleLog(...args);
       };
+  
       let codeLines = manipulationQuestion.code.split('\n');
-      
       let codeTest = codeLines[codeLines.length - 1]; // Get the last line
-      // Create a new function from the latest code
-      const func = new Function(code + '\n' + codeTest);
+  
+      // Remove console.log statements from the code
+      let modifiedCode = codeLines.slice(0, -1).join('\n'); // Get all lines except the last one and join them
+      if (modifiedCode.includes('console.log')) {
+        modifiedCode = modifiedCode.replace(/console\.log\([^)]*\);?/g, '');
+        console.log('modifiedCode:', modifiedCode);
+      }
+  
+      // Create and execute the new function
+      const func = new Function(modifiedCode + '\n' + codeTest);
       func();
   
+      // Restore the original console.log
       console.log = originalConsoleLog;
   
       const resultOutput = consoleOutput.join('\n');
@@ -61,7 +71,8 @@ function ManipulationPage() {
   
       console.log('Output:', resultOutput);
       console.log('Output expected:', expectedOutput);
-      if (resultOutput == expectedOutput) {
+  
+      if (resultOutput === expectedOutput) {
         setAlertMessage('Well done! Output matches expected result.');
         setRightAnswer(true);
       } else {
@@ -69,12 +80,14 @@ function ManipulationPage() {
         setRightAnswer(false);
       }
     } catch (error) {
-        setAlertMessage('Output does not match the expected result');
-        setRightAnswer(false);
+      console.log(error);
+      setAlertMessage('An error occurred while executing the code.');
+      setRightAnswer(false);
     }
     socket.emit('ROUND_END_MANIPULATION', rightAnswer);
-
   };
+  
+  
 
   const onChange = (newCode) => {
     setCode(newCode);
@@ -105,9 +118,10 @@ function ManipulationPage() {
   }, [alertMessage]);
 
   const handleInputManipulation = (data) => {
+    console.log("handle Input mandipulation");
     const { code , answer } = data;
     console.log('Received code:', code);
-    let codeLines = manipulationQuestion.code.split('\n');
+    let codeLines = code.split('\n');
     let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
     let codeTest = codeLines[codeLines.length - 1]; // Get the last line
     setCode(codeExceptLastLine);

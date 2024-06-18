@@ -48,7 +48,9 @@ function ManipulationPage() {
   };
 
   const onChange = (newCode) => {
-    const initialLength = initialCode.length;
+    let codeLines = manipulationQuestion.code.split('\n');
+    let lastLine = codeLines[codeLines.length - 1]; // Get the last line
+    const initialLength = initialCode.length - lastLine.length; // Initial code length without the last line
     const currentLength = newCode.length;
     const changeCount = Math.abs(currentLength - initialLength);
 
