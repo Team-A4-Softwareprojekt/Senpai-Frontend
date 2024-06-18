@@ -36,7 +36,7 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
 
         // Update playerData password
         setPlayerData({ ...playerData, playerpassword: newPassword });
-        setMessage('Ihr Passwort wurde erfolgreich geändert.');
+        setMessage('Dein Passwort wurde erfolgreich geändert.');
     };
 
     const togglePasswordVisibility = () => {

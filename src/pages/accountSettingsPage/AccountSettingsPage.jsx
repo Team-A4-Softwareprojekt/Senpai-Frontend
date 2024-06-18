@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { PlayerContext } from '../../context/playerContext';
 import PopUpChangeEmail from '../../components/popUpChangeEmail/PopUpChangeEmail.jsx';
 import PopUpChangePassword from '../../components/popUpChangePassword/PopUpChangePassword.jsx';
-
+import PopUpDeleteAccount from '../../components/popUpDeleteAccount/PopUpDeleteAccount.jsx';
 
 function AccountSettingsPage() {
     const navigate = useNavigate();
@@ -14,6 +14,7 @@ function AccountSettingsPage() {
     const [showFriendPopup, setShowFriendPopup] = useState(false);
     const [isPopUpChangeEmailVisible, setIsPopUpChangeEmailVisible] = useState(false);
     const [isPopUpChangePasswordVisible, setIsPopUpChangePasswordVisible] = useState(false);
+    const [isPopUpDeleteAccountVisible, setIsPopUpDeleteAccountVisible] = useState(false);
 
     const handleHomeClick = () => {
         navigate('/select');
@@ -25,6 +26,10 @@ function AccountSettingsPage() {
 
     const handleChangePasswordClick = () => {
         setIsPopUpChangePasswordVisible(true);
+    }
+
+    const handleDeleteAccountClick = () => {
+        setIsPopUpDeleteAccountVisible(true);
     }
 
     const toggleFriendPopup = () => {
@@ -64,7 +69,7 @@ function AccountSettingsPage() {
                     <button className={styles.button} onClick={handleChangePasswordClick}>Change Password</button>
                     <button className={styles.button} onClick={toggleFriendPopup}>Manage Friends</button>
                     <button className={styles.button}>Manage Subscription</button>
-                    <button className={styles.button}>Delete Account</button>
+                    <button className={styles.button} onClick={handleDeleteAccountClick}>Delete Account</button>
                 </div>
             </div>
             {showFriendPopup && (
@@ -90,6 +95,11 @@ function AccountSettingsPage() {
             <PopUpChangePassword 
                 closePopUp={() => setIsPopUpChangePasswordVisible(false)} 
                 isVisible={isPopUpChangePasswordVisible}
+            />
+
+            <PopUpDeleteAccount 
+                closePopUp={() => setIsPopUpDeleteAccountVisible(false)} 
+                isVisible={isPopUpDeleteAccountVisible}
             />
         </>
     );
