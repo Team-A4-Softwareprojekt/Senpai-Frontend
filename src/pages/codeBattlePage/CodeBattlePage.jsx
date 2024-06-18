@@ -18,6 +18,7 @@ import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
 import PopUpCountdown from '../../components/popUpCountdown/PopUpCountdown.jsx';
 import PopUpNoHearts from '../../components/popUpNoHearts/PopUpNoHearts.jsx';
 import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
+import PopUpSubscribedTrue from '../../components/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
 import {useNavigate} from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
@@ -38,6 +39,7 @@ function codeBattlePage() {
     const [isPopUpCountdownVisible, setIsPopUpCountdownVisible] = useState(false);
     const [isPopUpNoHeartsVisible, setIsPopUpNoHeartsVisible] = useState(false);
     const [isPopUpBuyPremiumVisible, setIsPopUpBuyPremiumVisible] = useState(false);
+    const [isPopUpSubscribedTrueVisible, setIsPopUpSubscribedTrueVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
     const [countdown, setCountdown] = useState(null);
     const [hearts, setHearts] = useState([]);
@@ -152,7 +154,11 @@ function codeBattlePage() {
     };
 
     const handleBuyPremiumClick = () => {
-        setIsPopUpBuyPremiumVisible(true);
+        if (playerData.subscribed === true) {
+            setIsPopUpSubscribedTrueVisible(true);
+        } else {   
+            setIsPopUpBuyPremiumVisible(true);
+        }
     };
 
     const onBuzzerClick = () => {
@@ -249,6 +255,11 @@ function codeBattlePage() {
             <PopUpPremium
                 isVisible={isPopUpBuyPremiumVisible}
                 closePopUp={() => setIsPopUpBuyPremiumVisible(false)}
+            />
+
+            <PopUpSubscribedTrue
+                isVisible={isPopUpSubscribedTrueVisible}
+                closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
             />
         </div>  
     );

@@ -8,7 +8,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 4px solid #FFD700;;
-    width: 350px;
+    width: 375px;
     max-width: 100%;
     z-index: 1002;
 }
@@ -20,63 +20,6 @@
 .popupHeader {
     margin-top: 0;
     color: #333;
-}
-
-.popupBody {
-    margin: 15px 0;
-    color: #555;
-    line-height: 1.6;
-}
-
-.benefitsList {
-    padding-left: 20px;
-    margin-top: 10px;
-    text-align: left;
-}
-
-.benefitItem {
-    margin-top: 10px;
-}
-
-.costBox {
-    border: 3px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 15px 0;
-}
-
-.costInfo {
-    display: flex;
-    justify-content: space-between;
-    margin: 5px 0;
-}
-
-.costLabel {
-    text-align: left;
-}
-
-.costValue {
-    text-align: right;
-}
-
-.costDivider {
-    margin: 10px 0;
-}
-
-.confirmButton {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    margin-right: 10px;
-    font-size: 16px;
-}
-
-.confirmButton:hover {
-    background: #218838;
 }
 
 .closeButton {
@@ -103,4 +46,9 @@
     height: 100%;
     background: rgba(49,49,49,0.8);
     z-index: 1001;
+}
+
+p {
+    color: black;
+    font-size: 18px;
 }
