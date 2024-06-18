@@ -4,16 +4,28 @@ import React, {useContext, useState} from 'react';
 import HomeButton from '../../components/homeButton/HomeButton';
 import { useNavigate } from 'react-router-dom';
 import { PlayerContext } from '../../context/playerContext';
+import PopUpChangeEmail from '../../components/popUpChangeEmail/PopUpChangeEmail.jsx';
+import PopUpChangePassword from '../../components/popUpChangePassword/PopUpChangePassword.jsx';
 
 
 function AccountSettingsPage() {
     const navigate = useNavigate();
     const {playerData} = useContext(PlayerContext);
     const [showFriendPopup, setShowFriendPopup] = useState(false);
+    const [isPopUpChangeEmailVisible, setIsPopUpChangeEmailVisible] = useState(false);
+    const [isPopUpChangePasswordVisible, setIsPopUpChangePasswordVisible] = useState(false);
 
     const handleHomeClick = () => {
         navigate('/select');
     };
+
+    const handleChangeEmailClick = () => {
+        setIsPopUpChangeEmailVisible(true);
+    }
+
+    const handleChangePasswordClick = () => {
+        setIsPopUpChangePasswordVisible(true);
+    }
 
     const toggleFriendPopup = () => {
         setShowFriendPopup(!showFriendPopup);
@@ -48,8 +60,8 @@ function AccountSettingsPage() {
                     </div>
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button className={styles.button}>Change E-Mail</button>
-                    <button className={styles.button}>Change Password</button>
+                    <button className={styles.button} onClick={handleChangeEmailClick}>Change E-Mail</button>
+                    <button className={styles.button} onClick={handleChangePasswordClick}>Change Password</button>
                     <button className={styles.button} onClick={toggleFriendPopup}>Manage Friends</button>
                     <button className={styles.button}>Manage Subscription</button>
                     <button className={styles.button}>Delete Account</button>
@@ -70,6 +82,15 @@ function AccountSettingsPage() {
                     </div>
                 </div>
             )}
+            <PopUpChangeEmail 
+                closePopUp={() => setIsPopUpChangeEmailVisible(false)} 
+                isVisible={isPopUpChangeEmailVisible} 
+            />
+
+            <PopUpChangePassword 
+                closePopUp={() => setIsPopUpChangePasswordVisible(false)} 
+                isVisible={isPopUpChangePasswordVisible}
+            />
         </>
     );
 }
