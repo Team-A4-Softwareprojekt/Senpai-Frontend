@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styles from './CodeBattlePage.module.css';
 import SelectGameCard from '../../components/selectGameCard/SelectGameCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
@@ -23,17 +23,18 @@ import {useNavigate} from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
+import { ManipulationPlayerContext } from "../../context/manipulationQuestionContext.jsx";
 import {URL} from '../../../url.js';
 
 /*
 This is the code battle page that holds an account button, amount of lives and three different
 game modes to choose from. Each game mode has a modal with the basic explanation of the mode
 */
-function codeBattlePage() {
-
+function CodeBattlePage() {
     const { playerName, playerData, setPlayerData } = useContext(PlayerContext);
     const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
-    
+    const { setManipulationQuestion } = useContext(ManipulationPlayerContext);
+
     const navigate = useNavigate();
     const [isPopUpQueueVisible, setIsPopUpQueueVisible] = useState(false);
     const [isPopUpCountdownVisible, setIsPopUpCountdownVisible] = useState(false);
@@ -44,7 +45,16 @@ function codeBattlePage() {
     const [countdown, setCountdown] = useState(null);
     const [hearts, setHearts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [player1Manipulation, setPlayer1Manipulation] = useState(false);
+    const [player2Manipulation, setPlayer2Manipulation] = useState(false);
+
     
+
+    const handleSetQuestionManipulation = (question) => {   
+        console.log(question);
+        setManipulationQuestion(question);
+    };
+
     useEffect(() => {
         const url = URL + "/loadAccountData";
 
@@ -81,7 +91,14 @@ function codeBattlePage() {
             setIsPopUpQueueVisible(false);
             setIsPopUpCountdownVisible(true);
         };
-
+    
+        const handleGameFoundManipulation = (fullRoom) => {
+            console.log('Game found Manipulation', fullRoom);
+            setIsPopUpQueueVisible(false);
+            setIsPopUpCountdownVisible(true);
+            //navigate('/codebattle/manipulation');
+        };
+    
         const handleQuestionType = (table) => {
             console.log('From table:', table);
             if (table === 'multiplechoicequestion') {
@@ -90,32 +107,58 @@ function codeBattlePage() {
                 navigate('/codebattle/buzzer/gaptext');
             }
         };
-
+    
         const handleStartCountdown = (countdown) => {
             console.log('Countdown started', countdown);
             setCountdown(countdown);
-
         };
-
+    
         const handleSetQuestion = (question) => {
             console.log(question);
             setBuzzerQuestion(question);
         };
+    
+        const handleSetQuestionManipulation = (question) => {   
+            console.log(question);
+            setManipulationQuestion(question);
+        };
 
+        const handlePlayerOneManipulation = (player) => {
+            console.log('Player one:', player);
+            setPlayer1Manipulation(true);
+            navigate('/codebattle/manipulation/player1');
+        }
+
+        const handlePlayerTwoManipulation = (player) => {
+            console.log('Player two:', player);
+            setPlayer2Manipulation(true);
+            navigate('/codebattle/manipulation/player2');
+        }
+    
         // Register the event listeners
         socket.on('Buzzer_GameFound', handleGameFound);
+        socket.on('Manipulation_GameFound', handleGameFoundManipulation);
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
         socket.on('BUZZER_COUNTDOWN', handleStartCountdown);
+        socket.on('MANIPULATION_COUNTDOWN', handleStartCountdown); 
         socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
-
+        socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
+        socket.on('PLAYER_ONE_MANIPULATION', handlePlayerOneManipulation);
+        socket.on('PLAYER_TWO_MANIPULATION', handlePlayerTwoManipulation);
+    
         // Clean up the listeners when the component is unmounted
         return () => {
             socket.off('Buzzer_GameFound', handleGameFound);
+            socket.off('Manipulation_GameFound', handleGameFoundManipulation);
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
             socket.off('BUZZER_COUNTDOWN', handleStartCountdown);
-            socket.off('SET_BUZZER_QUESTION', handleSetQuestion)
+            socket.off('MANIPULATION_COUNTDOWN', handleStartCountdown); 
+            socket.off('SET_BUZZER_QUESTION', handleSetQuestion);
+            socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
+            socket.off('PLAYER_ONE_MANIPULATION', handlePlayerOneManipulation);
+            socket.off('PLAYER_TWO_MANIPULATION', handlePlayerTwoManipulation);
         };
-    }, [navigate]);
+     }, [navigate, setBuzzerQuestion, setManipulationQuestion]);
     
     // Function to render hearts based on player lives
     useEffect(() => {
@@ -139,6 +182,7 @@ function codeBattlePage() {
 
         setHearts(renderHearts());
     }, [playerData]);
+
 
 
     const handleHomeClick = () => {
@@ -168,6 +212,7 @@ function codeBattlePage() {
     };
 
     const onManipulationClick = () => {
+        startManipulationQueue(playerName);
         setSelectedGameMode('Manipulation');
         setIsPopUpQueueVisible(true);
     };
@@ -180,9 +225,12 @@ function codeBattlePage() {
     const closePopup = () => {
         if (selectedGameMode === 'Buzzer') {
             leaveBuzzerQueue();
+        } else if (selectedGameMode === 'Manipulation') {
+            leaveManipulationQueue();
         }
         setIsPopUpQueueVisible(false);
     };
+
 
     const handleNoHeartsClick = () => {
         console.log("No hearts click handled");
@@ -211,6 +259,7 @@ function codeBattlePage() {
                     modalHeader="Buzzer"
                     modalText="Compete against another player. Answer questions by pressing a buzzer in a limited time."
                 />
+
                 <SelectGameCard 
                     buttonText="Manipulation"
                     imageUrl={playerData.lives > 0 ? manipulationImg : manipulationGrayImg}
@@ -220,6 +269,7 @@ function codeBattlePage() {
                     modalHeader="Manipulation"
                     modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
                 />
+
                 <SelectGameCard 
                     buttonText="Limitation"
                     imageUrl={playerData.lives > 0 ? limitationImg : limitationGrayImg}
@@ -261,7 +311,9 @@ function codeBattlePage() {
                 isVisible={isPopUpSubscribedTrueVisible}
                 closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
             />
+
         </div>  
     );
 }
-export default codeBattlePage;
+
+export default CodeBattlePage;
