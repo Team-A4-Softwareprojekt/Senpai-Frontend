@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "@lottiefiles/react-lottie-player": "^3.5.4",
+    "console-intercept": "^0.1.8",
     "express": "^4.17.1",
     "react": "^18.2.0",
+    "react-ace": "^11.0.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
     "socket.io-client": "^4.7.5"
