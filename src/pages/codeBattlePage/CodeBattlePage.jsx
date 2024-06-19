@@ -24,7 +24,13 @@ import PopUpNoHearts from '../../components/popUpNoHearts/PopUpNoHearts.jsx';
 import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
 import PopUpSubscribedTrue from '../../components/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
 import {useNavigate} from 'react-router-dom';
-import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
+import {
+    socket,
+    startBuzzerQueue,
+    leaveBuzzerQueue,
+    disconnectSocket,
+    startManipulationQueue, leaveManipulationQueue
+} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 import { ManipulationPlayerContext } from "../../context/manipulationQuestionContext.jsx";
