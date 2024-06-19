@@ -1,39 +1,89 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styles from './CodeBattlePage.module.css';
-import SelectCard from '../../components/selectCard/SelectCard.jsx';
+import SelectGameCard from '../../components/selectGameCard/SelectGameCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
 import manipulationImg from '../../assets/manipulation.png';
 import limitationImg from '../../assets/limitation.png';
+import buzzerGrayImg from '../../assets/buzzerGray.png';
+import manipulationGrayImg from '../../assets/manipulationGray.png';
+import limitationGrayImg from '../../assets/limitationGray.png';
+import emptyHeart from '../../assets/emptyHeart.png';
+import redHeart from '../../assets/redHeart.png';
+import goldenHeart from '../../assets/goldenHeart.png';
 import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
+import PremiumButton from '../../components/premiumButton/PremiumButton';
 import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
 import PopUpCountdown from '../../components/popUpCountdown/PopUpCountdown.jsx';
-import { useNavigate } from 'react-router-dom';
-import { socket, startBuzzerQueue, leaveBuzzerQueue, startManipulationQueue, leaveManipulationQueue } from '../../socket.js';
-import { PlayerContext } from "../../context/playerContext.jsx";
-import { BuzzerPlayerContext } from "../../context/buzzerQuestionContext.jsx";
+import PopUpNoHearts from '../../components/popUpNoHearts/PopUpNoHearts.jsx';
+import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
+import PopUpSubscribedTrue from '../../components/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
+import {useNavigate} from 'react-router-dom';
+import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, requestQuestion} from '../../socket.js';
+import {PlayerContext} from "../../context/playerContext.jsx";
+import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 import { ManipulationPlayerContext } from "../../context/manipulationQuestionContext.jsx";
+import {URL} from '../../../url.js';
 
+/*
+This is the code battle page that holds an account button, amount of lives and three different
+game modes to choose from. Each game mode has a modal with the basic explanation of the mode
+*/
 function CodeBattlePage() {
-    const { playerName } = useContext(PlayerContext);
+    const { playerName, playerData, setPlayerData } = useContext(PlayerContext);
     const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
     const { setManipulationQuestion } = useContext(ManipulationPlayerContext);
 
     const navigate = useNavigate();
     const [isPopUpQueueVisible, setIsPopUpQueueVisible] = useState(false);
     const [isPopUpCountdownVisible, setIsPopUpCountdownVisible] = useState(false);
+    const [isPopUpNoHeartsVisible, setIsPopUpNoHeartsVisible] = useState(false);
+    const [isPopUpBuyPremiumVisible, setIsPopUpBuyPremiumVisible] = useState(false);
+    const [isPopUpSubscribedTrueVisible, setIsPopUpSubscribedTrueVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
     const [countdown, setCountdown] = useState(null);
-
+    const [hearts, setHearts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [player1Manipulation, setPlayer1Manipulation] = useState(false);
     const [player2Manipulation, setPlayer2Manipulation] = useState(false);
+
     
 
     const handleSetQuestionManipulation = (question) => {   
         console.log(question);
         setManipulationQuestion(question);
     };
+
+    useEffect(() => {
+        const url = URL + "/loadAccountData";
+
+        const fetchPlayerData = async () => {
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ playerName })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                setPlayerData(data);
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPlayerData();
+    }, [playerName, setPlayerData]);
+
 
     useEffect(() => {
         const handleGameFound = (fullRoom) => {
@@ -108,7 +158,32 @@ function CodeBattlePage() {
             socket.off('PLAYER_ONE_MANIPULATION', handlePlayerOneManipulation);
             socket.off('PLAYER_TWO_MANIPULATION', handlePlayerTwoManipulation);
         };
-    }, [navigate, setBuzzerQuestion, setManipulationQuestion]);
+     }, [navigate, setBuzzerQuestion, setManipulationQuestion]);
+    
+    // Function to render hearts based on player lives
+    useEffect(() => {
+        const renderHearts = () => {
+            const hearts = [];
+            if (playerData && playerData.lives !== undefined) {
+                for (let i = 0; i < 3; i++) {
+                    if (playerData.subscribed === true && i < playerData.lives) {
+                        hearts.push(<img key={i} src={goldenHeart} alt="Golden Heart" className={styles.goldenHeart} />);
+                    } else {
+                        if (i < playerData.lives) {
+                            hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.fullRedHeart} />);
+                        } else {
+                            hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.emptyHeart} />);
+                        }
+                    }
+                }
+            }
+            return hearts;
+        };
+
+        setHearts(renderHearts());
+    }, [playerData]);
+
+
 
     const handleHomeClick = () => {
         navigate('/select/code');
@@ -120,6 +195,14 @@ function CodeBattlePage() {
 
     const handleChangeTopicClick = () => {
         navigate('/select');
+    };
+
+    const handleBuyPremiumClick = () => {
+        if (playerData.subscribed === true) {
+            setIsPopUpSubscribedTrueVisible(true);
+        } else {   
+            setIsPopUpBuyPremiumVisible(true);
+        }
     };
 
     const onBuzzerClick = () => {
@@ -148,39 +231,59 @@ function CodeBattlePage() {
         setIsPopUpQueueVisible(false);
     };
 
-    return ( 
+
+    const handleNoHeartsClick = () => {
+        console.log("No hearts click handled");
+        setIsPopUpNoHeartsVisible(true);
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    return( 
         <div>
-            <h1>Choose your battle</h1>
-            <div className={styles.cardsGridContainer}>      
-                <SelectCard 
+            <h1>
+                Choose your battle
+            </h1>
+            <div className={styles.heartsContainer}>
+                {hearts}
+            </div>
+            <div className= {styles.cardsGridContainer}>      
+                <SelectGameCard 
                     buttonText="Buzzer"
-                    imageUrl={buzzerImg} 
-                    modalHeader="Buzzer" 
-                    modalText="Compete against another player. Answer questions by pressing a buzzer in a limited time."
-                    className={styles.selectCard}
+                    imageUrl={playerData.lives > 0 ? buzzerImg : buzzerGrayImg}
                     handleClick={onBuzzerClick}
+                    handleNoHeartsClick={handleNoHeartsClick}
+                    lives={playerData.lives}
+                    modalHeader="Buzzer"
+                    modalText="Compete against another player. Answer questions by pressing a buzzer in a limited time."
                 />
-                <SelectCard 
-                    buttonText="Manipulation" 
-                    imageUrl={manipulationImg}
-                    modalHeader="Manipulation" 
-                    modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
-                    className={styles.selectCard}
+
+                <SelectGameCard 
+                    buttonText="Manipulation"
+                    imageUrl={playerData.lives > 0 ? manipulationImg : manipulationGrayImg}
                     handleClick={onManipulationClick}
+                    handleNoHeartsClick={handleNoHeartsClick}
+                    lives={playerData.lives}
+                    modalHeader="Manipulation"
+                    modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
                 />
-                <SelectCard 
-                    buttonText="Limitation" 
-                    imageUrl={limitationImg} 
-                    linkTo="*"
-                    modalHeader="Limitation" 
-                    modalText="Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
-                    className={styles.selectCard}
+
+                <SelectGameCard 
+                    buttonText="Limitation"
+                    imageUrl={playerData.lives > 0 ? limitationImg : limitationGrayImg}
                     handleClick={onLimitationClick}
+                    handleNoHeartsClick={handleNoHeartsClick}
+                    lives={playerData.lives}
+                    modalHeader="Limitation"
+                    modalText="Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
                 />
             </div>
             <HomeButton handleClick={handleHomeClick} />
             <AccountButton handleClick={handleAccountClick} />
             <ChangeTopicButton handleClick={handleChangeTopicClick} />
+            <PremiumButton handleClick={handleBuyPremiumClick}/>
 
             <PopUpQueue
                 isVisible={isPopUpQueueVisible}
@@ -191,8 +294,24 @@ function CodeBattlePage() {
             <PopUpCountdown
                 isVisible={isPopUpCountdownVisible}
                 closePopup={() => setIsPopUpCountdownVisible(false)}
-                countdown={countdown}
-            />   
+                countdown={countdown} // Transfer countdown value to the component
+            />
+            
+            <PopUpNoHearts
+                isVisible={isPopUpNoHeartsVisible}
+                closePopup={() => setIsPopUpNoHeartsVisible(false)}
+            />
+
+            <PopUpPremium
+                isVisible={isPopUpBuyPremiumVisible}
+                closePopUp={() => setIsPopUpBuyPremiumVisible(false)}
+            />
+
+            <PopUpSubscribedTrue
+                isVisible={isPopUpSubscribedTrueVisible}
+                closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
+            />
+
         </div>  
     );
 }
