@@ -1,0 +1,95 @@
+pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-left: 3px solid #ccc;
+    margin: 20px;
+    overflow: auto;
+    border-radius: 5px;
+}
+
+.title {
+    color: white;
+    font-size: 2rem;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    border: 2px solid white;
+    padding: 10px;
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
+
+.runButton {
+    display: block;
+    margin-left: auto;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
+
+.runButton:hover {
+    background-color: #224d24;
+}
+
+.editor {
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.languageDropdownContainer {
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+    margin: 20px;
+}
+
+.languageDropdown {
+    padding: 5px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.infoText {
+    color: rgb(255, 255, 255);
+  }
+  
+  .variable {
+    gap: 20px;
+    color: rgb(243, 243, 84);
+  }
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    padding: 5px;
+}
+
+/* For the AceEditor */
+.disabledEditor {
+    background-color: #f2f2f2; /* Light gray background */
+    color: #b0b0b0; /* Light gray text */
+    pointer-events: none; /* Disable pointer events */
+    opacity: 0.6; /* Reduced opacity */
+  }
+  
+  /* For the Submit Button */
+  .disabledButton {
+    background-color: #d3d3d3; /* Light gray background */
+    color: #a0a0a0; /* Light gray text */
+    cursor: not-allowed; /* Show disabled cursor */
+    opacity: 0.6; /* Reduced opacity */
+  }
+  

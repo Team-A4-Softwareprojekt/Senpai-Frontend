@@ -54,9 +54,20 @@ const startBuzzerQueue = (playerName) => {
     socket.emit('Buzzer_Queue', playerName);
 };
 
+const startManipulationQueue = (playerName) => {
+    console.log("Starting manipulation queue");
+    console.log(playerName);
+    socket.emit('Manipulation_Queue', playerName);
+};
+
 const leaveBuzzerQueue = () => {
     console.log("Leaving buzzer queue");
     socket.emit('Leave_Buzzer_Queue');
+};
+
+const leaveManipulationQueue = () => {
+    console.log("Leaving manipulation queue");
+    socket.emit('Leave_Manipulation_Queue');
 };
 
 // Function to send AWAIT_QUESTION event
@@ -88,4 +99,4 @@ const disconnectSocket = () => {
 };
 
 // Export the socket instance, and control functions
-export {socket, startBuzzerQueue, leaveBuzzerQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket, requestDailyChallengeQuestion};
+export {socket, startBuzzerQueue, startManipulationQueue, leaveBuzzerQueue, leaveManipulationQueue, requestQuestion, playerBuzzed, compareAnswer, disconnectSocket, requestDailyChallengeQuestion};
