@@ -5,7 +5,7 @@ import {URL} from "url.js";
 test('the URL should be the Render URL', () => {
     console.log(URL)
     //expect(URL).toBe('http://localhost:3000');
-    expect(URL).toBe('https://senpai-development.onrender.com');
+    expect(URL).toBe('https://senpai-server.onrender.com');
 })
 
 /*
