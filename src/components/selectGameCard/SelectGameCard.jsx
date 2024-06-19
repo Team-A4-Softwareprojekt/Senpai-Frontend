@@ -3,8 +3,16 @@ import ModalGameSelection from '../modalGameSelection/ModalGameSelection';
 import styles from './SelectGameCard.module.css';
 import { Link } from 'react-router-dom';
 
-function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick }) {
-    return (
+function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick, handleNoHeartsClick, lives }) {
+    const onButtonClick = () => {
+        if (lives === 0) {
+            handleNoHeartsClick();
+        } else {
+            handleClick();
+        }
+    };
+  
+  return (
         <div className={styles.selectCardContainer}>
             <h1 className={styles.buttonText}>{buttonText}</h1>
             <Link to={linkTo}>

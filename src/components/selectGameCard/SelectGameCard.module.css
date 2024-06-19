@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
     margin-bottom: 10px;
     margin-right: 15px;
 }
@@ -9,6 +10,7 @@
 .buttonText {
     margin-bottom: 10px;
 }
+
 
 .selectCardImg {
     width: 100%;
@@ -19,6 +21,7 @@
 .selectButton {
     width: 330px;
     height: 330px;
+
     background-color: hsl(212, 55%, 54%);
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -27,6 +30,7 @@
 .selectButton:hover {
     background-color: gold;
 }
+
 
 .infoContainer {
     margin-top: 10px;
@@ -39,3 +43,4 @@
     font-size: 24px;
     cursor: pointer;
 }
+
