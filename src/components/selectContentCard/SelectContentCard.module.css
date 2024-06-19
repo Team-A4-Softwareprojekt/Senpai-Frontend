@@ -2,34 +2,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
+    margin-right: 15px;
+}
+
+.buttonText {
+    margin-bottom: 10px;
 }
 
 .selectCardImg {
-    width: 87%;
-    height: auto;
-    border-radius: 10px;
+    width: 100%;
+    border: 4px solid black;
+    border-radius: 5px; 
 }
 
 .selectButton {
     width: 330px;
     height: 330px;
-    background-color:  rgb(27, 27, 27);
-    border-radius: 10px;
-    color: black;
-    border: 6px solid rgb(255, 255, 255);
-    padding: 10px 20px;
+    background-color: hsl(212, 16%, 84%);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 9px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .selectButton:hover {
-    background-color: rgb(52, 51, 51);
+    background-color: gold;
 }
 
 .infoContainer {

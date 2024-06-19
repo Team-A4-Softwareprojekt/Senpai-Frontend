@@ -11,18 +11,17 @@
 .overlay {
     background: rgba(49,49,49,0.8);
 }
-
 .content {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
-    background: #2a2a2a;
+    background: linear-gradient(0deg, #1e3c72 0%, #396cc4 0%);
     color: white;
     padding: 14px 28px;
     border-radius: 19px;
-    max-width: 750px;
+    max-width: 550px;
     min-width: 300px;
     border: 3px solid white;
 }

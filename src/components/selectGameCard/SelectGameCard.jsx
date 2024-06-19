@@ -1,8 +1,9 @@
 import React from 'react';
-import Modal from '../modal/Modal';
+import ModalGameSelection from '../modalGameSelection/ModalGameSelection';
 import styles from './SelectGameCard.module.css';
+import { Link } from 'react-router-dom';
 
-function SelectGameCard({ buttonText, imageUrl, modalHeader, modalText, handleClick, handleNoHeartsClick, lives }) {
+function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick, handleNoHeartsClick, lives }) {
     const onButtonClick = () => {
         if (lives === 0) {
             handleNoHeartsClick();
@@ -10,24 +11,20 @@ function SelectGameCard({ buttonText, imageUrl, modalHeader, modalText, handleCl
             handleClick();
         }
     };
-
-    return (
+  
+  return (
         <div className={styles.selectCardContainer}>
-                <button className={styles.selectButton} onClick={onButtonClick}>
+            <h1 className={styles.buttonText}>{buttonText}</h1>
+            <Link to={linkTo}>
+                <button className={styles.selectButton} onClick={handleClick}>
                     <img className={styles.selectCardImg} src={imageUrl} alt="Image Description" />
-                    <h1> {buttonText} </h1>
                 </button>
+            </Link>
             <div className={styles.questionMarkContainer}>
-                <Modal header={modalHeader} text={modalText}>
-                    <button className={styles.questionMarkButton}>?</button>
-                </Modal>
+                <ModalGameSelection header={header} text={text} slides={slides}/>
             </div>
         </div>
     );
-}
-
-SelectGameCard.defaultProps = {
-    buttonText: ' Not Found'
 }
 
 export default SelectGameCard;

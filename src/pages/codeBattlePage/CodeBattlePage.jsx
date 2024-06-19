@@ -4,6 +4,10 @@ import SelectGameCard from '../../components/selectGameCard/SelectGameCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
 import manipulationImg from '../../assets/manipulation.png';
 import limitationImg from '../../assets/limitation.png';
+import slideShowGame from '../../assets/slideShowGame.png';
+import slideConfirmAnswer from '../../assets/slideConfirmAnswer.png';
+import slideRightAnswer from '../../assets/slideRightAnswer.png';
+import slideWrongAnswer from '../../assets/slideWrongAnswer.png';
 import buzzerGrayImg from '../../assets/buzzerGray.png';
 import manipulationGrayImg from '../../assets/manipulationGray.png';
 import limitationGrayImg from '../../assets/limitationGray.png';
@@ -232,6 +236,21 @@ function CodeBattlePage() {
     };
 
 
+    const slideTexts = [
+        "Zu Beginn jeder Runde siehst du eine Frage und vier Antwortmöglichkeiten. Wenn du die Frage beantworten möchtest, dann drücke auf den roten Buzzer unten rechts. Behalte den Timer im Auge und sei schneller als dein Gegner!",
+        "Nachdem du den Buzzer gedrückt hast, musst du innerhalb von 5 Sekunden deine Antwort bestätigen. Wenn du dies nicht tust oder falsch antwortest, dann bekommt dein Gegner die Möglichkeit die Frage zu beantworten.",
+        "Wenn du richtig geantwortet hast, dann bekommst du einen Punkt. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel.",
+        "Wenn du nach dem Drücken des Buzzers nicht innerhalb der vorgegebenen Zeit oder falsch antwortest, dann verlierst du einen Punkt."
+    ];
+    
+    const buzzerSlides = [
+        { header: "Buzzer", text: slideTexts[0], image: slideShowGame },
+        { header: "Buzzer", text: slideTexts[1], image: slideConfirmAnswer },
+        { header: "Buzzer", text: slideTexts[2], image: slideRightAnswer },
+        { header: "Buzzer", text: slideTexts[3], image: slideWrongAnswer },
+    ];
+
+
     const handleNoHeartsClick = () => {
         console.log("No hearts click handled");
         setIsPopUpNoHeartsVisible(true);
@@ -240,6 +259,7 @@ function CodeBattlePage() {
     if (loading) {
         return <div>Loading...</div>;
     }
+
 
     return( 
         <div>
@@ -251,8 +271,10 @@ function CodeBattlePage() {
             </div>
             <div className= {styles.cardsGridContainer}>      
                 <SelectGameCard 
-                    buttonText="Buzzer"
+
+                    buttonText= "Buzzer"
                     imageUrl={playerData.lives > 0 ? buzzerImg : buzzerGrayImg}
+                    slides={buzzerSlides}
                     handleClick={onBuzzerClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}
@@ -261,7 +283,7 @@ function CodeBattlePage() {
                 />
 
                 <SelectGameCard 
-                    buttonText="Manipulation"
+                    buttonText= "Manipulation" 
                     imageUrl={playerData.lives > 0 ? manipulationImg : manipulationGrayImg}
                     handleClick={onManipulationClick}
                     handleNoHeartsClick={handleNoHeartsClick}
@@ -269,6 +291,7 @@ function CodeBattlePage() {
                     modalHeader="Manipulation"
                     modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
                 />
+
 
                 <SelectGameCard 
                     buttonText="Limitation"
