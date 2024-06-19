@@ -14,7 +14,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    max-width: 350px;
+    max-width: 400px;
     padding: 20px;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Neue Farben */
     border-radius: 10px; /* Runde Ecken */

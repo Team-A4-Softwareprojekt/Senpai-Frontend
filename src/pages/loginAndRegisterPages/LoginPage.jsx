@@ -20,7 +20,7 @@ function LoginPage() {
     const [loginError, setLoginError] = useState('');
     const { playerName, setPlayerName } = useContext(PlayerContext);
 
-    const url = URL + '/login';
+    const url = URL + 'login';
 
     // functions for updating the input formula
     const handlePasswordChange = (event) => {
