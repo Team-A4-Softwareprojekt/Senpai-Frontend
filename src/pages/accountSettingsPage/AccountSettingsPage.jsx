@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { PlayerContext } from '../../context/playerContext';
 import PopUpChangeEmail from '../../components/popUpChangeEmail/PopUpChangeEmail.jsx';
 import PopUpChangePassword from '../../components/popUpChangePassword/PopUpChangePassword.jsx';
+import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
+import PopUpSubscribedTrue from '../../components/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
 import PopUpDeleteAccount from '../../components/popUpDeleteAccount/PopUpDeleteAccount.jsx';
 
 function AccountSettingsPage() {
@@ -14,7 +16,12 @@ function AccountSettingsPage() {
     const [showFriendPopup, setShowFriendPopup] = useState(false);
     const [isPopUpChangeEmailVisible, setIsPopUpChangeEmailVisible] = useState(false);
     const [isPopUpChangePasswordVisible, setIsPopUpChangePasswordVisible] = useState(false);
+    const [isPopUpPremiumVisible, setIsPopUpPremiumVisible] = useState(false);
+    const [isPopUpSubscribedTrueVisible, setIsPopUpSubscribedTrueVisible] = useState(false);
     const [isPopUpDeleteAccountVisible, setIsPopUpDeleteAccountVisible] = useState(false);
+    const today = new Date();
+    const missedStreakDate = new Date(playerData.missedstreak);
+    const streakCounter = Math.ceil((today - missedStreakDate) / (1000 * 60 * 60 * 24));
 
     const handleHomeClick = () => {
         navigate('/select');
@@ -26,6 +33,14 @@ function AccountSettingsPage() {
 
     const handleChangePasswordClick = () => {
         setIsPopUpChangePasswordVisible(true);
+    }
+
+    const handleManageSubscriptionClick = () => {
+        if (playerData.subscribed === true) {
+            setIsPopUpSubscribedTrueVisible(true);
+        } else {   
+            setIsPopUpPremiumVisible(true);
+        }
     }
 
     const handleDeleteAccountClick = () => {
@@ -56,7 +71,7 @@ function AccountSettingsPage() {
                         <div className={styles.heading}><strong>Player Information</strong></div>
                         <div className={styles.infoRowContainer}>
                             <div className={styles.infoRow}>
-                                <strong>Streak:</strong> <span>{playerData.streaktoday ? 'Active' : 'Inactive'}</span>
+                                <strong>Streak:</strong> <span>{streakCounter}</span>
                             </div>
                             <div className={styles.infoRow}>
                                 <strong>Rank:</strong> <span>coming soon</span>
@@ -68,7 +83,7 @@ function AccountSettingsPage() {
                     <button className={styles.button} onClick={handleChangeEmailClick}>Change E-Mail</button>
                     <button className={styles.button} onClick={handleChangePasswordClick}>Change Password</button>
                     <button className={styles.button} onClick={toggleFriendPopup}>Manage Friends</button>
-                    <button className={styles.button}>Manage Subscription</button>
+                    <button className={styles.button} onClick={handleManageSubscriptionClick}>Manage Subscription</button>
                     <button className={styles.button} onClick={handleDeleteAccountClick}>Delete Account</button>
                 </div>
             </div>
@@ -97,6 +112,16 @@ function AccountSettingsPage() {
                 isVisible={isPopUpChangePasswordVisible}
             />
 
+            <PopUpPremium 
+                closePopUp={() => setIsPopUpPremiumVisible(false)} 
+                isVisible={isPopUpPremiumVisible}
+            />
+
+            <PopUpSubscribedTrue
+                closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
+                isVisible={isPopUpSubscribedTrueVisible}
+            />
+            
             <PopUpDeleteAccount 
                 closePopUp={() => setIsPopUpDeleteAccountVisible(false)} 
                 isVisible={isPopUpDeleteAccountVisible}
