@@ -142,7 +142,7 @@ function CodeBattlePage() {
         const handlePlayerTwoManipulation = (player) => {
             console.log('Player two:', player);
             setPlayer2Manipulation(true);
-            navigate('/codebattle/manipulation/player2');
+            navigate('/codebattle/manipulation/player1');
         }
     
         // Register the event listeners

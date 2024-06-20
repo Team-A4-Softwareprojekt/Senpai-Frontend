@@ -64,8 +64,8 @@ function ManipulationPage() {
       // Restore the original console.log
       console.log = originalConsoleLog;
   
-      const resultOutput = consoleOutput.join('\n').trim();
-      const expected = expectedOutput.trim();
+      const resultOutput = consoleOutput.join('\n');
+      const expected = expectedOutput
   
       if (resultOutput === expected) {
         setAlertMessage('Well done! Output matches expected result.');
@@ -117,9 +117,11 @@ function ManipulationPage() {
   }, [alertMessage]);
 
   const handleInputManipulation = (data) => {
+    
     console.log("handle Input manipulation");
     const { code , answer } = data;
     console.log('Received code:', code);
+    
     let codeLines = code.split('\n');
     let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
     let codeTest = codeLines[codeLines.length - 1]; // Get the last line
@@ -127,6 +129,7 @@ function ManipulationPage() {
     setCode(codeExceptLastLine);
     setCodeTest(codeTest);
     setExpectedOutput(answer);
+    console.log('Expected output:', expectedOutput);
     setInitialCode(code);
     setOutput('');
     setIsDisabled(false);
@@ -142,15 +145,18 @@ function ManipulationPage() {
     setManipulationQuestion(question);
   };
 
+
   useEffect(() => {
     socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
     socket.on('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
     socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+  
 
     return () => {
       socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
       socket.off('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+      
     };
   }, []);
 

@@ -96,11 +96,17 @@ function ManipulationPage() {
     navigate('/codebattle/manipulation/player2');
   };
 
+  const handleSwitchPageManipulation = () => {
+    navigate('/codebattle/manipulation/player2');
+  };
+
   useEffect(() => {
     socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+    socket.on('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
 
     return () => {
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+      socket.off('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
     };
   }, []);
   
