@@ -3,10 +3,11 @@ import SelectContentCard from '../../components/selectContentCard/SelectContentC
 import codeChallengeImg from '../../assets/codeChallenge.jpg';
 import codeBattleImg from '../../assets/codeBattle.jpg';
 import codeExerciseImg from '../../assets/codeExercise.jpg';
-import React, { useEffect } from 'react';
+import React, {useState, useEffect } from 'react';
 import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
+import PopUpExercise from '../../components/popUpExercise/PopUpExercise';
 import { useNavigate } from 'react-router-dom';
 import {socket, requestDailyChallengeQuestion} from '../../socket.js';
 
@@ -15,7 +16,7 @@ This is the code-senpai page that holds an account button, amount of lives and t
 game modes to choose from. Each game mode has a modal with the basic explanation of the mode
 */
 function codeSenpaiPage() {
-
+    const [isPopUpExerciseVisible, setIsPopUpExerciseVisible] = useState(false);
     const navigate = useNavigate();
     
     const handleHomeClick = () => {
@@ -33,6 +34,10 @@ function codeSenpaiPage() {
     const handleDailyChallenge = () => {
         requestDailyChallengeQuestion();
         //navigate('/select/code/dailyChallenge');
+    };
+
+    const handleExerciseClick = () => {
+        setIsPopUpExerciseVisible(true);
     };
 
     useEffect(() => {
@@ -68,27 +73,31 @@ function codeSenpaiPage() {
                     modalText = "Absolviere täglich eine neue Herausforderung und baue deine Streak auf."
                     className= {styles.selectCard}
                     handleClick = {handleDailyChallenge}
-                    />
-                    	
+                /> 	
                 <SelectContentCard 
                     buttonText= "Code Battle"
                     imageUrl={codeBattleImg}
                     linkTo={"/select/code/codeBattle"}
                     modalHeader = "Code Battle" 
                     modalText = "Stelle dich der Herausforderung und trete gegen andere Spieler in spannenden Wettkämpfen an."
-                    className= {styles.selectCard}/>
-                    
+                    className= {styles.selectCard}
+                />  
                 <SelectContentCard 
-                    buttonText= "Exercise"
-                    imageUrl={codeExerciseImg}
-                    linkTo={"/select/code/exercise"}
-                    modalHeader= "Exercise" 
-                    modalText= "Bearbeite komplexe Aufgaben und erhalte direktes Feedback zu deinem Code."
-                    className= {styles.selectCard}/>
+                     buttonText="Exercise"
+                     imageUrl={codeExerciseImg}
+                     modalHeader="Exercise" 
+                     modalText="Bearbeite komplexe Aufgaben und erhalte direktes Feedback zu deinem Code."
+                     className={styles.selectCard}
+                     handleClick={handleExerciseClick}
+                 />
             </div>
             <HomeButton handleClick={handleHomeClick} />
             <AccountButton handleClick={handleAccountClick} />
             <ChangeTopicButton handleClick={handleChangeTopicClick} />
+            
+            <PopUpExercise 
+                isVisible={isPopUpExerciseVisible} 
+                closePopUp={() => setIsPopUpExerciseVisible(false)}/>
         </div>
         
     );

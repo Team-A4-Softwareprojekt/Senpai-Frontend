@@ -45,7 +45,7 @@ const PopUpSubscribedTrue = ({ closePopUp, isVisible }) => {
                     <h2 className={styles.popupHeader}>Du hast bereits Premium {":-)"}</h2>
                         <div className={styles.cancelBox}>  
                             <p>Verbleibende Restlaufzeit: <strong>{remainingTime}</strong> {remainingTime === 1 ? 'Tag' : 'Tage'}</p>
-                            <button className={styles.cancelButton} onClick={handleConfirmCancel}>Abo kündigen</button>
+                            <button className={styles.cancelButton} onClick={handleConfirmCancel}>Cancel Subscription</button>
                         </div> 
                     <button className={styles.closeButton} onClick={closePopUp}>Close</button>
                 </div>
