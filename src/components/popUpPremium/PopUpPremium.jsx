@@ -10,6 +10,7 @@ const PopUpPremium = ({ closePopUp, isVisible }) => {
     const [isSuccessVisible, setIsSuccessVisible] = useState(false);
     const [isFailureVisible, setIsFailureVisible] = useState(false);
     const url = URL + '/startSubscription'
+    const urlCurrency = URL + '/buyCurrency'
 
     if (!isVisible) return null;
 
@@ -61,11 +62,36 @@ const PopUpPremium = ({ closePopUp, isVisible }) => {
         }
     };
 
-    const handleAddCredit = () => {
-        setPlayerData({
-            ...playerData,
-            credit: playerData.credit + 5,
-        });
+    const handleAddCredit = (amount) => {
+
+        let playerName = playerData.playername;
+
+        fetch(urlCurrency, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({playerName, amount})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                if(data.success === true) {
+                    // Update playerData email
+                    setPlayerData({
+                        ...playerData,
+                        credit: playerData.credit + amount,
+                    });
+                }
+                console.log(data.message);
+                //data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
+            });
+
         setIsFailureVisible(false);
     };
 

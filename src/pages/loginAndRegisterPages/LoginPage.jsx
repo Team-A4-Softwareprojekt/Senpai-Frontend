@@ -88,7 +88,7 @@ function LoginPage() {
                 <div className={styles2.additionalLinks}>
                     <a href="/register" className={styles2.link}>Register</a>
                     <span className={styles2.separator}> | </span> {/* Separator between links */}
-                    <a href="/forgot-password" className={styles2.link}>Forgot Password</a>
+                    <a href="/forgotPassword" className={styles2.link}>Forgot Password</a>
 
                 </div>
                 <div className={styles2.loginButtonDiv}>
