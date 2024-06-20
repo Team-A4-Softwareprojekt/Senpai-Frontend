@@ -29,8 +29,6 @@ function ManipulationPage() {
     navigate('/select/code');
   };
 
-  
-
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
     { value: 'python', label: 'Python', disabled: true },
@@ -43,48 +41,47 @@ function ManipulationPage() {
       const consoleOutput = [];
       const originalConsoleLog = console.log;
   
-      // Temporarily override console.log
+      // Temporarily override console.log to capture output
       console.log = (...args) => {
         consoleOutput.push(args.join(' '));
         originalConsoleLog(...args);
       };
   
-      let codeLines = manipulationQuestion.code.split('\n');
-      let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+      let modifiedCode = code;
   
-      // Remove console.log statements from the code
-      let modifiedCode = codeLines.slice(0, -1).join('\n'); // Get all lines except the last one and join them
+      // Remove unnecessary console.log statements
       if (modifiedCode.includes('console.log')) {
         modifiedCode = modifiedCode.replace(/console\.log\([^)]*\);?/g, '');
-        console.log('modifiedCode:', modifiedCode);
       }
   
+      // Ensure codeTest (last line) is added back
+      modifiedCode += '\n' + codeTest;
+
       // Create and execute the new function
-      const func = new Function(modifiedCode + '\n' + codeTest);
+      const func = new Function(modifiedCode);
       func();
   
       // Restore the original console.log
       console.log = originalConsoleLog;
   
-      const resultOutput = consoleOutput.join('\n');
-      setOutput(resultOutput);
+      const resultOutput = consoleOutput.join('\n').trim();
+      const expected = expectedOutput.trim();
   
-      console.log('Output:', resultOutput);
-      console.log('Output expected:', expectedOutput);
-  
-      if (resultOutput === expectedOutput) {
+      if (resultOutput === expected) {
         setAlertMessage('Well done! Output matches expected result.');
         setRightAnswer(true);
+        socket.emit('ROUND_END_MANIPULATION', true);
       } else {
         setAlertMessage('Output does not match the expected result.');
         setRightAnswer(false);
+        socket.emit('ROUND_END_MANIPULATION', false);
       }
     } catch (error) {
       console.log(error);
       setAlertMessage('An error occurred while executing the code.');
       setRightAnswer(false);
+      socket.emit('ROUND_END_MANIPULATION', false);
     }
-    socket.emit('ROUND_END_MANIPULATION', rightAnswer);
   };
   
   
@@ -102,8 +99,10 @@ function ManipulationPage() {
       let codeLines = manipulationQuestion.code.split('\n');
       let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
       let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+      
       setCode(codeExceptLastLine);
       setCodeTest(codeTest);
+      console.log('Code test:', codeTest);
       setInitialCode(manipulationQuestion.code);
       setOutput('');
       setExpectedOutput(manipulationQuestion.outputtext);
@@ -118,12 +117,13 @@ function ManipulationPage() {
   }, [alertMessage]);
 
   const handleInputManipulation = (data) => {
-    console.log("handle Input mandipulation");
+    console.log("handle Input manipulation");
     const { code , answer } = data;
     console.log('Received code:', code);
     let codeLines = code.split('\n');
     let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
     let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+    console.log('Code test:', codeTest);
     setCode(codeExceptLastLine);
     setCodeTest(codeTest);
     setExpectedOutput(answer);
@@ -227,5 +227,3 @@ function ManipulationPage() {
 }
 
 export default ManipulationPage;
-
-
