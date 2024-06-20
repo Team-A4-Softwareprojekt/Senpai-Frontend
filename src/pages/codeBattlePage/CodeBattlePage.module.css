@@ -50,3 +50,8 @@
     margin: 0 5px; /* Add some space between the hearts */
     vertical-align: middle; /* Vertically aligns the hearts */ 
 }
+
+.h1 {
+    font-size: 40px;
+    color: lightgreen;
+}

@@ -56,7 +56,7 @@ function codeSenpaiPage() {
 
     return( 
         <div>
-            <h1>
+            <h1 className={styles.h1}>
                 Choose your form of training
             </h1>
             <div className= {styles.cardsGridContainer}>      
@@ -65,7 +65,7 @@ function codeSenpaiPage() {
                     imageUrl={codeChallengeImg}
                     /*linkTo={"/select/code/dailyChallenge"}*/
                     modalHeader= "Daily Challenge" 
-                    modalText = "Participate in daily challenges to improve your skills and build a continuous learning routine."
+                    modalText = "Absolviere täglich eine neue Herausforderung und baue deine Streak auf."
                     className= {styles.selectCard}
                     handleClick = {handleDailyChallenge}
                     />
@@ -75,7 +75,7 @@ function codeSenpaiPage() {
                     imageUrl={codeBattleImg}
                     linkTo={"/select/code/codeBattle"}
                     modalHeader = "Code Battle" 
-                    modalText = "Challenge yourself and compete with others in entertaining code duels to expand your knowledge in a playful way."
+                    modalText = "Stelle dich der Herausforderung und trete gegen andere Spieler in spannenden Wettkämpfen an."
                     className= {styles.selectCard}/>
                     
                 <SelectContentCard 
@@ -83,7 +83,7 @@ function codeSenpaiPage() {
                     imageUrl={codeExerciseImg}
                     linkTo={"/select/code/exercise"}
                     modalHeader= "Exercise" 
-                    modalText= "Work on complex tasks in different categories and receive individual feedback from experienced tutors to deepen your understanding."
+                    modalText= "Bearbeite komplexe Aufgaben und erhalte direktes Feedback zu deinem Code."
                     className= {styles.selectCard}/>
             </div>
             <HomeButton handleClick={handleHomeClick} />

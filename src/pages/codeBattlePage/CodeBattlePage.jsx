@@ -269,7 +269,7 @@ function CodeBattlePage() {
 
     return( 
         <div>
-            <h1>
+            <h1 className={styles.h1}>
                 Choose your battle
             </h1>
             <div className={styles.heartsContainer}>
