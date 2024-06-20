@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { ManipulationPlayerContext } from '../../context/manipulationQuestionContext.jsx';
 import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
+import PopUpManipulationWrong from '../../components/popUpManipulation/PopUpManipulationWrong.jsx';
+import PopUpManipulationCorrect from '../../components/popUpManipulation/PopUpManipulationCorrect.jsx';
 
 import styles from '../General.module.css';
 import styles2 from './ManipulationPage.module.css';
@@ -22,8 +24,11 @@ function ManipulationPage() {
   const [alertMessage, setAlertMessage] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [rightAnswer, setRightAnswer] = useState(false);
+  const [wrongAnswer, setWrongAnswer] = useState(false);
   const { setManipulationQuestion } = useContext(ManipulationPlayerContext);
   const [codeTest, setCodeTest] = useState('');
+  const [showPopupCorrect, setShowPopupCorrect] = useState(false); // State to manage correct popup visibility
+  const [popupClosed, setPopupClosed] = useState(false); // State to track if the popup is closed
 
   const handleHomeClick = () => {
     navigate('/select/code');
@@ -40,51 +45,50 @@ function ManipulationPage() {
     try {
       const consoleOutput = [];
       const originalConsoleLog = console.log;
-  
+
       // Temporarily override console.log to capture output
       console.log = (...args) => {
         consoleOutput.push(args.join(' '));
         originalConsoleLog(...args);
       };
-  
+
       let modifiedCode = code;
-  
+
       // Remove unnecessary console.log statements
       if (modifiedCode.includes('console.log')) {
         modifiedCode = modifiedCode.replace(/console\.log\([^)]*\);?/g, '');
       }
-  
+
       // Ensure codeTest (last line) is added back
       modifiedCode += '\n' + codeTest;
 
       // Create and execute the new function
       const func = new Function(modifiedCode);
       func();
-  
+
       // Restore the original console.log
       console.log = originalConsoleLog;
-  
+
       const resultOutput = consoleOutput.join('\n');
-      const expected = expectedOutput
-  
+      const expected = expectedOutput;
+
       if (resultOutput === expected) {
-        setAlertMessage('Well done! Output matches expected result.');
         setRightAnswer(true);
-        socket.emit('ROUND_END_MANIPULATION', true);
+        setWrongAnswer(false);
+        setIsDisabled(true);
+        setShowPopupCorrect(true); // Show the correct popup
       } else {
-        setAlertMessage('Output does not match the expected result.');
+        setWrongAnswer(true);
         setRightAnswer(false);
-        socket.emit('ROUND_END_MANIPULATION', false);
+        setIsDisabled(true);
       }
     } catch (error) {
-      console.log(error);
-      setAlertMessage('An error occurred while executing the code.');
+      setWrongAnswer(true);
       setRightAnswer(false);
-      socket.emit('ROUND_END_MANIPULATION', false);
+      setIsDisabled(true);
+      socket.emit('ROUND_END_MANIPULATION', false); // Emit false on error
     }
   };
-  
-  
 
   const onChange = (newCode) => {
     setCode(newCode);
@@ -99,7 +103,7 @@ function ManipulationPage() {
       let codeLines = manipulationQuestion.code.split('\n');
       let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
       let codeTest = codeLines[codeLines.length - 1]; // Get the last line
-      
+
       setCode(codeExceptLastLine);
       setCodeTest(codeTest);
       console.log('Code test:', codeTest);
@@ -117,11 +121,10 @@ function ManipulationPage() {
   }, [alertMessage]);
 
   const handleInputManipulation = (data) => {
-    
-    console.log("handle Input manipulation");
-    const { code , answer } = data;
+    console.log('handle Input manipulation');
+    const { code, answer } = data;
     console.log('Received code:', code);
-    
+
     let codeLines = code.split('\n');
     let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
     let codeTest = codeLines[codeLines.length - 1]; // Get the last line
@@ -140,23 +143,42 @@ function ManipulationPage() {
     navigate('/codebattle/manipulation/player1');
   };
 
-  const handleSetQuestionManipulation = (question) => {   
+  const handleSetQuestionManipulation = (question) => {
     console.log(question);
     setManipulationQuestion(question);
   };
 
+  const handlePopupClose = (isCorrect) => {
+    if (isCorrect) {
+      setShowPopupCorrect(false); // Close the correct popup
+      setPopupClosed(true); // Set popup closed state to true
+    } else {
+      setShowPopupCorrect(false); // Close the correct popup
+      setPopupClosed(true); // Set popup closed state to true
+    }
+  };
+
+  useEffect(() => {
+    if (popupClosed) {
+      // Emit only after popup is closed
+      if (rightAnswer) {
+        socket.emit('ROUND_END_MANIPULATION', true);
+      } else {
+        socket.emit('ROUND_END_MANIPULATION', false);
+      }
+      setPopupClosed(false); // Reset popup closed state
+    }
+  }, [popupClosed, rightAnswer]);
 
   useEffect(() => {
     socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
     socket.on('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
     socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
-  
 
     return () => {
       socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
       socket.off('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
-      
     };
   }, []);
 
@@ -196,7 +218,7 @@ function ManipulationPage() {
               name="UNIQUE_ID_OF_EDITOR"
               editorProps={{ $blockScrolling: true }}
               value={code}
-              style={{ width: '50vw', height: '300px'}}
+              style={{ width: '50vw', height: '300px' }}
               className={styles2.enabledEditor}
             />
             <div className={styles2.footer}>
@@ -228,6 +250,14 @@ function ManipulationPage() {
           <pre>{output}</pre>
         </div>
       )}
+      <PopUpManipulationCorrect
+        isVisible={showPopupCorrect}
+        closePopup={() => handlePopupClose(true)} // Emit true on close
+      />
+      <PopUpManipulationWrong
+        isVisible={wrongAnswer}
+        closePopup={() => setWrongAnswer(false)}
+      />
     </>
   );
 }
