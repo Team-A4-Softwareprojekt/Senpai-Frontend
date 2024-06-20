@@ -22,7 +22,7 @@
     color: #333;
 }
 
-.closeButton {
+.cancelButton {
     background: #dc3545;
     color: white;
     border: none;
@@ -34,8 +34,24 @@
     font-size: 16px;
 }
 
-.closeButton:hover {
+.cancelButton:hover {
     background: #c82333;
+}
+
+.closeButton {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.closeButton:hover {
+    background: #218838;
 }
 
 .overlay {
@@ -51,4 +67,11 @@
 p {
     color: black;
     font-size: 18px;
+}
+
+.cancelBox {
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px 0;
 }
