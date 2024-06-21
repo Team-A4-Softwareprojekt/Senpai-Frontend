@@ -9,6 +9,7 @@
 }
 
 .popup {
+    color: white !important;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -34,4 +35,8 @@
 .solution {
     color: #FFD700;
     font-weight: bold;
+}
+
+.p {
+    color: white;
 }
