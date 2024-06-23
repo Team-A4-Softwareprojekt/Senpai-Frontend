@@ -83,6 +83,7 @@ function CodeBattlePage() {
                 }
 
                 const data = await response.json();
+                console.log('Response from server:', data);
                 setPlayerData(data);
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
