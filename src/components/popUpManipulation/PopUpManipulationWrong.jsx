@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './PopUpManipulation.module.css';
+import { socket } from '../../socket.js';
 
-const PopUpManipulationWrong = ({ isVisible, closePopup }) => {
+const PopUpManipulationWrong = ({ isVisible, closePopup}) => {
 
     if (!isVisible) return null;
 
