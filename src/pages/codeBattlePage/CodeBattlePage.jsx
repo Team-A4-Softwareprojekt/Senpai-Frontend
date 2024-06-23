@@ -4,10 +4,16 @@ import SelectGameCard from '../../components/selectGameCard/SelectGameCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
 import manipulationImg from '../../assets/manipulation.png';
 import limitationImg from '../../assets/limitation.png';
+
 import slideShowGame from '../../assets/slideShowGame.png';
 import slideConfirmAnswer from '../../assets/slideConfirmAnswer.png';
 import slideRightAnswer from '../../assets/slideRightAnswer.png';
 import slideWrongAnswer from '../../assets/slideWrongAnswer.png';
+
+import manipulationSlide01 from '../../assets/manipulationSlide01.png';
+import manipulationSlide02 from '../../assets/manipulationSlide02.png';
+import manipulationSlide03 from '../../assets/manipulationSlide03.png';
+
 import buzzerGrayImg from '../../assets/buzzerGray.png';
 import manipulationGrayImg from '../../assets/manipulationGray.png';
 import limitationGrayImg from '../../assets/limitationGray.png';
@@ -143,7 +149,7 @@ function CodeBattlePage() {
         const handlePlayerTwoManipulation = (player) => {
             console.log('Player two:', player);
             setPlayer2Manipulation(true);
-            navigate('/codebattle/manipulation/player2');
+            navigate('/codebattle/manipulation/player1');
         }
     
         // Register the event listeners
@@ -249,6 +255,12 @@ function CodeBattlePage() {
         "Wenn du richtig geantwortet hast, dann bekommst du einen Punkt. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel.",
         "Wenn du nach dem Drücken des Buzzers nicht innerhalb der vorgegebenen Zeit oder falsch antwortest, dann verlierst du einen Punkt."
     ];
+
+    const manipulationSlideTexts = [
+        "Zu Beginn erhältst du einen Codeausschnitt, den du so verändern musst, dass er nicht mehr kompiliert. Zeige deine Fähigkeiten, indem du den Code geschickt manipulierst und deinen Gegner herausforderst.",
+        "Sobald du fertig bist, klicke auf den Submit-Button und warte auf deinen Gegner.",
+        "Wenn dein Gegner fertig ist, dann wird der Code deines Gegners angezeigt und du musst diesen reparieren."
+    ];
     
     const buzzerSlides = [
         { header: "Buzzer", text: slideTexts[0], image: slideShowGame },
@@ -257,6 +269,11 @@ function CodeBattlePage() {
         { header: "Buzzer", text: slideTexts[3], image: slideWrongAnswer },
     ];
 
+    const manipulationSlides = [
+        { header: "Manipulation", text: manipulationSlideTexts[0], image: manipulationSlide01 },
+        { header: "Manipulation", text: manipulationSlideTexts[1], image: manipulationSlide02 },
+        { header: "Manipulation", text: manipulationSlideTexts[2], image: manipulationSlide03 },
+    ];
 
     const handleNoHeartsClick = () => {
         console.log("No hearts click handled");
@@ -291,6 +308,7 @@ function CodeBattlePage() {
                 <SelectGameCard 
                     buttonText= "Manipulation" 
                     imageUrl={playerData.lives > 0 ? manipulationImg : manipulationGrayImg}
+                    slides = {manipulationSlides}
                     handleClick={onManipulationClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ManipulationPlayerContext } from '../../context/manipulationQuestionContext.jsx';
 import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
-
+import PopUpManipulationWordLimit from '../../components/popUpManipulation/PopUpManipulationWordLimit.jsx';
 
 import styles from '../General.module.css';
 import styles2 from './ManipulationPage.module.css';
@@ -25,6 +25,7 @@ function ManipulationPage() {
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
   const [actionText, setActionText] = useState('');
   const [codeTest, setCodeTest] = useState('');
+  const [showWordLimitPopup, setShowWordLimitPopup] = useState(false); // State to manage word limit popup visibility
 
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -39,7 +40,6 @@ function ManipulationPage() {
   };
 
   const submitCode = () => {
-
     let codeWithTest = code + '\n' + codeTest; // Concatenate code and codeTest with a newline
 
     socket.emit('SUBMIT_CHANGES_MANIPULATION', { code: codeWithTest, expectedOutput });
@@ -59,7 +59,8 @@ function ManipulationPage() {
       setCharactersLeft(manipulationQuestion.permittedsymbols - changeCount);
       setActionText(`Change the code below. You have ${manipulationQuestion.permittedsymbols - changeCount} characters left. Change the code so the output is not: ${expectedOutput}`);
     } else {
-      setAlertMessage('You have exceeded the permitted number of character changes.');
+      // Display word limit popup
+      setShowWordLimitPopup(true);
     }
   };
 
@@ -76,7 +77,7 @@ function ManipulationPage() {
       setCode(codeExceptLastLine);
       setCodeTest(codeTest);
       console.log('Code test:', codeTest);
-      
+
       setInitialCode(manipulationQuestion.code);
       setExpectedOutput(manipulationQuestion.outputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);
@@ -86,7 +87,8 @@ function ManipulationPage() {
 
   useEffect(() => {
     if (alertMessage) {
-      alert(alertMessage);
+      // Replace alert with custom popup
+      setShowWordLimitPopup(true); // Show the word limit popup instead of alert
       setAlertMessage('');
     }
   }, [alertMessage]);
@@ -96,14 +98,24 @@ function ManipulationPage() {
     navigate('/codebattle/manipulation/player2');
   };
 
+  const handleSwitchPageManipulation = () => {
+    navigate('/codebattle/manipulation/player2');
+  };
+
   useEffect(() => {
     socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+    socket.on('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
 
     return () => {
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+      socket.off('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
     };
   }, []);
-  
+
+  const handleCloseWordLimitPopup = () => {
+    setShowWordLimitPopup(false);
+  };
+
   return (
     <>
       <header className={styles2.header}>
@@ -115,7 +127,7 @@ function ManipulationPage() {
           {actionText}
         </h2>
       </div>
-      
+
       {showEditor && (
         <div className={styles2.editor}>
           <AceEditor
@@ -139,6 +151,12 @@ function ManipulationPage() {
           </div>
         </div>
       )}
+
+      <PopUpManipulationWordLimit
+        isVisible={showWordLimitPopup}
+        closePopup={handleCloseWordLimitPopup}
+        message="You have exceeded the permitted number of character changes."
+      />
 
       <HomeButton handleClick={handleHomeClick} />
     </>
