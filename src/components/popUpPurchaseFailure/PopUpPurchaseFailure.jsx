@@ -4,6 +4,9 @@ import styles from './PopUpPurchaseFailure.module.css';
 const PopUpPurchaseFailure = ({ closePopUp, isVisible, addCredit }) => {
     if (!isVisible) return null;
 
+    // Wrapper-Funktion für die Übergabe des Guthabens
+    const addCreditHandler = (credit) => () => addCredit(credit);
+
     return (
         <>
             <div className={styles.overlay}></div>
@@ -14,7 +17,10 @@ const PopUpPurchaseFailure = ({ closePopUp, isVisible, addCredit }) => {
                         <div className={styles.chargeCreditText}>
                             Guthaben kaufen:
                         </div>
-                        <button className={styles.addButton} onClick={addCredit}>5 Euro</button>
+                        <button className={styles.addButton} onClick={addCreditHandler(5)}>5 Euro</button>
+                        <button className={styles.addButton} onClick={addCreditHandler(10)}>10 Euro</button>
+                        <button className={styles.addButton} onClick={addCreditHandler(20)}>20 Euro</button>
+                        <button className={styles.addButton} onClick={addCreditHandler(50)}>50 Euro</button>
                     </div>
                     <button className={styles.closeButton} onClick={closePopUp}>Close</button>
                 </div>
