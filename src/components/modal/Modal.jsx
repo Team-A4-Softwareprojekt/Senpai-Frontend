@@ -22,13 +22,12 @@ function Modal({ header, text }) {
             </button>
             {modal && (
                 <div className={styles.modal} >
-
                     <div onClick={toggleModal} className={styles.overlay}></div>
                     <div className={styles.content}>
-                        <h2>{header}</h2>
-                        <p>{text}</p>
+                        <h2 className={styles.popupHeader}>{header}</h2>
+                        <p className={styles.text}>{text}</p>
                         <div className={styles.buttonContainer}>
-                            <button className={styles.button} onClick={toggleModal}>Close</button>
+                            <button className={styles.closeButton} onClick={toggleModal}>Close</button>
                         </div>
                     </div>
                 </div>

@@ -30,12 +30,13 @@
     flex-direction: column;
     gap: 25px;
     height: 148px;
-    width: 300px;
+    width: 350px;
 }
 
 .heading {
     color: black;
     font-size: 25px;
+    text-align: center;
 }
 
 .infoRowContainer {
@@ -51,7 +52,7 @@
 }
 
 .infoRow strong {
-    width: 40%;
+    width: 30%;
     font-size: 20px;
 }
 

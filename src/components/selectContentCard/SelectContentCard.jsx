@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
  This is the selectcard component. The whole component is a link to another page
  The parameters are set when the component is initialized
 */
-function SelectCard({ buttonText, imageUrl, linkTo, modalHeader, modalText, slides, handleClick}){
+function SelectContentCard({ buttonText, imageUrl, linkTo, modalHeader, modalText, slides, handleClick}){
     return(
         <div className={styles.selectCardContainer}>
             <h1 className={styles.buttonText}>{buttonText}</h1>
@@ -25,4 +25,4 @@ function SelectCard({ buttonText, imageUrl, linkTo, modalHeader, modalText, slid
     );
 }
 
-export default SelectCard;
+export default SelectContentCard;

@@ -11,19 +11,23 @@ function Slide({ slides }) {
     return (
         <div className={styles.slideContainer}>
             <h2>{slides[currentSlide].header}</h2>
-            <img src={slides[currentSlide].image} alt={slides[currentSlide].header} className={styles.image} />
+            {slides[currentSlide].image && (
+                <img src={slides[currentSlide].image} alt={slides[currentSlide].header} className={styles.image} />
+            )}
             <div className={styles.textContainer}>
                 {slides[currentSlide].text}
             </div>
-            <div className={styles.navigationDots}>
-                {slides.map((_, index) => (
-                    <span
-                        key={index}
-                        className={`${styles.dot} ${currentSlide === index ? styles.active : ''}`}
-                        onClick={() => goToSlide(index)}
-                    ></span>
-                ))}
-            </div>
+            {slides.length > 1 && (
+                <div className={styles.navigationDots}>
+                    {slides.map((_, index) => (
+                        <span
+                            key={index}
+                            className={`${styles.dot} ${currentSlide === index ? styles.active : ''}`}
+                            onClick={() => goToSlide(index)}
+                        ></span>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

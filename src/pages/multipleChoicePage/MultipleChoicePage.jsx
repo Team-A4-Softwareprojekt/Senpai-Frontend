@@ -209,7 +209,7 @@ const MultipleChoicePage = () => {
             <div className={styles.questionAndTimer}>
                 <div className={styles.questionBox}>
                     <div className={styles.questionContent}>
-                        <p>{buzzerQuestion.question}</p>
+                        <p className={styles.p}>{buzzerQuestion.question}</p>
                     </div>
                     {remainingSeconds !== null && (
                         <div className={styles.timer}>

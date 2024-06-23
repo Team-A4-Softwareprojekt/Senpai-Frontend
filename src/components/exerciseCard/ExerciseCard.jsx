@@ -1,17 +1,24 @@
-import styles from '../../pages/General.module.css';
-import styles2 from './ExerciseCard.module.css';
+import styles from './ExerciseCard.module.css';
 
-function ExerciseCard({ exerciseName, exerciseStatus, handleClick }) {
+function ExerciseCard({ exerciseName, exerciseStatus }) {
+    let statusClass;
 
-  const statusClass = exerciseStatus === 'Finished' ? styles2.finished : styles2.unfinished;
+    if (exerciseStatus === 'Finished') {
+      statusClass = styles.finished;
+    } else if (exerciseStatus === 'Pending') {
+      statusClass = styles.pending;
+    } else {
+      statusClass = styles.unfinished;
+    }
 
-  return (
-    <div className= {styles2.exerciseCardDiv} onClick={handleClick}>
-      <h1 className = {styles2.exerciseName}>{exerciseName}</h1>
-      <p className={styles2.status}>
-          Status: <span className={statusClass}>{exerciseStatus}</span>
-      </p>
-    </div>
-  );
-}  
+    return (
+      <div className={styles.exerciseCardDiv}>
+        <h1 className={styles.exerciseName}>{exerciseName}</h1>
+        <p className={styles.status}>
+          Status: <span className={statusClass}><strong>{exerciseStatus}</strong></span>
+        </p>
+      </div>
+    );
+}
+
 export default ExerciseCard;

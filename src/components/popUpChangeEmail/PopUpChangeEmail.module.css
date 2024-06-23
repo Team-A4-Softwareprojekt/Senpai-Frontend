@@ -83,7 +83,14 @@ p {
 
 .error {
     color: red;
-    margin-top: 10px;
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+.success {
+    color: green;
+    margin-top: 25px;
+    font-weight: bold;
 }
 
 .changeEmailBox {
@@ -91,6 +98,13 @@ p {
     border-radius: 5px;
     padding: 10px;
     margin: 15px 0;
+}
+
+.changeEmailBox.disabled {
+    filter: grayscale(100%);
+    background-color: #f0f0f0;
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 .labelText {

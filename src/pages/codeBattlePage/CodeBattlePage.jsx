@@ -29,14 +29,9 @@ import PopUpCountdown from '../../components/popUpCountdown/PopUpCountdown.jsx';
 import PopUpNoHearts from '../../components/popUpNoHearts/PopUpNoHearts.jsx';
 import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
 import PopUpSubscribedTrue from '../../components/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
+import PopUpMissingContent from '../../components/popUpMissingContent/PopUpMissingContent.jsx';
 import {useNavigate} from 'react-router-dom';
-import {
-    socket,
-    startBuzzerQueue,
-    leaveBuzzerQueue,
-    disconnectSocket,
-    startManipulationQueue, leaveManipulationQueue
-} from '../../socket.js';
+import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, startManipulationQueue, leaveManipulationQueue} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 import { ManipulationPlayerContext } from "../../context/manipulationQuestionContext.jsx";
@@ -57,6 +52,7 @@ function CodeBattlePage() {
     const [isPopUpNoHeartsVisible, setIsPopUpNoHeartsVisible] = useState(false);
     const [isPopUpBuyPremiumVisible, setIsPopUpBuyPremiumVisible] = useState(false);
     const [isPopUpSubscribedTrueVisible, setIsPopUpSubscribedTrueVisible] = useState(false);
+    const [isPopUpMissingContentVisible, setIsPopUpMissingContentVisible] = useState(false);
     const [selectedGameMode, setSelectedGameMode] = useState('');
     const [countdown, setCountdown] = useState(null);
     const [hearts, setHearts] = useState([]);
@@ -235,8 +231,7 @@ function CodeBattlePage() {
     };
 
     const onLimitationClick = () => {
-        setSelectedGameMode('Limitation');
-        setIsPopUpQueueVisible(true);
+        setIsPopUpMissingContentVisible(true);
     };
 
     const closePopup = () => {
@@ -269,10 +264,25 @@ function CodeBattlePage() {
         { header: "Buzzer", text: slideTexts[3], image: slideWrongAnswer },
     ];
 
+    const limitationInfoText = 
+        `Dieser Spielmodi wird nur im „2vs2“ angeboten, sodass insgesamt vier Spieler teilnehmen müssen, damit das Spiel beginnen kann.
+        Es wird eine Aufgabe präsentiert, die die beiden Teams in begrenzter Zeit lösen müssen.
+        Dabei hat jeder Spieler nur eine begrenzte Anzahl an Zeichen zur Verfügung.
+        Eine Kommunikation zwischen den beiden Spielern im Team ist nicht möglich.
+        Aufgrund dessen müssen beide Spieler genau wissen, wie die Aufgabe gelöst werden kann, um das Spiel zu gewinnen.
+        Das Gewinnerteam bekommt einen Punkt.`;
+
+    const limitationInfo = [
+        { 
+            header: "Limitation", 
+            text: limitationInfoText.trim(), 
+        }
+
     const manipulationSlides = [
         { header: "Manipulation", text: manipulationSlideTexts[0], image: manipulationSlide01 },
         { header: "Manipulation", text: manipulationSlideTexts[1], image: manipulationSlide02 },
         { header: "Manipulation", text: manipulationSlideTexts[2], image: manipulationSlide03 },
+
     ];
 
     const handleNoHeartsClick = () => {
@@ -287,7 +297,7 @@ function CodeBattlePage() {
 
     return( 
         <div>
-            <h1>
+            <h1 className={styles.h1}>
                 Choose your battle
             </h1>
             <div className={styles.heartsContainer}>
@@ -319,6 +329,7 @@ function CodeBattlePage() {
                 <SelectGameCard 
                     buttonText="Limitation"
                     imageUrl={playerData.lives > 0 ? limitationImg : limitationGrayImg}
+                    slides={limitationInfo}
                     handleClick={onLimitationClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}
@@ -359,6 +370,10 @@ function CodeBattlePage() {
                 closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
             />
 
+            <PopUpMissingContent
+                isVisible={isPopUpMissingContentVisible}
+                closePopUp={() => setIsPopUpMissingContentVisible(false)}
+            />
         </div>  
     );
 }
