@@ -8,28 +8,31 @@ import { ManipulationPlayerContext } from '../../context/manipulationQuestionCon
 import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
 
+import PopUpManipulationCorrect from '../../components/popUpManipulation/PopUpManipulationCorrect.jsx';
+import PopUpManipulationWrong from '../../components/popUpManipulation/PopUpManipulationWrong.jsx';
+
 import styles from '../General.module.css';
 import styles2 from './ManipulationPage.module.css';
 
 function ManipulationPage() {
   const navigate = useNavigate();
   const [code, setCode] = useState('');
-  const [initialCode, setInitialCode] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
   const { manipulationQuestion } = useContext(ManipulationPlayerContext);
   const [output, setOutput] = useState('');
   const [expectedOutput, setExpectedOutput] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
-  const [rightAnswer, setRightAnswer] = useState(false);
   const { setManipulationQuestion } = useContext(ManipulationPlayerContext);
   const [codeTest, setCodeTest] = useState('');
+
+  const [isPopupManipulationCorrectVisible, setIsPopupManipulationCorrectVisible] = useState(false);
+  const [isPopupManipulationWrongVisible, setIsPopupManipulationWrongVisible] = useState(false);
+
 
   const handleHomeClick = () => {
     navigate('/select/code');
   };
-
-  
 
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -43,48 +46,41 @@ function ManipulationPage() {
       const consoleOutput = [];
       const originalConsoleLog = console.log;
   
-      // Temporarily override console.log
+      // Temporarily override console.log to capture output
       console.log = (...args) => {
         consoleOutput.push(args.join(' '));
         originalConsoleLog(...args);
       };
   
-      let codeLines = manipulationQuestion.code.split('\n');
-      let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+      let modifiedCode = code;
   
-      // Remove console.log statements from the code
-      let modifiedCode = codeLines.slice(0, -1).join('\n'); // Get all lines except the last one and join them
+      // Remove unnecessary console.log statements
       if (modifiedCode.includes('console.log')) {
         modifiedCode = modifiedCode.replace(/console\.log\([^)]*\);?/g, '');
-        console.log('modifiedCode:', modifiedCode);
       }
   
+      // Ensure codeTest (last line) is added back
+      modifiedCode += '\n' + codeTest;
+
       // Create and execute the new function
-      const func = new Function(modifiedCode + '\n' + codeTest);
+      const func = new Function(modifiedCode);
       func();
   
       // Restore the original console.log
       console.log = originalConsoleLog;
   
       const resultOutput = consoleOutput.join('\n');
-      setOutput(resultOutput);
+      const expected = expectedOutput
   
-      console.log('Output:', resultOutput);
-      console.log('Output expected:', expectedOutput);
-  
-      if (resultOutput === expectedOutput) {
-        setAlertMessage('Well done! Output matches expected result.');
-        setRightAnswer(true);
+      if (resultOutput === expected) {
+        setIsPopupManipulationCorrectVisible(true);
       } else {
-        setAlertMessage('Output does not match the expected result.');
-        setRightAnswer(false);
+        setIsPopupManipulationWrongVisible(true);
       }
     } catch (error) {
       console.log(error);
-      setAlertMessage('An error occurred while executing the code.');
-      setRightAnswer(false);
+      setIsPopupManipulationWrongVisible(true);
     }
-    socket.emit('ROUND_END_MANIPULATION', rightAnswer);
   };
   
   
@@ -102,9 +98,10 @@ function ManipulationPage() {
       let codeLines = manipulationQuestion.code.split('\n');
       let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
       let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+      
       setCode(codeExceptLastLine);
       setCodeTest(codeTest);
-      setInitialCode(manipulationQuestion.code);
+      console.log('Code test:', codeTest);
       setOutput('');
       setExpectedOutput(manipulationQuestion.outputtext);
     }
@@ -118,16 +115,19 @@ function ManipulationPage() {
   }, [alertMessage]);
 
   const handleInputManipulation = (data) => {
-    console.log("handle Input mandipulation");
+    
+    console.log("handle Input manipulation");
     const { code , answer } = data;
     console.log('Received code:', code);
+    
     let codeLines = code.split('\n');
     let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
     let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+    console.log('Code test:', codeTest);
     setCode(codeExceptLastLine);
     setCodeTest(codeTest);
     setExpectedOutput(answer);
-    setInitialCode(code);
+    console.log('Expected output:', expectedOutput);
     setOutput('');
     setIsDisabled(false);
   };
@@ -142,17 +142,33 @@ function ManipulationPage() {
     setManipulationQuestion(question);
   };
 
+
   useEffect(() => {
     socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
     socket.on('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
     socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+  
 
     return () => {
       socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
       socket.off('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
+      
     };
   }, []);
+
+  const handlePopupManipulationCorrectVisible = () => {
+    socket.emit('ROUND_END_MANIPULATION');
+    setIsPopupManipulationCorrectVisible(false);
+    setIsDisabled(true);
+  };
+
+  const handlePopupManipulationWrongVisible = () => {
+    socket.emit('ROUND_END_MANIPULATION');
+    setIsPopupManipulationWrongVisible(false);
+    setIsDisabled(true);
+  };
+
 
   return (
     <>
@@ -222,10 +238,11 @@ function ManipulationPage() {
           <pre>{output}</pre>
         </div>
       )}
+      <PopUpManipulationCorrect isVisible={isPopupManipulationCorrectVisible} closePopup={handlePopupManipulationCorrectVisible} />
+      <PopUpManipulationWrong isVisible={isPopupManipulationWrongVisible} closePopup={handlePopupManipulationWrongVisible}/>
+      
     </>
   );
 }
 
 export default ManipulationPage;
-
-

@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import styles from '../../pages/General.module.css';
 import styles2 from './FillInTheBlankText.module.css';
 import Modal from '../modal/Modal.jsx';
+import {PlayerContext} from '../../context/playerContext';
+import {URL} from "../../../url.js";
+import { useNavigate } from 'react-router-dom';
 
 function FillInTheBlankText({ text, blankIndices, allowHelp }) {
+  const navigate = useNavigate();
+
   const [inputs, setInputs] = useState(Array(blankIndices.length).fill(''));
   const [words, setWords] = useState(text.split(' '));
-  
+
   // Set initial state for modal
   const [show, setShow] = useState(false);
   // Set initial state for results
@@ -14,6 +19,10 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   const [firstAttempt, setFirstAttempt] = useState(true);
   const [isWinner, setIsWinner] = useState(false);
   const [helpUsed, setHelpUsed] = useState(false);
+  const {playerName} = useContext(PlayerContext);
+  const {playerData, setPlayerData} = useContext(PlayerContext);
+
+  const url = URL + '/streakForToday';
 
   // Function to handle changes in the input fields
   const handleChange = (e, idx) => {
@@ -34,6 +43,28 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
         setIsWinner(true);
         window.alert('Congratulations! You have answered all correctly on your first attempt!');
         // Add any additional logic for winning, such as notifying the server or updating the UI
+
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ playerName })
+        })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Response from server:', data.message);
+              if (data.success === true) {
+                navigate("/select/code");
+                setPlayerData({...playerData, streaktoday: true});
+              }
+            })
+
       } else {
         window.alert('Not all answers are correct. Please try again.');
       }
@@ -67,7 +98,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
                       ? results[blankIdx]
                         ? 'lightgreen'
                         : 'lightcoral'
-                      : 'transparent',
+                        : 'transparent',
                     color: 'white',
                   }}
                 />{' '}

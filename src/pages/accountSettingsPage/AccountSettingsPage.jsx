@@ -2,8 +2,8 @@ import styles from './AccountSettingsPage.module.css';
 import UserCard from '../../components/userCard/UserCard.jsx';
 import React, {useContext, useState} from 'react';
 import HomeButton from '../../components/homeButton/HomeButton';
-import { useNavigate } from 'react-router-dom';
-import { PlayerContext } from '../../context/playerContext';
+import {useNavigate} from 'react-router-dom';
+import {PlayerContext} from '../../context/playerContext';
 import PopUpChangeEmail from '../../components/popUpChangeEmail/PopUpChangeEmail.jsx';
 import PopUpChangePassword from '../../components/popUpChangePassword/PopUpChangePassword.jsx';
 import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
@@ -21,7 +21,7 @@ function AccountSettingsPage() {
     const [isPopUpDeleteAccountVisible, setIsPopUpDeleteAccountVisible] = useState(false);
     const today = new Date();
     const missedStreakDate = new Date(playerData.missedstreak);
-    const streakCounter = Math.ceil((today - missedStreakDate) / (1000 * 60 * 60 * 24));
+
 
     const handleHomeClick = () => {
         navigate('/select');
@@ -51,6 +51,36 @@ function AccountSettingsPage() {
         setShowFriendPopup(!showFriendPopup);
     };
 
+    const calculateStreak = () =>{
+        let today = new Date();
+        let missedStreakDate = new Date(playerData.missedstreak);
+        let timeDifference = 0;
+        let daysDifference = 0;
+        console.log(today.date);
+        console.log(playerData.missedstreak);
+
+
+
+        if(playerData.streaktoday === false){
+            // Berechnen der Differenz in Millisekunden
+            timeDifference = Math.abs(today.getTime() - missedStreakDate.getTime());
+            // Konvertieren der Differenz in Tage
+            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) - 2); // Verwende Math.ceil, um aufzurunde
+        }else{
+            // Berechnen der Differenz in Millisekunden
+            timeDifference = Math.abs(today.getTime() - missedStreakDate.getTime());
+
+            // Konvertieren der Differenz in Tage
+            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) -1); // Verwende Math.ceil, um aufzurunde
+        }
+
+
+        return daysDifference;
+    }
+
+    const streakValue = calculateStreak();
+    console.log(streakValue);
+
     return (
         <>
             <HomeButton handleClick={handleHomeClick} />
@@ -71,7 +101,7 @@ function AccountSettingsPage() {
                         <div className={styles.heading}><strong>Player Information</strong></div>
                         <div className={styles.infoRowContainer}>
                             <div className={styles.infoRow}>
-                                <strong>Streak:</strong> <span>{streakCounter}</span>
+                                <strong>Streak:</strong> <span>{streakValue}</span>
                             </div>
                             <div className={styles.infoRow}>
                                 <strong>Rank:</strong> <span>coming soon</span>

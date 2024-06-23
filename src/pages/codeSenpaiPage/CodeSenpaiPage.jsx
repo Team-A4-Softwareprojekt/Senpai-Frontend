@@ -3,13 +3,14 @@ import SelectContentCard from '../../components/selectContentCard/SelectContentC
 import codeChallengeImg from '../../assets/codeChallenge.jpg';
 import codeBattleImg from '../../assets/codeBattle.jpg';
 import codeExerciseImg from '../../assets/codeExercise.jpg';
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import HomeButton from '../../components/homeButton/HomeButton';
 import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
 import PopUpExercise from '../../components/popUpExercise/PopUpExercise';
 import { useNavigate } from 'react-router-dom';
 import {socket, requestDailyChallengeQuestion} from '../../socket.js';
+import {PlayerContext} from '../../context/playerContext';
 
 /*
 This is the code-senpai page that holds an account button, amount of lives and three different
@@ -18,7 +19,9 @@ game modes to choose from. Each game mode has a modal with the basic explanation
 function codeSenpaiPage() {
     const [isPopUpExerciseVisible, setIsPopUpExerciseVisible] = useState(false);
     const navigate = useNavigate();
-    
+
+    const {playerData, setPlayerData} = useContext(PlayerContext);
+
     const handleHomeClick = () => {
         navigate('/select/code');
     };
@@ -32,7 +35,12 @@ function codeSenpaiPage() {
     };
 
     const handleDailyChallenge = () => {
-        requestDailyChallengeQuestion();
+        if (playerData.streaktoday === false){
+            requestDailyChallengeQuestion();
+        }else{
+            //TODO: Hier bitte ein nettes Popup einfügen
+            window.alert('You have already completed the daily challenge for today! Come back tomorrow and see which question is waiting for you.');
+        }
         //navigate('/select/code/dailyChallenge');
     };
 
@@ -54,12 +62,12 @@ function codeSenpaiPage() {
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
 
         return () => {
-           // socket.off('RECEIVE_QUESTION_MULTIPLE_CHOICE',handleQuestionMultipleChoice );
+            // socket.off('RECEIVE_QUESTION_MULTIPLE_CHOICE',handleQuestionMultipleChoice );
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
         };
-    }),[];
+    }), [];
 
-    return( 
+    return (
         <div>
             <h1 className={styles.h1}>
                 Choose your form of training
@@ -99,7 +107,8 @@ function codeSenpaiPage() {
                 isVisible={isPopUpExerciseVisible} 
                 closePopUp={() => setIsPopUpExerciseVisible(false)}/>
         </div>
-        
+
     );
 }
+
 export default codeSenpaiPage;

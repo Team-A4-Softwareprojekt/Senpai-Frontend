@@ -1,13 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import styles from './PopUpChangeEmail.module.css';
-import { PlayerContext } from "../../context/playerContext.jsx";
+import {PlayerContext} from "../../context/playerContext.jsx";
+import {URL} from "../../../url.js";
 
-const PopUpChangeEmail = ({ closePopUp, isVisible }) => {
-    const { playerData, setPlayerData } = useContext(PlayerContext);
+const PopUpChangeEmail = ({closePopUp, isVisible}) => {
+    const {playerData, setPlayerData} = useContext(PlayerContext);
     const [newEmail, setNewEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const url = URL + '/changeEmail'
 
     if (!isVisible) return null;
 
@@ -25,9 +27,32 @@ const PopUpChangeEmail = ({ closePopUp, isVisible }) => {
             return;
         }
 
-        // Update playerData email
-        setPlayerData({ ...playerData, email: newEmail });
-        setMessage('Deine E-Mail wurde erfolgreich geändert.');
+        let playerName = playerData.playername;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({playerName, newEmail})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from server after Email change:', data);
+
+                if(data.success == true) {
+                    // Update playerData email
+                    setPlayerData({...playerData, email: newEmail});
+                    setMessage('Deine E-Mail wurde erfolgreich geändert.');
+                }
+                console.log(data.message);
+                //data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
+            });
     };
 
     const handleClose = () => {
@@ -40,7 +65,7 @@ const PopUpChangeEmail = ({ closePopUp, isVisible }) => {
 
     return (
         <>
-            <div className={styles.overlay}></div>             
+            <div className={styles.overlay}></div>
             <div className={styles.popupContainer}>
                 <div className={styles.popupContent}>
                     <h2 className={styles.popupHeader}>E-Mail ändern: </h2>
