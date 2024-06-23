@@ -276,7 +276,7 @@ function CodeBattlePage() {
         { 
             header: "Limitation", 
             text: limitationInfoText.trim(), 
-        }
+        }];
 
     const manipulationSlides = [
         { header: "Manipulation", text: manipulationSlideTexts[0], image: manipulationSlide01 },
