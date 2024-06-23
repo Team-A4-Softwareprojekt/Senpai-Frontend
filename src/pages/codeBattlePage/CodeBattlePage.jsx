@@ -83,6 +83,7 @@ function CodeBattlePage() {
                 }
 
                 const data = await response.json();
+                console.log('Response from server:', data);
                 setPlayerData(data);
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
@@ -277,7 +278,6 @@ function CodeBattlePage() {
             </div>
             <div className= {styles.cardsGridContainer}>      
                 <SelectGameCard 
-
                     buttonText= "Buzzer"
                     imageUrl={playerData.lives > 0 ? buzzerImg : buzzerGrayImg}
                     slides={buzzerSlides}
@@ -286,8 +286,8 @@ function CodeBattlePage() {
                     lives={playerData.lives}
                     modalHeader="Buzzer"
                     modalText="Compete against another player. Answer questions by pressing a buzzer in a limited time."
+                    selectedOption="Java"
                 />
-
                 <SelectGameCard 
                     buttonText= "Manipulation" 
                     imageUrl={playerData.lives > 0 ? manipulationImg : manipulationGrayImg}
@@ -296,9 +296,8 @@ function CodeBattlePage() {
                     lives={playerData.lives}
                     modalHeader="Manipulation"
                     modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
+                    selectedOption="JavaScript"
                 />
-
-
                 <SelectGameCard 
                     buttonText="Limitation"
                     imageUrl={playerData.lives > 0 ? limitationImg : limitationGrayImg}
@@ -307,6 +306,7 @@ function CodeBattlePage() {
                     lives={playerData.lives}
                     modalHeader="Limitation"
                     modalText="Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
+                    selectedOption="Python"
                 />
             </div>
             <HomeButton handleClick={handleHomeClick} />

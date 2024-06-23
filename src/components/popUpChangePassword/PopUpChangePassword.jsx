@@ -3,6 +3,7 @@ import styles from './PopUpChangePassword.module.css';
 import { PlayerContext } from "../../context/playerContext.jsx";
 import PasswordEyeClosed from '../../assets/passwordEyeClosed.png';
 import PasswordEyeOpen from '../../assets/passwordEyeOpen.png';
+import {URL} from "../../../url.js";
 
 const PopUpChangePassword = ({ closePopUp, isVisible }) => {
     const { playerData, setPlayerData } = useContext(PlayerContext);
@@ -10,6 +11,7 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const url = URL + '/changePassword';
 
     if (!isVisible) return null;
 
@@ -34,9 +36,32 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
             return;
         }
 
-        // Update playerData password
-        setPlayerData({ ...playerData, playerpassword: newPassword });
-        setMessage('Dein Passwort wurde erfolgreich geändert.');
+        let playerName = playerData.playername;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({playerName, newPassword})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from server after Email change:', data);
+
+                if(data.success == true) {
+                    // Update playerData password
+                    setPlayerData({ ...playerData, playerpassword: newPassword });
+                    setMessage('Dein Passwort wurde erfolgreich geändert.');
+                }
+                console.log(data.message);
+                //data.message kann als erfolgs meldung im popup verwendet werden
+            });
     };
 
     const togglePasswordVisibility = () => {

@@ -3,11 +3,14 @@ import styles from './PopUpPremium.module.css';
 import { PlayerContext } from "../../context/playerContext.jsx";
 import PopUpPurchaseSuccess from '../popUpPurchaseSuccess/PopUpPurchaseSuccess.jsx';
 import PopUpPurchaseFailure from '../popUpPurchaseFailure/PopUpPurchaseFailure.jsx';
+import {URL} from "../../../url.js";
 
 const PopUpPremium = ({ closePopUp, isVisible }) => {
     const { playerData, setPlayerData } = useContext(PlayerContext);
     const [isSuccessVisible, setIsSuccessVisible] = useState(false);
     const [isFailureVisible, setIsFailureVisible] = useState(false);
+    const url = URL + '/startSubscription'
+    const urlCurrency = URL + '/buyCurrency'
 
     if (!isVisible) return null;
 
@@ -17,28 +20,78 @@ const PopUpPremium = ({ closePopUp, isVisible }) => {
             const subEndDate = new Date(today);
             subEndDate.setDate(today.getDate() + 30);
 
-            setPlayerData({
-                ...playerData,
-                credit: playerData.credit - 5,
-                subscribed: true,
-                lives: 3,
-                subenddate: subEndDate,
-            });
-            setIsSuccessVisible(true);
-            setTimeout(() => {
-                setIsSuccessVisible(false);
-                closePopUp();
-            }, 5000);
+            let playerName = playerData.playername;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({playerName, subEndDate})
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data.message);
+                    if(data.success === true) {
+                        setPlayerData({
+                            ...playerData,
+                            credit: playerData.credit - 5,
+                            subscribed: true,
+                            lives: 3,
+                            subenddate: subEndDate,
+                        });
+                        setIsSuccessVisible(true);
+                        setTimeout(() => {
+                            setIsSuccessVisible(false);
+                            closePopUp();
+                        }, 5000);
+                    }
+
+                    //data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
+                });
+
+
+
         } else {
             setIsFailureVisible(true);
         }
     };
 
-    const handleAddCredit = () => {
-        setPlayerData({
-            ...playerData,
-            credit: playerData.credit + 5,
-        });
+    const handleAddCredit = (amount) => {
+
+        let playerName = playerData.playername;
+
+        fetch(urlCurrency, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({playerName, amount})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                if(data.success === true) {
+                    // Update playerData email
+                    setPlayerData({
+                        ...playerData,
+                        credit: playerData.credit + amount,
+                    });
+                }
+                console.log(data.message);
+                //data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
+            });
+
         setIsFailureVisible(false);
     };
 
