@@ -1,6 +1,6 @@
 // src/test-utils.jsx
 import React from 'react';
-import { PlayerContext } from '../src/context/PlayerContext'; // Pfad anpassen
+import { PlayerContext } from "../src/context/playerContext.jsx"; // Pfad anpassen
 import { vi } from 'vitest';
 import {BuzzerPlayerContext} from "../src/context/buzzerQuestionContext.jsx";
 import {ManipulationPlayerContext} from "../src/context/manipulationQuestionContext.jsx"; // Importieren von Vitest
