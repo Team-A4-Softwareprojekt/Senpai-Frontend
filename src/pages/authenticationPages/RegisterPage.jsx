@@ -74,7 +74,7 @@ function RegisterPage() {
     };
 
     return (
-        <div>
+        <div className={styles.backgroundContainer}>
             <div className={styles.authenticationContainer}>
                 <div className={styles.h1}>Register</div>
                 <form onSubmit={handleRegister}>

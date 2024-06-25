@@ -67,7 +67,7 @@ function LoginPage() {
     }
 
     return (
-        <div>
+        <div className={styles.backgroundContainer}>
             <div className={styles.authenticationContainer}>
                 <div className={styles.h1}>Login</div>
                 <form action="">

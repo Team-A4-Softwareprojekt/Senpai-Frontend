@@ -82,7 +82,7 @@ function ForgotPasswordPage() {
     }
 
     return (
-        <div>  
+        <div className={styles.backgroundContainer}> 
             <div className={styles.authenticationContainer}>
                 <div className={styles.h1}>Reset password</div>
                 <form onSubmit={handleReset}>
