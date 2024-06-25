@@ -228,7 +228,7 @@ function ManipulationPage() {
         <h2 className={styles2.infoText}>
           {isDisabled
             ? 'Wait for the other player to finish...'
-            : `It's your turn. Change the code to achieve the desired output: ${expectedOutput}`
+            : `It's your turn. Change the code to achieve the desired output: ${expectedOutput} when the input is: ${manipulationQuestion.inputtext}`
           }
         </h2>
       </div>

@@ -81,7 +81,7 @@ function ManipulationPage() {
       setInitialCode(manipulationQuestion.code);
       setExpectedOutput(manipulationQuestion.outputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);
-      setActionText(`Change the code below. You have ${manipulationQuestion.permittedsymbols} characters left. Change the code so the output is not: ${manipulationQuestion.outputtext}`);
+      setActionText(`You have ${manipulationQuestion.permittedsymbols} characters left. Change the code so the output is not: ${manipulationQuestion.outputtext} when the input is ${manipulationQuestion.inputtext}`);
     }
   }, [manipulationQuestion]);
 
