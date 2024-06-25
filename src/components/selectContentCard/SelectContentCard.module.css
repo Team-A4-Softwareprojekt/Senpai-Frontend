@@ -10,14 +10,14 @@
 }
 
 .selectCardImg {
-    width: 100%;
+    width: 95%;
     border: 4px solid black;
     border-radius: 5px; 
 }
 
 .selectButton {
-    width: 330px;
-    height: 330px;
+    width: 350px;
+    height: 350px;
     background-color: hsl(212, 16%, 84%);
     cursor: pointer;
     transition: background-color 0.3s ease;

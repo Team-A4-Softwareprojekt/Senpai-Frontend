@@ -35,7 +35,7 @@ function AccountSettingsPage() {
         setIsPopUpChangePasswordVisible(true);
     }
 
-    const handleManageSubscriptionClick = () => {
+    const handleBuyPremiumClick = () => {
         if (playerData.subscribed === true) {
             setIsPopUpSubscribedTrueVisible(true);
         } else {   
@@ -65,13 +65,13 @@ function AccountSettingsPage() {
             // Berechnen der Differenz in Millisekunden
             timeDifference = Math.abs(today.getTime() - missedStreakDate.getTime());
             // Konvertieren der Differenz in Tage
-            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) - 2); // Verwende Math.ceil, um aufzurunde
+            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) - 2); // Verwende Math.ceil, um aufzurunden
         }else{
             // Berechnen der Differenz in Millisekunden
             timeDifference = Math.abs(today.getTime() - missedStreakDate.getTime());
 
             // Konvertieren der Differenz in Tage
-            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) -1); // Verwende Math.ceil, um aufzurunde
+            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) -1); // Verwende Math.ceil, um aufzurunden
         }
 
 
@@ -113,7 +113,7 @@ function AccountSettingsPage() {
                     <button className={styles.button} onClick={handleChangeEmailClick}>Change E-Mail</button>
                     <button className={styles.button} onClick={handleChangePasswordClick}>Change Password</button>
                     <button className={styles.button} onClick={toggleFriendPopup}>Manage Friends</button>
-                    <button className={styles.button} onClick={handleManageSubscriptionClick}>Manage Subscription</button>
+                    <button className={styles.button} onClick={handleBuyPremiumClick}>Buy Premium</button>
                     <button className={styles.button} onClick={handleDeleteAccountClick}>Delete Account</button>
                 </div>
             </div>

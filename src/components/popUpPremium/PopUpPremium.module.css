@@ -72,7 +72,7 @@
     cursor: pointer;
     margin-top: 20px;
     margin-right: 10px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .confirmButton:hover {
@@ -88,7 +88,7 @@
     cursor: pointer;
     margin-top: 20px;
     margin-right: 10px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .closeButton:hover {

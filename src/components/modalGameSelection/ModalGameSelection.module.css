@@ -40,8 +40,9 @@
 }
 
 .button {
+    border: 2px solid black;
     font-size: 18px; /* Schriftgröße des Buttons */
-    padding: 10px 15px; /* Innenabstand des Buttons */
+    padding: 10px; /* Innenabstand des Buttons */
     margin-top: 15px;
     display: flex;
     align-items: center;
