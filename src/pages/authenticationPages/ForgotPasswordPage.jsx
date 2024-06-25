@@ -1,8 +1,7 @@
-import styles from '../General.module.css';
-import styles2 from './LoginPage.module.css';
+import styles from './Authentication.module.css';
 import {useNavigate} from 'react-router-dom';
 import React, {useContext, useEffect, useState} from "react";
-import {PlayerContext} from '../../context/playerContext';
+import {PlayerContext} from '../../context/playerContext.jsx';
 import {URL} from '../../../url.js';
 
 
@@ -83,22 +82,22 @@ function ForgotPasswordPage() {
     }
 
     return (
-        <div>
-            <h1>Reset password</h1>
-            <div className={styles2.loginContainer}>
+        <div>  
+            <div className={styles.authenticationContainer}>
+                <div className={styles.h1}>Reset password</div>
                 <form onSubmit={handleReset}>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="email">Email</label>
                         <input type="email" placeholder="Enter Email" value={email} onChange={handleEmailChange}/>
-                        {errors.email && <div className={styles2.errorMessage}>{errors.email}</div>}
+                        {errors.email && <div className={styles.error}>{errors.email}</div>}
                     </div>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="password">Password</label>
                         <input type="password" placeholder="Enter new password" value={password}
                                onChange={handlePasswordChange}/>
-                        {errors.password && <div className={styles2.errorMessage}>{errors.password}</div>}
+                        {errors.password && <div className={styles.error}>{errors.password}</div>}
                     </div>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="securityQuestion">Security Question</label>
                         <select value={securityQuestion} onChange={handleSecurityQuestionChange}>
                             <option value="">Select a security question</option>
@@ -107,16 +106,16 @@ function ForgotPasswordPage() {
                             ))}
                         </select>
                         {errors.securityQuestion &&
-                            <div className={styles2.errorMessage}>{errors.securityQuestion}</div>}
+                            <div className={styles.error}>{errors.securityQuestion}</div>}
                     </div>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="securityAnswer">Security Answer</label>
                         <input type="text" placeholder="Enter Security Answer" value={securityAnswer}
                                onChange={handleSecurityAnswerChange}/>
-                        {errors.securityAnswer && <div className={styles2.errorMessage}>{errors.securityAnswer}</div>}
+                        {errors.securityAnswer && <div className={styles.error}>{errors.securityAnswer}</div>}
                     </div>
-                    <div className={styles2.loginButtonDiv}>
-                        <button type="submit" className={styles.button01}>Reset password</button>
+                    <div className={styles.buttonDiv}>
+                        <button type="submit" className={styles.button}>Reset password</button>
                     </div>
                 </form>
             </div>

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import styles from '../General.module.css';
-import styles2 from './LoginPage.module.css';
+import styles from './Authentication.module.css';
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import {URL} from '../../../url.js';
 
 function RegisterPage() {
@@ -76,25 +75,25 @@ function RegisterPage() {
 
     return (
         <div>
-            <h1>Register</h1>
-            <div className={styles2.loginContainer}>
+            <div className={styles.authenticationContainer}>
+                <div className={styles.h1}>Register</div>
                 <form onSubmit={handleRegister}>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="username">Username</label>
                         <input type="text" placeholder="Enter Username" value={username} onChange={handleUsernameChange} />
-                        {errors.username && <div className={styles2.errorMessage}>{errors.username}</div>}
+                        {errors.username && <div className={styles.error}>{errors.username}</div>}
                     </div>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="email">Email</label>
                         <input type="email" placeholder="Enter Email" value={email} onChange={handleEmailChange} />
-                        {errors.email && <div className={styles2.errorMessage}>{errors.email}</div>}
+                        {errors.email && <div className={styles.error}>{errors.email}</div>}
                     </div>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="password">Password</label>
                         <input type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange} />
-                        {errors.password && <div className={styles2.errorMessage}>{errors.password}</div>}
+                        {errors.password && <div className={styles.error}>{errors.password}</div>}
                     </div>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="securityQuestion">Security Question</label>
                         <select value={securityQuestion} onChange={handleSecurityQuestionChange}>
                             <option value="">Select a security question</option>
@@ -102,15 +101,15 @@ function RegisterPage() {
                                 <option key={index} value={question}>{question}</option>
                             ))}
                         </select>
-                        {errors.securityQuestion && <div className={styles2.errorMessage}>{errors.securityQuestion}</div>}
+                        {errors.securityQuestion && <div className={styles.error}>{errors.securityQuestion}</div>}
                     </div>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="securityAnswer">Security Answer</label>
                         <input type="text" placeholder="Enter Security Answer" value={securityAnswer} onChange={handleSecurityAnswerChange} />
-                        {errors.securityAnswer && <div className={styles2.errorMessage}>{errors.securityAnswer}</div>}
+                        {errors.securityAnswer && <div className={styles.error}>{errors.securityAnswer}</div>}
                     </div>
-                    <div className={styles2.loginButtonDiv}>
-                        <button type="submit" className={styles.button01}>Register</button>
+                    <div className={styles.buttonDiv}>
+                        <button type="submit" className={styles.button}>Register</button>
                     </div>
                 </form>
             </div>

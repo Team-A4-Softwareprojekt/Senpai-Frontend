@@ -1,8 +1,7 @@
-import styles from '../General.module.css';
-import styles2 from './LoginPage.module.css';
+import styles from './Authentication.module.css';
 import {useNavigate} from 'react-router-dom';
 import {useContext, useState} from "react";
-import {PlayerContext} from '../../context/playerContext';
+import {PlayerContext} from '../../context/playerContext.jsx';
 import {URL} from '../../../url.js';
 
 /*
@@ -69,30 +68,30 @@ function LoginPage() {
 
     return (
         <div>
-            <h1>Login</h1>
-            <div className={styles2.loginContainer}>
+            <div className={styles.authenticationContainer}>
+                <div className={styles.h1}>Login</div>
                 <form action="">
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="username">Username</label>
                         <input id="username" type="text" placeholder="Enter Username" value={username}
                                onChange={handleUsernameChange}/>
                     </div>
-                    <div className={styles2.loginFormDiv}>
+                    <div className={styles.authenticationFormDiv}>
                         <label htmlFor="password">Password</label>
                         <input id="password" type="password" placeholder="Enter Password" value={password}
                                onChange={handlePasswordChange}/>
                     </div>
 
                 </form>
-                {loginError && <div className={styles2.error}>{loginError}</div>}
-                <div className={styles2.additionalLinks}>
-                    <a href="/register" className={styles2.link}>Register</a>
-                    <span className={styles2.separator}> | </span> {/* Separator between links */}
-                    <a href="/forgotPassword" className={styles2.link}>Forgot Password</a>
+                {loginError && <div className={styles.error}>{loginError}</div>}
+                <div className={styles.additionalLinks}>
+                    <a href="/register" className={styles.link}>Register</a>
+                    <span className={styles.separator}> | </span> {/* Separator between links */}
+                    <a href="/forgotPassword" className={styles.link}>Forgot Password</a>
 
                 </div>
-                <div className={styles2.loginButtonDiv}>
-                    <button className={styles.button01} onClick={handleLogin}>Login</button>
+                <div className={styles.buttonDiv}>
+                    <button className={styles.button} onClick={handleLogin}>Login</button>
                 </div>
 
 

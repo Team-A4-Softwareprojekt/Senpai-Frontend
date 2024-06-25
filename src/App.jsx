@@ -1,9 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import StartPage from "./pages/startPage/StartPage.jsx";
-import LoginPage from "./pages/loginAndRegisterPages/LoginPage.jsx";
-import RegisterPage from "./pages/loginAndRegisterPages/RegisterPage.jsx";
-import ForgotPasswordPage from "./pages/loginAndRegisterPages/ForgotPasswordPage.jsx";
+import LoginPage from "./pages/authenticationPages/LoginPage.jsx";
+import RegisterPage from "./pages/authenticationPages/RegisterPage.jsx";
+import ForgotPasswordPage from "./pages/authenticationPages/ForgotPasswordPage.jsx";
 import SelectLearningContent from "./pages/selectLearningContent/SelectLearningContent.jsx";
 import CodeSenpaiPage from "./pages/codeSenpaiPage/CodeSenpaiPage.jsx";
 import AccountSettingsPage from "./pages/accountSettingsPage/AccountSettingsPage.jsx";
