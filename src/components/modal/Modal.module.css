@@ -53,6 +53,7 @@
     align-items: center;
     font-weight: bold;
     cursor: pointer;
+    border: 3px solid black;
 }
 
 /* Darker red on hover and active */

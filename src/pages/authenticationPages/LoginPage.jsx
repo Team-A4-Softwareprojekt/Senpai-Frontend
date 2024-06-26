@@ -1,6 +1,6 @@
 import styles from './Authentication.module.css';
 import {useNavigate} from 'react-router-dom';
-import {useContext, useState} from "react";
+import {useEffect, useContext, useState} from "react";
 import {PlayerContext} from '../../context/playerContext.jsx';
 import {URL} from '../../../url.js';
 
@@ -18,8 +18,13 @@ function LoginPage() {
     const [username, setUsername] = useState('');
     const [loginError, setLoginError] = useState('');
     const { playerName, setPlayerName } = useContext(PlayerContext);
+    const [fadeIn, setFadeIn] = useState(false);
 
     const url = URL + '/login';
+
+    useEffect(() => {
+        setFadeIn(true);
+    }, []);
 
     // functions for updating the input formula
     const handlePasswordChange = (event) => {
@@ -68,7 +73,7 @@ function LoginPage() {
 
     return (
         <div className={styles.backgroundContainer}>
-            <div className={styles.authenticationContainer}>
+            <div className={`${styles.authenticationContainerLogin} ${fadeIn ? styles.fadeIn : ""}`}>
                 <div className={styles.h1}>Login</div>
                 <form action="">
                     <div className={styles.authenticationFormDiv}>
@@ -81,7 +86,6 @@ function LoginPage() {
                         <input id="password" type="password" placeholder="Enter Password" value={password}
                                onChange={handlePasswordChange}/>
                     </div>
-
                 </form>
                 {loginError && <div className={styles.error}>{loginError}</div>}
                 <div className={styles.additionalLinks}>

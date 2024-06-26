@@ -2,18 +2,24 @@
     position: absolute;
     top: 10px; /* Abstand vom oberen Rand */
     left: 10px; /* Abstand vom rechten Rand */
+    border: 1px solid white;
   }
   
-  .homeButton {
-    padding: 10px 15px; /* Innenabstand des Buttons */
+.homeButton {
+    background: #2874a7;
+    padding: 10px 10px; /* Innenabstand des Buttons */
     display: flex;
     align-items: center;
     cursor: pointer;
-  }
+}
+
+.homeButton:hover {
+    background: #7fb9cf;
+}
   
-  .homeIcon {
-    width: 25px; /* Breite des Icons */
-    height: 25px; /* Höhe des Icons */
+.homeIcon {
+    width: 28.5px; /* Breite des Icons */
+    height: 28.5px; /* Höhe des Icons */
     transform: scale(1.5); /* Skalieren des Icons */
-  }
+}
   
