@@ -7,10 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { ManipulationPlayerContext } from '../../context/manipulationQuestionContext.jsx';
 import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
+
 import PopUpManipulationWordLimit from '../../components/popUpManipulation/PopUpManipulationWordLimit.jsx';
+
 
 import styles from '../General.module.css';
 import styles2 from './ManipulationPage.module.css';
+import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
+import {ScoreContext} from "../../context/scoreContext.jsx";
 
 function ManipulationPage() {
   const navigate = useNavigate();
@@ -25,6 +29,7 @@ function ManipulationPage() {
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
   const [actionText, setActionText] = useState('');
   const [codeTest, setCodeTest] = useState('');
+  const {ownPoints, opponentPoints} = useContext(ScoreContext);
   const [showWordLimitPopup, setShowWordLimitPopup] = useState(false); // State to manage word limit popup visibility
 
   const languages = [
@@ -122,6 +127,7 @@ function ManipulationPage() {
         <HomeButton handleClick={handleHomeClick} />
         <h1>Manipulation</h1>
       </header>
+      <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints}/>
       <div>
         <h2 className={styles2.infoText}>
           {actionText}
