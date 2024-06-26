@@ -28,6 +28,7 @@
 }
 
 .popupHeader {
+    text-align: center;
     margin-top: 0;
     color: #333;
 }
@@ -83,6 +84,7 @@
 }
 
 .text {
+    color: black;
     text-align: center;
     font-size: 20px;
 }

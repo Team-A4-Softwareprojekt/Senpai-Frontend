@@ -1,8 +1,8 @@
 .changeTopicContainer {
     position: absolute;
-    top: 10px; /* Abstand vom oberen Rand */
-    left: 75px; /* Abstand vom rechten Rand */
-    border: 1px solid white;
+    top: 2px; /* Abstand vom oberen Rand */
+    left: 60px; /* Abstand vom rechten Rand */
+  
   }
   
   .changeTopicButton {

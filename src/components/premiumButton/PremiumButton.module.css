@@ -1,8 +1,7 @@
 .buyPremiumContainer {
     position: absolute;
-    top: 10px; /* Abstand vom oberen Rand */
-    right: 178px; /* Abstand vom rechten Rand */
-    border: 1px solid white;
+    top: 2px; /* Abstand vom oberen Rand */
+    left: 251px;
 }
   
 .buyPremiumButton {

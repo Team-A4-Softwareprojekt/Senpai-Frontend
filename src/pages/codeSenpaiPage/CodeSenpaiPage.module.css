@@ -5,6 +5,8 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
+    margin-top: 20px; /* Add margin to create space between the title and cards */
+    justify-content: center; /* Center the cards within the container */
 }
 
 .selectCard {
@@ -34,7 +36,7 @@
 }
 
 .h1 {
-    font-size: 40px;
+    font-size: 50px;
     font-weight: bold;
     color: rgb(255, 230, 0);
     text-align: center;
@@ -47,6 +49,7 @@
     -2px 0 0 black,
     0 2px 0 black,
     0 -2px 0 black;
+    margin-top: 75px;
 }
 
 .backgroundContainer {
@@ -55,5 +58,20 @@
     background-position: center; /* Bild wird in der Mitte des Containers zentriert */
     background-repeat: no-repeat; /* Bild wird nicht wiederholt */
     width: 100vw; /* Breite des Containers */
-    height: 100vh; /* Höhe des Containers auf die volle Höhe des Viewports setzen */
+    height: 98.9vh; /* Höhe des Containers */
+    padding-top: 10px; /* Add padding to push content below the button bar */
+}
+
+.buttonBar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 557px;
+    height: 37px;
+    z-index: 10;
 }

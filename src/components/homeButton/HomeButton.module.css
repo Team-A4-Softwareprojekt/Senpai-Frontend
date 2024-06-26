@@ -1,8 +1,8 @@
 .homeButtonContainer {
     position: absolute;
-    top: 10px; /* Abstand vom oberen Rand */
-    left: 10px; /* Abstand vom rechten Rand */
-    border: 1px solid white;
+    top: 2px; /* Abstand vom oberen Rand */
+    left: 3px; /* Abstand vom rechten Rand */
+    
   }
   
 .homeButton {

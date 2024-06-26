@@ -5,9 +5,12 @@ import codeBattleImg from '../../assets/codeBattleCard2.png';
 import codeExerciseImg from '../../assets/exerciseChallengeCard.png';
 import React, {useState, useEffect, useContext} from 'react';
 import HomeButton from '../../components/homeButton/HomeButton';
-import AccountButton from '../../components/accountButton/AccountButton';
 import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
+import PremiumButton from '../../components/premiumButton/PremiumButton';
+import AccountButton from '../../components/accountButton/AccountButton';
 import PopUpExercise from '../../components/popUpExercise/PopUpExercise';
+import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
+import PopUpSubscribedTrue from '../../components/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
 import { useNavigate } from 'react-router-dom';
 import {socket, requestDailyChallengeQuestion} from '../../socket.js';
 import {PlayerContext} from '../../context/playerContext';
@@ -18,6 +21,8 @@ game modes to choose from. Each game mode has a modal with the basic explanation
 */
 function codeSenpaiPage() {
     const [isPopUpExerciseVisible, setIsPopUpExerciseVisible] = useState(false);
+    const [isPopUpBuyPremiumVisible, setIsPopUpBuyPremiumVisible] = useState(false);
+    const [isPopUpSubscribedTrueVisible, setIsPopUpSubscribedTrueVisible] = useState(false);
     const navigate = useNavigate();
 
     const {playerData, setPlayerData} = useContext(PlayerContext);
@@ -48,6 +53,14 @@ function codeSenpaiPage() {
         setIsPopUpExerciseVisible(true);
     };
 
+    const handleBuyPremiumClick = () => {
+        if (playerData.subscribed === true) {
+            setIsPopUpSubscribedTrueVisible(true);
+        } else {   
+            setIsPopUpBuyPremiumVisible(true);
+        }
+    };
+
     useEffect(() => {
 
         const handleQuestionType = (table) => {
@@ -69,45 +82,57 @@ function codeSenpaiPage() {
 
     return (
         <div className={styles.backgroundContainer}>
+            <div className={styles.buttonBar}>
+                <HomeButton handleClick={handleHomeClick} />
+                <ChangeTopicButton handleClick={handleChangeTopicClick} />
+                <PremiumButton handleClick={handleBuyPremiumClick} />
+                <AccountButton handleClick={handleAccountClick} />
+            </div>
             <div className={styles.h1}>
                 Choose your form of training
             </div>
-            <div className= {styles.cardsGridContainer}>      
+            <div className={styles.cardsGridContainer}>
                 <SelectContentCard 
-                    buttonText= "Daily Challenge"
+                    buttonText="Daily Challenge"
                     imageUrl={codeChallengeImg}
-                    /*linkTo={"/select/code/dailyChallenge"}*/
-                    modalHeader= "Daily Challenge" 
-                    modalText = "Absolviere täglich eine neue Herausforderung und baue deine Streak auf."
-                    className= {styles.selectCard}
-                    handleClick = {handleDailyChallenge}
-                /> 	
+                    modalHeader="Daily Challenge" 
+                    modalText="Absolviere täglich eine neue Herausforderung und baue deine Streak auf."
+                    className={styles.selectCard}
+                    handleClick={handleDailyChallenge}
+                />
                 <SelectContentCard 
-                    buttonText= "Code Battle"
+                    buttonText="Code Battle"
                     imageUrl={codeBattleImg}
-                    linkTo={"/select/code/codeBattle"}
-                    modalHeader = "Code Battle" 
-                    modalText = "Stelle dich der Herausforderung und trete gegen andere Spieler in spannenden Wettkämpfen an."
-                    className= {styles.selectCard}
-                />  
+                    linkTo="/select/code/codeBattle"
+                    modalHeader="Code Battle" 
+                    modalText="Stelle dich der Herausforderung und trete gegen andere Spieler in spannenden Wettkämpfen an."
+                    className={styles.selectCard}
+                />
                 <SelectContentCard 
-                     buttonText="Exercise"
-                     imageUrl={codeExerciseImg}
-                     modalHeader="Exercise" 
-                     modalText="Bearbeite komplexe Aufgaben und erhalte direktes Feedback zu deinem Code."
-                     className={styles.selectCard}
-                     handleClick={handleExerciseClick}
-                 />
+                    buttonText="Exercise"
+                    imageUrl={codeExerciseImg}
+                    modalHeader="Exercise" 
+                    modalText="Bearbeite komplexe Aufgaben und erhalte direktes Feedback zu deinem Code."
+                    className={styles.selectCard}
+                    handleClick={handleExerciseClick}
+                />
             </div>
-            <HomeButton handleClick={handleHomeClick} />
-            <AccountButton handleClick={handleAccountClick} />
-            <ChangeTopicButton handleClick={handleChangeTopicClick} />
             
             <PopUpExercise 
                 isVisible={isPopUpExerciseVisible} 
-                closePopUp={() => setIsPopUpExerciseVisible(false)}/>
-        </div>
+                closePopUp={() => setIsPopUpExerciseVisible(false)}
+            />
 
+            <PopUpPremium
+                isVisible={isPopUpBuyPremiumVisible}
+                closePopUp={() => setIsPopUpBuyPremiumVisible(false)}
+            />
+
+            <PopUpSubscribedTrue
+                isVisible={isPopUpSubscribedTrueVisible}
+                closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
+            />
+        </div>
     );
 }
 
