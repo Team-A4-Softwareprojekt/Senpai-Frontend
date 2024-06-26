@@ -57,10 +57,9 @@
     border: 3px solid black;
 }
 
-/* Darker red on hover and active */
 .button:hover,
 .button:active {
-    background-color: #9c1d3f; /* Darker shade of red */
+    background-color: #70d1f7;
 }
 
 .surroundingDiv{

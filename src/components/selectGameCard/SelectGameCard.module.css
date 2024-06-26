@@ -8,6 +8,16 @@
 
 .buttonText {
     margin-bottom: 10px;
+    color: rgb(255, 230, 0);
+    text-shadow: 
+    2px 2px 0 black,
+    -2px -2px 0 black,
+    -2px 2px 0 black,
+    2px -2px 0 black,
+    2px 0 0 black,
+    -2px 0 0 black,
+    0 2px 0 black,
+    0 -2px 0 black;
 }
 
 .selectCardImg {

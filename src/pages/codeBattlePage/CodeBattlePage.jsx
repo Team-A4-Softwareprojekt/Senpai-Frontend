@@ -18,6 +18,7 @@ import buzzerGrayImg from '../../assets/buzzerGray.png';
 import manipulationGrayImg from '../../assets/manipulationGray.png';
 import limitationGrayImg from '../../assets/limitationGray.png';
 import emptyHeart from '../../assets/emptyHeart.png';
+import brokenHeart from '../../assets/brokenHeart.png';
 import redHeart from '../../assets/redHeart.png';
 import goldenHeart from '../../assets/goldenHeart.png';
 import HomeButton from '../../components/homeButton/HomeButton';
@@ -185,7 +186,7 @@ function CodeBattlePage() {
                         if (i < playerData.lives) {
                             hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.fullRedHeart} />);
                         } else {
-                            hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.emptyHeart} />);
+                            hearts.push(<img key={i} src={brokenHeart} alt="Broken Heart" className={styles.brokenHeart} />);
                         }
                     }
                 }
@@ -195,7 +196,6 @@ function CodeBattlePage() {
 
         setHearts(renderHearts());
     }, [playerData]);
-
 
 
     const handleHomeClick = () => {
@@ -296,12 +296,18 @@ function CodeBattlePage() {
 
 
     return( 
-        <div>
-            <h1 className={styles.h1}>
-                Choose your battle
-            </h1>
+        <div className={styles.backgroundContainer}>
+            <div className={styles.buttonBar}>
+                <HomeButton handleClick={handleHomeClick} />
+                <ChangeTopicButton handleClick={handleChangeTopicClick} />
+                <PremiumButton handleClick={handleBuyPremiumClick} />
+                <AccountButton handleClick={handleAccountClick} />
+            </div>
             <div className={styles.heartsContainer}>
                 {hearts}
+            </div>
+            <div className={styles.h1}>
+                Choose your battle
             </div>
             <div className= {styles.cardsGridContainer}>      
                 <SelectGameCard 
