@@ -20,26 +20,26 @@ function SelectLearningContent() {
 
     return (
         <>
-            <div>
-                <h1 className={styles.h1}>Choose your learning content</h1>
+            <div className={styles.backgroundContainer}>
+                <div className={styles.h1}>Choose your learning content</div>
+                <div className={styles.cardsGridContainer}>
+                    <SelectContentCard buttonText="Code Senpai" imageUrl={codeSenpaiImage}
+                        linkTo="/select/code" modalHeader="Code Senpai" modalText="Teste dein Wissen rund um das Thema Programmieren und trete in spannenden Wettkämpfen gegen andere Spieler an." />
+
+                    <SelectContentCard buttonText="Med Senpai" imageUrl={medSenpaiImage} 
+                        linkTo="#" handleClick={showPopUpMissingContent}
+                        modalHeader="Med Senpai" modalText="Teste dein Wissen rund um das Thema Medizin und trete in spannenden Wettkämpfen gegen andere Spieler an." />
+
+                    <SelectContentCard buttonText="Math Senpai" imageUrl={mathSenpaiImage} 
+                        linkTo="#" handleClick={showPopUpMissingContent}
+                        modalHeader="Math Senpai" modalText="Teste dein Wissen rund um das Thema Mathematik und trete in spannenden Wettkämpfen gegen andere Spieler an." />
+
+                    <SelectContentCard buttonText="Gym Senpai" imageUrl={gymSenpaiImage} 
+                        linkTo="#" handleClick={showPopUpMissingContent}
+                        modalHeader="Gym Senpai" modalText="Teste dein Wissen rund um das Thema Fitness und trete in spannenden Wettkämpfen gegen andere Spieler an." />
+                </div>
+                <PopUpMissingContent isVisible={isPopUpMissingContentVisible} closePopUp={hidePopUpMissingContent}/>
             </div>
-            <div className={styles.cardsGridContainer}>
-                <SelectContentCard buttonText="Code Senpai" imageUrl={codeSenpaiImage}
-                    linkTo="/select/code" modalHeader="Code Senpai" modalText="Teste dein Wissen rund um das Thema Programmieren und trete in spannenden Wettkämpfen gegen andere Spieler an." />
-
-                <SelectContentCard buttonText="Med Senpai" imageUrl={medSenpaiImage} 
-                    linkTo="#" handleClick={showPopUpMissingContent}
-                    modalHeader="Med Senpai" modalText="Teste dein Wissen rund um das Thema Medizin und trete in spannenden Wettkämpfen gegen andere Spieler an." />
-
-                <SelectContentCard buttonText="Math Senpai" imageUrl={mathSenpaiImage} 
-                    linkTo="#" handleClick={showPopUpMissingContent}
-                    modalHeader="Math Senpai" modalText="Teste dein Wissen rund um das Thema Mathematik und trete in spannenden Wettkämpfen gegen andere Spieler an." />
-
-                <SelectContentCard buttonText="Gym Senpai" imageUrl={gymSenpaiImage} 
-                    linkTo="#" handleClick={showPopUpMissingContent}
-                    modalHeader="Gym Senpai" modalText="Teste dein Wissen rund um das Thema Fitness und trete in spannenden Wettkämpfen gegen andere Spieler an." />
-            </div>
-            <PopUpMissingContent isVisible={isPopUpMissingContentVisible} closePopUp={hidePopUpMissingContent}/>
         </>
     );
 }

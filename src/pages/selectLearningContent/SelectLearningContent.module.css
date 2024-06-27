@@ -1,10 +1,9 @@
 .cardsGridContainer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns */
-    grid-auto-rows: minmax(200px, auto); /* Automatic row height */
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     justify-items: center; /* Center items horizontally */
 }
@@ -19,6 +18,27 @@
 }
 
 .h1 {
-    font-size: 40px;
-    color: lightgreen;
+    font-size: 50px;
+    font-weight: bold;
+    color: rgb(255, 230, 0);
+    text-align: center;
+    text-shadow: 
+    2px 2px 0 black,
+    -2px -2px 0 black,
+    -2px 2px 0 black,
+    2px -2px 0 black,
+    2px 0 0 black,
+    -2px 0 0 black,
+    0 2px 0 black,
+    0 -2px 0 black;
+    margin-bottom: 50px;
+}
+
+.backgroundContainer {
+    background-image: url('../../assets/background7.png'); /* Pfad zum Hintergrundbild */
+    background-size: cover; /* Bild wird so skaliert, dass der gesamte Container abgedeckt wird */
+    background-position: center; /* Bild wird in der Mitte des Containers zentriert */
+    background-repeat: no-repeat; /* Bild wird nicht wiederholt */
+    width: 100vw; /* Breite des Containers */
+    height: 100vh; /* Höhe des Containers */
 }
