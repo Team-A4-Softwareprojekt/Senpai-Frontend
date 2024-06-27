@@ -55,7 +55,6 @@ function ManipulationPage() {
     //const [opponentPoints, setOpponentPoints] = useState(0);
 
     const handleHomeClick = () => {
-
         navigate('/select/code');
     };
 
@@ -240,10 +239,12 @@ function ManipulationPage() {
 
 
     return (
-        <>
+        <div className={styles2.backgroundImage}>
+          <HomeButton handleClick={handleHomeClick}/>
+          <div className={styles2.whiteBackground}>
             <header className={styles2.header}>
-                <HomeButton handleClick={handleHomeClick}/>
-                <h1>Manipulation</h1>
+                
+                <h1 className={styles2.manipulationText}>Manipulation</h1>
             </header>
             <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints}/>
             <div>
@@ -293,7 +294,9 @@ function ManipulationPage() {
             <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
             <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
 
-        </>
+          </div>
+
+        </div>
     );
 }
 
