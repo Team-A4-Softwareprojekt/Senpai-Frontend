@@ -1,20 +1,20 @@
 import React from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
-import animationData from '../../animations/LoserAnimation.json';
-import styles from './PopUpGameLoser.module.css';
-import ConfirmButton from '../confirmButton/ConfirmButton';
+import animationData from '../../animations/TieAnimation.json';
+import styles from './PopUpTie.module.css';
+import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
 import { useNavigate } from 'react-router-dom';
 import { socket } from '../../socket.js';
-import ScoresFinal from '../scoresFinal/ScoresFinal';
+import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
 
-const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints }) => {
+const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints }) => {
   const navigate = useNavigate();
 
   if (!isVisible) {
     return null;
   }
 
-  const handleLoserConfirm = () => {
+  const handleTieConfirm = () => {
     socket.emit('CLOSE_LOBBY');
     navigate('/select/code/codeBattle');
   };
@@ -32,12 +32,12 @@ const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints }) => {
         />
         <ScoresFinal ownPoints={ownPoints} opponentPoints={opponentPoints} />
         <div className={styles.message}>
-          Sorry <span className={styles.name}>{loser}</span>, better luck next time!
+          This match ended in a tie!
         </div>
-        <ConfirmButton buttonText="OK" handleSubmit={handleLoserConfirm} />
+        <ConfirmButton buttonText="OK" handleSubmit={handleTieConfirm} />
       </div>
     </>
   );
 };
 
-export default PopUpGameLoser;
+export default PopUpTie;

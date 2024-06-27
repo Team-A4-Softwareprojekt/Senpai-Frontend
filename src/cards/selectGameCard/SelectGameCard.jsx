@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalGameSelection from '../modalGameSelection/ModalGameSelection';
+import ModalGameSelection from '../../components/modalGameSelection/ModalGameSelection';
 import styles from './SelectGameCard.module.css';
 import { Link } from 'react-router-dom';
 

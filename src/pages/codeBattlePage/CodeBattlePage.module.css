@@ -74,7 +74,7 @@
 }
 
 .backgroundContainer {
-    background-image: url('../../assets/background7.png'); /* Pfad zum Hintergrundbild */
+    background-image: url('../../assets/clouds.jpg'); /* Pfad zum Hintergrundbild */
     background-size: cover; /* Bild wird so skaliert, dass der gesamte Container abgedeckt wird */
     background-position: center; /* Bild wird in der Mitte des Containers zentriert */
     background-repeat: no-repeat; /* Bild wird nicht wiederholt */

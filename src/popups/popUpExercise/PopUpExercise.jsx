@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './PopUpExercise.module.css';
-import ExerciseCard from '../../components/exerciseCard/ExerciseCard.jsx';
+import ExerciseCard from '../../cards/exerciseCard/ExerciseCard.jsx';
 
 const PopUpExercise = ({ closePopUp, isVisible }) => {
     return (

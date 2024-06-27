@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styles from './SelectLearningContent.module.css';
-import SelectContentCard from '../../components/selectContentCard/SelectContentCard';
+import SelectContentCard from '../../cards/selectContentCard/SelectContentCard';
 import codeSenpaiImage from '../../assets/codeSenpai.jpg';
 import medSenpaiImage from '../../assets/medSenpai.png';
 import mathSenpaiImage from '../../assets/mathSenpai.png';
 import gymSenpaiImage from '../../assets/gymSenpai.png';
-import PopUpMissingContent from '../../components/popUpMissingContent/PopUpMissingContent.jsx';
+import PopUpMissingContent from '../../popups/popUpMissingContent/PopUpMissingContent.jsx';
 
 function SelectLearningContent() {
     const [isPopUpMissingContentVisible, setPopUpMissingContentVisible] = useState(false);

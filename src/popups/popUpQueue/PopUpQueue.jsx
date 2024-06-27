@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PopUpQueue.module.css';
-import PopUpCountdown from '../popUpCountdown/PopUpCountdown.jsx';
+import PopUpCountdown from '../../popups/popUpCountdown/PopUpCountdown.jsx';
 import {socket} from '../../socket.js';
 
 const PopUpQueue = ({ isVisible, selectedGameMode, closePopup }) => {

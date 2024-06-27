@@ -1,14 +1,14 @@
 import styles from './AccountSettingsPage.module.css';
-import UserCard from '../../components/userCard/UserCard.jsx';
+import UserCard from '../../cards/userCard/UserCard.jsx';
 import React, {useContext, useState} from 'react';
-import HomeButton from '../../components/homeButton/HomeButton';
+import HomeButton from '../../buttons/homeButton/HomeButton';
 import {useNavigate} from 'react-router-dom';
 import {PlayerContext} from '../../context/playerContext';
-import PopUpChangeEmail from '../../components/popUpChangeEmail/PopUpChangeEmail.jsx';
-import PopUpChangePassword from '../../components/popUpChangePassword/PopUpChangePassword.jsx';
-import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
-import PopUpSubscribedTrue from '../../components/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
-import PopUpDeleteAccount from '../../components/popUpDeleteAccount/PopUpDeleteAccount.jsx';
+import PopUpChangeEmail from '../../popups/popUpChangeEmail/PopUpChangeEmail.jsx';
+import PopUpChangePassword from '../../popups/popUpChangePassword/PopUpChangePassword.jsx';
+import PopUpPremium from '../../popups/popUpPremium/PopUpPremium.jsx';
+import PopUpSubscribedTrue from '../../popups/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
+import PopUpDeleteAccount from '../../popups/popUpDeleteAccount/PopUpDeleteAccount.jsx';
 
 function AccountSettingsPage() {
     const navigate = useNavigate();

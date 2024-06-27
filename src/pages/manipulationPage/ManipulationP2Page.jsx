@@ -2,14 +2,14 @@ import React, { useEffect, useState, useContext } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
-import HomeButton from '../../components/homeButton/HomeButton.jsx';
+import HomeButton from '../../buttons/homeButton/HomeButton.jsx';
 import { useNavigate } from 'react-router-dom';
 import { ManipulationPlayerContext } from '../../context/manipulationQuestionContext.jsx';
 import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
 
-import PopUpManipulationCorrect from '../../components/popUpManipulation/PopUpManipulationCorrect.jsx';
-import PopUpManipulationWrong from '../../components/popUpManipulation/PopUpManipulationWrong.jsx';
+import PopUpManipulationCorrect from '../../popups/popUpManipulation/PopUpManipulationCorrect.jsx';
+import PopUpManipulationWrong from '../../popups/popUpManipulation/PopUpManipulationWrong.jsx';
 
 import styles from '../General.module.css';
 import styles2 from './ManipulationPage.module.css';
