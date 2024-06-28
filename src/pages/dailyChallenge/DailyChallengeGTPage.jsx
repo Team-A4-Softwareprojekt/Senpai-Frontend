@@ -2,7 +2,7 @@ import styles2 from './DailyChallengePage.module.css';
 import FillInTheBlankText from '../../components/fillInTheBlankText/FillInTheBlankText.jsx';
 import { socket } from '../../socket.js';
 import { useEffect, useState } from 'react';
-//import HomeButton from '../../components/homeButton/HomeButton.jsx';
+import HomeButton from '../../buttons/homeButton/HomeButton.jsx';
 import {useNavigate} from 'react-router-dom';
 
 function DailyChallengeGTPage() {
@@ -31,11 +31,10 @@ function DailyChallengeGTPage() {
         };
     }, []);
 
-    //<HomeButton handleClick={handleHomeClick}/>
 
     return (
         <div className={styles2.backgroundImage}>
-
+            <HomeButton handleClick={handleHomeClick}/>
             <div className={styles2.centeredContainer}>
                 <div className={styles2.text}>
                     <h1 className={styles2.infoText}>This is today's Daily Challenge</h1>

@@ -12,13 +12,11 @@ import {socket} from '../../socket.js';
 
 import PopUpManipulationCorrect from '../../popups/popUpManipulation/PopUpManipulationCorrect.jsx';
 import PopUpManipulationWrong from '../../popups/popUpManipulation/PopUpManipulationWrong.jsx';
-
-import styles from '../General.module.css';
 import styles2 from './ManipulationPage.module.css';
 import PopUpManipulationRoundEnd from "../../components/popUpManipulationRoundEnd/PopUpManipulationRoundEnd.jsx";
-import PopUpGameWinner from "../../components/popUpGameWinner/PopUpGameWinner.jsx";
-import PopUpGameLoser from "../../components/popUpGameLoser/PopUpGameLoser.jsx";
-import PopUpTie from "../../components/popUpTie/PopUpTie.jsx";
+import PopUpGameWinner from "../../popups/popUpGameWinner/PopUpGameWinner.jsx";
+import PopUpGameLoser from "../../popups/popUpGameLoser/PopUpGameLoser.jsx";
+import PopUpTie from "../../popups/popUpTie/PopUpTie.jsx";
 import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
 
 function ManipulationPage() {

@@ -1,8 +1,7 @@
 import {describe, it} from 'vitest'; // Import von ViTest
 import {render, screen} from '@testing-library/react'; // Import der render-Funktion von @testing-library/react
 import {MemoryRouter} from "react-router-dom";
-import LoginPage from "../src/pages/loginAndRegisterPages/LoginPage.jsx";
-import RegisterPage from "../src/pages/loginAndRegisterPages/RegisterPage.jsx";
+import RegisterPage from "../src/pages/authenticationPages/RegisterPage.jsx";
 
 describe("RegisterPage", () => {
     it("renders the RegisterPage", () => {
