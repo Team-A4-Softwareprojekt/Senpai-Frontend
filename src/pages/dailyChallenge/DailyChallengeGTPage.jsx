@@ -31,9 +31,11 @@ function DailyChallengeGTPage() {
         };
     }, []);
 
+    //<HomeButton handleClick={handleHomeClick}/>
+
     return (
         <div className={styles2.backgroundImage}>
-            <!--HomeButton handleClick={handleHomeClick}/-->
+
             <div className={styles2.centeredContainer}>
                 <div className={styles2.text}>
                     <h1 className={styles2.infoText}>This is today's Daily Challenge</h1>
