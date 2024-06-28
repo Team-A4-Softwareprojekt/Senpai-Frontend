@@ -1,0 +1,126 @@
+import styles from './Authentication.module.css';
+import {useNavigate} from 'react-router-dom';
+import React, {useContext, useEffect, useState} from "react";
+import {PlayerContext} from '../../context/playerContext.jsx';
+import {URL} from '../../../url.js';
+
+
+function ForgotPasswordPage() {
+
+    // Navigate function
+    const navigate = useNavigate();
+
+    const url = URL + '/forgotPassword';
+    const urlQuestion = URL + '/security-questions';
+
+
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [securityQuestion, setSecurityQuestion] = useState('');
+    const [securityAnswer, setSecurityAnswer] = useState('');
+    const [securityQuestions, setSecurityQuestions] = useState([]);
+    const [errors, setErrors] = useState({});
+
+
+    // Fetch security questions from the server
+    useEffect(() => {
+        fetch(urlQuestion)
+            .then(response => response.json())
+            .then(data => setSecurityQuestions(data))
+            .catch(error => console.error('Error:', error));
+    }, []);
+
+
+    // Handle input changes
+    const handleEmailChange = (e) => setEmail(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value);
+    const handleSecurityQuestionChange = (e) => setSecurityQuestion(e.target.value);
+    const handleSecurityAnswerChange = (e) => setSecurityAnswer(e.target.value);
+
+
+    // Validate form inputs
+    const validate = () => {
+        const newErrors = {};
+        if (!email) newErrors.email = 'E-Mail ist erforderlich';
+        if (!password) newErrors.password = 'Passwort ist erforderlich';
+        if (!securityQuestion) newErrors.securityQuestion = 'Sicherheitsfrage ist erforderlich';
+        if (!securityAnswer) newErrors.securityAnswer = 'Sicherheitsantwort ist erforderlich';
+        return newErrors;
+    };
+
+    const handleReset = (event) => {
+
+        event.preventDefault();
+        const newErrors = validate();
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email, password, securityQuestion, securityAnswer})
+        })
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success === true) {
+                    //TODO: data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
+                    console.log(data.message);
+                    navigate('/login');
+                }
+
+            });
+    }
+
+    return (
+        <div className={styles.backgroundContainer}> 
+            <div className={styles.authenticationContainer}>
+                <div className={styles.h1}>Passwort zurücksetzen</div>
+                <form onSubmit={handleReset}>
+                    <div className={styles.authenticationFormDiv}>
+                        <label htmlFor="email">E-Mail</label>
+                        <input type="email" placeholder="E-Mail eingeben" value={email} onChange={handleEmailChange}/>
+                        {errors.email && <div className={styles.error}>{errors.email}</div>}
+                    </div>
+                    <div className={styles.authenticationFormDiv}>
+                        <label htmlFor="password">Passwort</label>
+                        <input type="password" placeholder="Neues Passwort eingeben" value={password}
+                               onChange={handlePasswordChange}/>
+                        {errors.password && <div className={styles.error}>{errors.password}</div>}
+                    </div>
+                    <div className={styles.authenticationFormDiv}>
+                        <label htmlFor="securityQuestion">Sicherheitsfrage</label>
+                        <select value={securityQuestion} onChange={handleSecurityQuestionChange}>
+                            <option value="">Eine Sicherheitsfrage auswählen</option>
+                            {securityQuestions.map((question, index) => (
+                                <option key={index} value={question}>{question}</option>
+                            ))}
+                        </select>
+                        {errors.securityQuestion &&
+                            <div className={styles.error}>{errors.securityQuestion}</div>}
+                    </div>
+                    <div className={styles.authenticationFormDiv}>
+                        <label htmlFor="securityAnswer">Sicherheitsantwort</label>
+                        <input type="text" placeholder="Eine Sicherheitsantwort eingeben" value={securityAnswer}
+                               onChange={handleSecurityAnswerChange}/>
+                        {errors.securityAnswer && <div className={styles.error}>{errors.securityAnswer}</div>}
+                    </div>
+                    <div className={styles.buttonDiv}>
+                        <button type="submit" className={styles.button}>Bestätigen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}
+
+export default ForgotPasswordPage;

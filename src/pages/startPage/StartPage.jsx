@@ -1,33 +1,29 @@
-import styles from '../General.module.css';
-import styles2 from "./StartPage.module.css";
 import { useNavigate } from "react-router-dom";
-import senpaiBackground from "../../assets/senpaiStartPage.jpg";
+import styles from "./StartPage.module.css";
 
-/*
-This is the start page with the title and a button to move on
-*/
-function StartPage(){ //(props)
-    // UseNavigate is used to switch between pages
+function StartPage() {
     const navigate = useNavigate();
 
-    // Navigates to the login page
     const handleClick = () => {
-        //props.checkClick();
-        navigate("./login");
+            navigate("./login");
     };
 
-    return(
-        // Background image 
-        <div className={styles2.background} style={{backgroundImage: `url(${senpaiBackground})`}}>
-            <div className= {styles2.startDiv}>
-                <h1>Senpai</h1>
-                <div>
-                    <button data-testid="startButton" className={styles.button01} onClick={handleClick}>
-                        Start Your Journey
-                    </button> 
+    return (
+        <div className={styles.backgroundContainer}>
+            <div className={styles.contentContainer}>
+                <div className={styles.senpaiText}>Senpai</div>
+                <div className={styles.startDiv}>
+                    <button className={styles.button74} onClick={handleClick}>
+                        Start your journey
+                    </button>
+                </div>
+                <div className={styles.infoBox}>
+                    Welcome to Senpai. Begin your journey by clicking the button on the right.
+                    Welcome to Senpai. Begin your journey by clicking the button on the right.
+                    Welcome to Senpai. Begin your journey by clicking the button on the right.
+                    Welcome to Senpai. Begin your journey by clicking the button on the right.
                 </div>
             </div>
-            
         </div>
     );
 }

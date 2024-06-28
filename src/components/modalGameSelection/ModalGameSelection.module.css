@@ -40,8 +40,9 @@
 }
 
 .button {
-    font-size: 18px; /* Schriftgröße des Buttons */
-    padding: 10px 15px; /* Innenabstand des Buttons */
+    border: 2px solid black;
+    font-size: 18px;
+    padding: 10px;
     margin-top: 15px;
     display: flex;
     align-items: center;
@@ -49,10 +50,9 @@
     cursor: pointer;
 }
 
-/* Darker red on hover and active */
 .button:hover,
 .button:active {
-    background-color: #9c1d3f; /* Darker shade of red */
+    background-color: #f3bfbf;
 }
 
 .surroundingDiv{

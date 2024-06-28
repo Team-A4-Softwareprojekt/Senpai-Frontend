@@ -1,0 +1,21 @@
+.changeTopicContainer {
+    position: absolute;
+    top: 2px;
+    left: 60px;
+  }
+  
+.changeTopicButton {
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-size: 25px;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.changeTopicButton:hover {
+    background: #f3bfbf;
+}

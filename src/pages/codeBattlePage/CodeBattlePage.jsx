@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styles from './CodeBattlePage.module.css';
-import SelectGameCard from '../../components/selectGameCard/SelectGameCard.jsx';
+import SelectGameCard from '../../cards/selectGameCard/SelectGameCard.jsx';
 import buzzerImg from '../../assets/buzzer.png';
 import manipulationImg from '../../assets/manipulation.png';
 import limitationImg from '../../assets/limitation.png';
@@ -17,19 +17,19 @@ import manipulationSlide03 from '../../assets/manipulationSlide03.png';
 import buzzerGrayImg from '../../assets/buzzerGray.png';
 import manipulationGrayImg from '../../assets/manipulationGray.png';
 import limitationGrayImg from '../../assets/limitationGray.png';
-import emptyHeart from '../../assets/emptyHeart.png';
+import brokenHeart from '../../assets/brokenHeart.png';
 import redHeart from '../../assets/redHeart.png';
 import goldenHeart from '../../assets/goldenHeart.png';
-import HomeButton from '../../components/homeButton/HomeButton';
-import AccountButton from '../../components/accountButton/AccountButton';
-import ChangeTopicButton from '../../components/changeTopicButton/ChangeTopicButton';
-import PremiumButton from '../../components/premiumButton/PremiumButton';
-import PopUpQueue from '../../components/popUpQueue/PopUpQueue.jsx';
-import PopUpCountdown from '../../components/popUpCountdown/PopUpCountdown.jsx';
-import PopUpNoHearts from '../../components/popUpNoHearts/PopUpNoHearts.jsx';
-import PopUpPremium from '../../components/popUpPremium/PopUpPremium.jsx';
-import PopUpSubscribedTrue from '../../components/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
-import PopUpMissingContent from '../../components/popUpMissingContent/PopUpMissingContent.jsx';
+import HomeButton from '../../buttons/homeButton/HomeButton';
+import AccountButton from '../../buttons/accountButton/AccountButton';
+import ChangeTopicButton from '../../buttons/changeTopicButton/ChangeTopicButton';
+import PremiumButton from '../../buttons/premiumButton/PremiumButton';
+import PopUpQueue from '../../popups/popUpQueue/PopUpQueue.jsx';
+import PopUpCountdown from '../../popups/popUpCountdown/PopUpCountdown.jsx';
+import PopUpNoHearts from '../../popups/popUpNoHearts/PopUpNoHearts.jsx';
+import PopUpPremium from '../../popups/popUpPremium/PopUpPremium.jsx';
+import PopUpSubscribedTrue from '../../popups/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
+import PopUpMissingContent from '../../popups/popUpMissingContent/PopUpMissingContent.jsx';
 import {useNavigate} from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, startManipulationQueue, leaveManipulationQueue} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
@@ -194,7 +194,7 @@ function CodeBattlePage() {
                         if (i < playerData.lives) {
                             hearts.push(<img key={i} src={redHeart} alt="Red Heart" className={styles.fullRedHeart} />);
                         } else {
-                            hearts.push(<img key={i} src={emptyHeart} alt="Empty Heart" className={styles.emptyHeart} />);
+                            hearts.push(<img key={i} src={brokenHeart} alt="Broken Heart" className={styles.brokenHeart} />);
                         }
                     }
                 }
@@ -204,7 +204,6 @@ function CodeBattlePage() {
 
         setHearts(renderHearts());
     }, [playerData]);
-
 
 
     const handleHomeClick = () => {
@@ -305,12 +304,18 @@ function CodeBattlePage() {
 
 
     return( 
-        <div>
-            <h1 className={styles.h1}>
-                Choose your battle
-            </h1>
+        <div className={styles.backgroundContainer}>
+            <div className={styles.buttonBar}>
+                <HomeButton handleClick={handleHomeClick} />
+                <ChangeTopicButton handleClick={handleChangeTopicClick} />
+                <PremiumButton handleClick={handleBuyPremiumClick} />
+                <AccountButton handleClick={handleAccountClick} />
+            </div>
             <div className={styles.heartsContainer}>
                 {hearts}
+            </div>
+            <div className={styles.h1}>
+                Wähle einen Spielmodus
             </div>
             <div className= {styles.cardsGridContainer}>      
                 <SelectGameCard 

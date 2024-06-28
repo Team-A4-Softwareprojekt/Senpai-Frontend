@@ -1,0 +1,25 @@
+.homeButtonContainer {
+    position: absolute;
+    top: 2px;
+    left: 3px;
+}
+  
+.homeButton {
+    border-radius: 10px;
+    background: white;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.homeButton:hover {
+    background: #f3bfbf;
+}
+  
+.homeIcon {
+    width: 28.5px;
+    height: 28.5px;
+    transform: scale(1.5);
+}
+  

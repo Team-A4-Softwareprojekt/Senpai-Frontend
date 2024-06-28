@@ -2,8 +2,8 @@ import styles from '../General.module.css';
 import styles2 from './DailyChallengePage.module.css';
 import { useEffect, useState } from 'react';
 import { socket } from '../../socket.js';
-import ConfirmButton from '../../components/confirmButton/ConfirmButton.jsx';
-import BuzzerButton from '../../components/buzzerButton/BuzzerButton.jsx';
+import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
+import BuzzerButton from '../../buttons/buzzerButton/BuzzerButton.jsx';
 
 function DailyChallengeMCPage() {
     const [question, setQuestion] = useState(null);
