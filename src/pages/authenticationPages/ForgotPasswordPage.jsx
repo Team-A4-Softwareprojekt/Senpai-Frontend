@@ -41,10 +41,10 @@ function ForgotPasswordPage() {
     // Validate form inputs
     const validate = () => {
         const newErrors = {};
-        if (!email) newErrors.email = 'Email is required';
-        if (!password) newErrors.password = 'Password is required';
-        if (!securityQuestion) newErrors.securityQuestion = 'Security question is required';
-        if (!securityAnswer) newErrors.securityAnswer = 'Security answer is required';
+        if (!email) newErrors.email = 'E-Mail ist erforderlich';
+        if (!password) newErrors.password = 'Passwort ist erforderlich';
+        if (!securityQuestion) newErrors.securityQuestion = 'Sicherheitsfrage ist erforderlich';
+        if (!securityAnswer) newErrors.securityAnswer = 'Sicherheitsantwort ist erforderlich';
         return newErrors;
     };
 
@@ -84,23 +84,23 @@ function ForgotPasswordPage() {
     return (
         <div className={styles.backgroundContainer}> 
             <div className={styles.authenticationContainer}>
-                <div className={styles.h1}>Reset password</div>
+                <div className={styles.h1}>Passwort zurücksetzen</div>
                 <form onSubmit={handleReset}>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="email">Email</label>
-                        <input type="email" placeholder="Enter Email" value={email} onChange={handleEmailChange}/>
+                        <label htmlFor="email">E-Mail</label>
+                        <input type="email" placeholder="E-Mail eingeben" value={email} onChange={handleEmailChange}/>
                         {errors.email && <div className={styles.error}>{errors.email}</div>}
                     </div>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" placeholder="Enter new password" value={password}
+                        <label htmlFor="password">Passwort</label>
+                        <input type="password" placeholder="Neues Passwort eingeben" value={password}
                                onChange={handlePasswordChange}/>
                         {errors.password && <div className={styles.error}>{errors.password}</div>}
                     </div>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="securityQuestion">Security Question</label>
+                        <label htmlFor="securityQuestion">Sicherheitsfrage</label>
                         <select value={securityQuestion} onChange={handleSecurityQuestionChange}>
-                            <option value="">Select a security question</option>
+                            <option value="">Eine Sicherheitsfrage auswählen</option>
                             {securityQuestions.map((question, index) => (
                                 <option key={index} value={question}>{question}</option>
                             ))}
@@ -109,13 +109,13 @@ function ForgotPasswordPage() {
                             <div className={styles.error}>{errors.securityQuestion}</div>}
                     </div>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="securityAnswer">Security Answer</label>
-                        <input type="text" placeholder="Enter Security Answer" value={securityAnswer}
+                        <label htmlFor="securityAnswer">Sicherheitsantwort</label>
+                        <input type="text" placeholder="Eine Sicherheitsantwort eingeben" value={securityAnswer}
                                onChange={handleSecurityAnswerChange}/>
                         {errors.securityAnswer && <div className={styles.error}>{errors.securityAnswer}</div>}
                     </div>
                     <div className={styles.buttonDiv}>
-                        <button type="submit" className={styles.button}>Reset password</button>
+                        <button type="submit" className={styles.button}>Bestätigen</button>
                     </div>
                 </form>
             </div>

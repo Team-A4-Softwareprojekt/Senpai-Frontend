@@ -17,7 +17,6 @@ import manipulationSlide03 from '../../assets/manipulationSlide03.png';
 import buzzerGrayImg from '../../assets/buzzerGray.png';
 import manipulationGrayImg from '../../assets/manipulationGray.png';
 import limitationGrayImg from '../../assets/limitationGray.png';
-import emptyHeart from '../../assets/emptyHeart.png';
 import brokenHeart from '../../assets/brokenHeart.png';
 import redHeart from '../../assets/redHeart.png';
 import goldenHeart from '../../assets/goldenHeart.png';
@@ -307,7 +306,7 @@ function CodeBattlePage() {
                 {hearts}
             </div>
             <div className={styles.h1}>
-                Choose your battle
+                Wähle einen Spielmodus
             </div>
             <div className= {styles.cardsGridContainer}>      
                 <SelectGameCard 

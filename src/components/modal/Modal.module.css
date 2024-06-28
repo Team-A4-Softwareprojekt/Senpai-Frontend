@@ -47,19 +47,19 @@
 }
 
 .button {
-    font-size: 18px; /* Schriftgröße des Buttons */
+    border-radius: 10px;
+    font-size: 20px; /* Schriftgröße des Buttons */
     padding: 10px 15px; /* Innenabstand des Buttons */
     margin-top: 15px;
     display: flex;
     align-items: center;
     font-weight: bold;
     cursor: pointer;
-    border: 3px solid black;
 }
 
 .button:hover,
 .button:active {
-    background-color: #70d1f7;
+    background-color: #f3bfbf;
 }
 
 .surroundingDiv{

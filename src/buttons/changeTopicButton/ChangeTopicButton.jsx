@@ -5,7 +5,7 @@ const ChangeTopicButton = ({ handleClick }) => {
   return (
     <div className={styles.changeTopicContainer}>
       <button className={styles.changeTopicButton} onClick={handleClick}>
-        Change Topic
+        Thema wechseln
       </button>
     </div>
   );

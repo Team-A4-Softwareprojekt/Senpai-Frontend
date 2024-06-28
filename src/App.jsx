@@ -4,7 +4,7 @@ import StartPage from "./pages/startPage/StartPage.jsx";
 import LoginPage from "./pages/authenticationPages/LoginPage.jsx";
 import RegisterPage from "./pages/authenticationPages/RegisterPage.jsx";
 import ForgotPasswordPage from "./pages/authenticationPages/ForgotPasswordPage.jsx";
-import SelectLearningContent from "./pages/selectLearningContent/SelectLearningContent.jsx";
+import SelectPlatformPage from "./pages/selectPlatformPage/SelectPlatformPage.jsx";
 import CodeSenpaiPage from "./pages/codeSenpaiPage/CodeSenpaiPage.jsx";
 import AccountSettingsPage from "./pages/accountSettingsPage/AccountSettingsPage.jsx";
 import DailyChallengeGTPage from "./pages/dailyChallenge/DailyChallengeGTPage.jsx";
@@ -30,7 +30,7 @@ function App() {
                             <Route path="/login" element={<LoginPage />} />
                             <Route path="/register" element={<RegisterPage />} />
                             <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
-                            <Route path="/select" element={<SelectLearningContent />} />
+                            <Route path="/select" element={<SelectPlatformPage />} />
                             <Route path="/select/code" element={<CodeSenpaiPage />} />
                             <Route path="/select/code/dailyChallenge/gapText" element={<DailyChallengeGTPage/>}/>
                             <Route path="/select/code/dailyChallenge/multipleChoice" element={<DailyChallengeMCPage/>}/>

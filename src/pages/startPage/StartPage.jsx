@@ -1,21 +1,16 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./StartPage.module.css";
 
 function StartPage() {
     const navigate = useNavigate();
-    const [startAnimation, setStartAnimation] = useState(false);
 
     const handleClick = () => {
-        setStartAnimation(true);
-        setTimeout(() => {
             navigate("./login");
-        }, 3000); // 3 seconds delay
     };
 
     return (
         <div className={styles.backgroundContainer}>
-            <div className={`${styles.contentContainer} ${startAnimation ? styles.fadeOut : ""}`}>
+            <div className={styles.contentContainer}>
                 <div className={styles.senpaiText}>Senpai</div>
                 <div className={styles.startDiv}>
                     <button className={styles.button74} onClick={handleClick}>

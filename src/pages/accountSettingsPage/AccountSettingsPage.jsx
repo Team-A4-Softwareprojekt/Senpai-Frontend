@@ -83,79 +83,81 @@ function AccountSettingsPage() {
 
     return (
         <>
-            <HomeButton handleClick={handleHomeClick} />
-            <div className={`${styles.accountDiv} ${showFriendPopup ? styles.blurBackground : ''}`}>
-                <div className={styles.infoContainer}>
-                    <div className={styles.container}>
-                        <div className={styles.heading}><strong>General Information</strong></div>
-                        <div className={styles.infoRowContainer}>
-                            <div className={styles.infoRow}>
-                                <strong>Name:</strong> <span>{playerData.playername}</span>
-                            </div>
-                            <div className={styles.infoRow}>
-                                <strong>E-Mail:</strong> <span>{playerData.email}</span>
+            <div className={styles.backgroundContainer}>
+                <HomeButton handleClick={handleHomeClick} />
+                <div className={`${styles.accountDiv} ${showFriendPopup ? styles.blurBackground : ''}`}>
+                    <div className={styles.infoContainer}>
+                        <div className={styles.container}>
+                            <div className={styles.heading}><strong>Allgemeine Informationen</strong></div>
+                            <div className={styles.infoRowContainer}>
+                                <div className={styles.infoRow}>
+                                    <strong>Name:</strong> <span>{playerData.playername}</span>
+                                </div>
+                                <div className={styles.infoRow}>
+                                    <strong>E-Mail:</strong> <span>{playerData.email}</span>
+                                </div>
                             </div>
                         </div>
+                        <div className={styles.container}>
+                            <div className={styles.heading}><strong>Spieler Informationen</strong></div>
+                            <div className={styles.infoRowContainer}>
+                                <div className={styles.infoRow}>
+                                    <strong>Streak:</strong> <span>{streakValue}</span>
+                                </div>
+                                <div className={styles.infoRow}>
+                                    <strong>Rang:</strong> <span>bald verfügbar</span>
+                                </div>
+                            </div>  
+                        </div>
                     </div>
-                    <div className={styles.container}>
-                        <div className={styles.heading}><strong>Player Information</strong></div>
-                        <div className={styles.infoRowContainer}>
-                            <div className={styles.infoRow}>
-                                <strong>Streak:</strong> <span>{streakValue}</span>
-                            </div>
-                            <div className={styles.infoRow}>
-                                <strong>Rank:</strong> <span>coming soon</span>
-                            </div>
-                        </div>  
+                    <div className={styles.buttonContainer}>
+                        <button className={styles.button} onClick={handleChangeEmailClick}>E-Mail ändern</button>
+                        <button className={styles.button} onClick={handleChangePasswordClick}>Passwort ändern</button>
+                        <button className={styles.button} onClick={handleBuyPremiumClick}>Premium kaufen</button>
+                        <button className={styles.button} onClick={toggleFriendPopup}>Freundesliste</button>
+                        <button className={styles.deleteAccountButton} onClick={handleDeleteAccountClick}>Account löschen</button>
                     </div>
                 </div>
-                <div className={styles.buttonContainer}>
-                    <button className={styles.button} onClick={handleChangeEmailClick}>Change E-Mail</button>
-                    <button className={styles.button} onClick={handleChangePasswordClick}>Change Password</button>
-                    <button className={styles.button} onClick={toggleFriendPopup}>Manage Friends</button>
-                    <button className={styles.button} onClick={handleBuyPremiumClick}>Buy Premium</button>
-                    <button className={styles.button} onClick={handleDeleteAccountClick}>Delete Account</button>
-                </div>
+                {showFriendPopup && (
+                    <div className={styles.overlay}>
+                        <div className={styles.friendPopup}>
+                            <input type="text" placeholder="Search friend" />
+                            <div className={styles.friendList}>
+                                <UserCard userName="Jane Doe" userEmail="jane.doe@gmail.com" userStreak="44" />
+                                <UserCard userName="John Smith" userEmail="john.smith@gmail.com" userStreak="30" />
+                                <UserCard userName="Alice Johnson" userEmail="alice.johnson@gmail.com" userStreak="15" />
+                                <UserCard userName="Bob Anderson" userEmail="bob.anderson@gmail.com" userStreak="10" />
+                                <UserCard userName="Peter Neumann" userEmail="peter.neumann@gmail.com" userStreak="20" />
+                            </div>
+                            <button className={styles.closeButton} onClick={toggleFriendPopup}>Close</button>
+                        </div>
+                    </div>
+                )}
+                <PopUpChangeEmail 
+                    closePopUp={() => setIsPopUpChangeEmailVisible(false)} 
+                    isVisible={isPopUpChangeEmailVisible} 
+                />
+
+                <PopUpChangePassword 
+                    closePopUp={() => setIsPopUpChangePasswordVisible(false)} 
+                    isVisible={isPopUpChangePasswordVisible}
+                />
+
+                <PopUpPremium 
+                    closePopUp={() => setIsPopUpPremiumVisible(false)} 
+                    isVisible={isPopUpPremiumVisible}
+                />
+
+                <PopUpSubscribedTrue
+                    closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
+                    isVisible={isPopUpSubscribedTrueVisible}
+                />
+                
+                <PopUpDeleteAccount 
+                    closePopUp={() => setIsPopUpDeleteAccountVisible(false)} 
+                    isVisible={isPopUpDeleteAccountVisible}
+                />
             </div>
-            {showFriendPopup && (
-                <div className={styles.overlay}>
-                    <div className={styles.friendPopup}>
-                        <input type="text" placeholder="Search friend" />
-                        <div className={styles.friendList}>
-                            <UserCard userName="Jane Doe" userEmail="jane.doe@gmail.com" userStreak="44" />
-                            <UserCard userName="John Smith" userEmail="john.smith@gmail.com" userStreak="30" />
-                            <UserCard userName="Alice Johnson" userEmail="alice.johnson@gmail.com" userStreak="15" />
-                            <UserCard userName="Bob Anderson" userEmail="bob.anderson@gmail.com" userStreak="10" />
-                            <UserCard userName="Peter Neumann" userEmail="peter.neumann@gmail.com" userStreak="20" />
-                        </div>
-                        <button className={styles.closeButton} onClick={toggleFriendPopup}>Close</button>
-                    </div>
-                </div>
-            )}
-            <PopUpChangeEmail 
-                closePopUp={() => setIsPopUpChangeEmailVisible(false)} 
-                isVisible={isPopUpChangeEmailVisible} 
-            />
-
-            <PopUpChangePassword 
-                closePopUp={() => setIsPopUpChangePasswordVisible(false)} 
-                isVisible={isPopUpChangePasswordVisible}
-            />
-
-            <PopUpPremium 
-                closePopUp={() => setIsPopUpPremiumVisible(false)} 
-                isVisible={isPopUpPremiumVisible}
-            />
-
-            <PopUpSubscribedTrue
-                closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
-                isVisible={isPopUpSubscribedTrueVisible}
-            />
-            
-            <PopUpDeleteAccount 
-                closePopUp={() => setIsPopUpDeleteAccountVisible(false)} 
-                isVisible={isPopUpDeleteAccountVisible}
-            />
         </>
     );
 }

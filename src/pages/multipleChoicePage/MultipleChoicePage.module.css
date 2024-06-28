@@ -4,8 +4,8 @@
   max-width: 650px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  border: 5px solid gold;
+  background: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -28,7 +28,7 @@
 }
 
 .questionContent {
-  color: white;
+  color: black;
   font-size: 1.5rem;
   font-family: 'Arial', sans-serif;
 }
@@ -42,7 +42,7 @@
 
 .answerOption {
   margin-bottom: 10px;
-  color: white;
+  color: black;
   font-family: 'Arial', sans-serif;
 }
 
@@ -92,5 +92,15 @@
 }
 
 .p {
-  color: white;
+  color: black;
+}
+
+.backgroundContainer {
+  background-image: url('../../assets/codeBattleIngame.png'); /* Pfad zum Hintergrundbild */
+  background-size: cover; /* Bild wird so skaliert, dass der gesamte Container abgedeckt wird */
+  background-position: center; /* Bild wird in der Mitte des Containers zentriert */
+  background-repeat: no-repeat; /* Bild wird nicht wiederholt */
+  width: 100vw; /* Breite des Containers */
+  height: 98.9vh; /* Höhe des Containers */
+  padding-top: 10px; /* Add padding to push content below the button bar */
 }

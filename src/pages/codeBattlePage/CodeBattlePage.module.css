@@ -1,6 +1,5 @@
 .cardsGridContainer {
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
     max-width: 1200px;
@@ -74,7 +73,7 @@
 }
 
 .backgroundContainer {
-    background-image: url('../../assets/clouds.jpg'); /* Pfad zum Hintergrundbild */
+    background-image: url('../../assets/cloudsBlurry.jpg'); /* Pfad zum Hintergrundbild */
     background-size: cover; /* Bild wird so skaliert, dass der gesamte Container abgedeckt wird */
     background-position: center; /* Bild wird in der Mitte des Containers zentriert */
     background-repeat: no-repeat; /* Bild wird nicht wiederholt */
@@ -87,7 +86,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color: white;
     padding: 10px 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: fixed;

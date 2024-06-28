@@ -1,6 +1,6 @@
 import styles from './Authentication.module.css';
 import {useNavigate} from 'react-router-dom';
-import {useEffect, useContext, useState} from "react";
+import {useContext, useState} from "react";
 import {PlayerContext} from '../../context/playerContext.jsx';
 import {URL} from '../../../url.js';
 
@@ -18,13 +18,8 @@ function LoginPage() {
     const [username, setUsername] = useState('');
     const [loginError, setLoginError] = useState('');
     const { playerName, setPlayerName } = useContext(PlayerContext);
-    const [fadeIn, setFadeIn] = useState(false);
 
     const url = URL + '/login';
-
-    useEffect(() => {
-        setFadeIn(true);
-    }, []);
 
     // functions for updating the input formula
     const handlePasswordChange = (event) => {
@@ -63,7 +58,7 @@ function LoginPage() {
                     setPlayerName(data.username);
                     navigate("/select");
                 } else {
-                    setLoginError("Invalid username or password")
+                    setLoginError("Falscher Benutzername oder Passwort")
                 }
             })
             .catch(error => {
@@ -73,25 +68,25 @@ function LoginPage() {
 
     return (
         <div className={styles.backgroundContainer}>
-            <div className={`${styles.authenticationContainerLogin} ${fadeIn ? styles.fadeIn : ""}`}>
+            <div className={styles.authenticationContainer}>
                 <div className={styles.h1}>Login</div>
                 <form action="">
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="username">Username</label>
-                        <input id="username" type="text" placeholder="Enter Username" value={username}
+                        <label htmlFor="username">Benutzername</label>
+                        <input id="username" type="text" placeholder="Benutzername eingeben" value={username}
                                onChange={handleUsernameChange}/>
                     </div>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="password">Password</label>
-                        <input id="password" type="password" placeholder="Enter Password" value={password}
+                        <label htmlFor="password">Passwort</label>
+                        <input id="password" type="password" placeholder="Passwort eingeben" value={password}
                                onChange={handlePasswordChange}/>
                     </div>
                 </form>
                 {loginError && <div className={styles.error}>{loginError}</div>}
                 <div className={styles.additionalLinks}>
-                    <a href="/register" className={styles.link}>Register</a>
+                    <a href="/register" className={styles.link}>Registrieren</a>
                     <span className={styles.separator}> | </span> {/* Separator between links */}
-                    <a href="/forgotPassword" className={styles.link}>Forgot Password</a>
+                    <a href="/forgotPassword" className={styles.link}>Passwort vergessen</a>
 
                 </div>
                 <div className={styles.buttonDiv}>

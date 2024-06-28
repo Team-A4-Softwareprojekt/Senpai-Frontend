@@ -121,10 +121,10 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
                                 />
                             </div>
                         </div>
-                        <button className={styles.confirmButton} onClick={handleConfirm}>Confirm</button>
+                        <button className={styles.confirmButton} onClick={handleConfirm}>Bestätigen</button>
                     </div>
                     {message && <p className={message.includes('erfolgreich') ? styles.success : styles.error}>{message}</p>}
-                    <button className={styles.closeButton} onClick={handleClose}>Close</button>
+                    <button className={styles.closeButton} onClick={handleClose}>Schließen</button>
                 </div>
             </div>
         </>

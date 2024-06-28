@@ -1,13 +1,16 @@
 .accountDiv {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    margin: 50px auto;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
     padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 5px solid black;
+    width: 600px;
+    max-width: 100%;
+    margin: 50px auto;
     display: flex;
     justify-content: space-between;
 }
@@ -23,7 +26,7 @@
 .container {
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #ced4da;
+    border: 3px solid black;
     border-radius: 5px;
     background: #ffffff;
     display: flex;
@@ -83,7 +86,25 @@
 }
 
 .button:hover {
-    background-color: #218838;
+    background-color: #3fdd61;
+}
+
+.deleteAccountButton {
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    width: 200px;
+    height: 59px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: #dc3545;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteAccountButton:hover {
+    background: #c82333;
 }
 
 .overlay {
@@ -150,4 +171,13 @@
 
 .blurBackground {
     filter: blur(5px);
+}
+
+.backgroundContainer {
+    background-image: url('../../assets/cloudsBlurry.jpg'); /* Pfad zum Hintergrundbild */
+    background-size: cover; /* Bild wird so skaliert, dass der gesamte Container abgedeckt wird */
+    background-position: center; /* Bild wird in der Mitte des Containers zentriert */
+    background-repeat: no-repeat; /* Bild wird nicht wiederholt */
+    width: 100vw; /* Breite des Containers */
+    height: 100vh; /* Höhe des Containers */
 }

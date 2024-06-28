@@ -7,6 +7,7 @@ import PopUpRoundWinner from '../../popups/popUpRoundWinner/PopUpRoundWinner.jsx
 import PopUpGameWinner from '../../popups/popUpGameWinner/PopUpGameWinner.jsx';
 import PopUpGameLoser from '../../popups/popUpGameLoser/PopUpGameLoser.jsx';
 import PopUpTie from '../../popups/popUpTie/PopUpTie.jsx';
+import PopUpPlayerDisconnected from '../../popups/popUpPlayerDisconnected/PopUpPlayerDisconnected.jsx';
 import ScoresRound from '../../components/scoresRound/ScoresRound.jsx';
 import {PlayerContext} from '../../context/playerContext';
 import {useNavigate} from 'react-router-dom';
@@ -32,6 +33,8 @@ const MultipleChoicePage = () => {
     const {playerName} = useContext(PlayerContext);
     const {buzzerQuestion, setBuzzerQuestion} = useContext(BuzzerPlayerContext);
     const [buzzerMessage, setBuzzerMessage] = useState(null);
+    const [isContainerVisible, setIsContainerVisible] = useState(true);
+    const [isPopUpPlayerDisconnectedVisible, setIsPopUpPlayerDisconnectedVisible] = useState(false);
 
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
@@ -109,6 +112,7 @@ const MultipleChoicePage = () => {
             setSolution(solution);
             setBuzzerMessage(null);
             setIsRoundWinnerVisible(true);
+            setIsContainerVisible(false);
 
             console.log('Received own points:', ownPointsReceived);
             console.log('Received opponent points:', opponentPointsReceived);
@@ -118,6 +122,7 @@ const MultipleChoicePage = () => {
 
             setTimeout(() => {
                 setIsRoundWinnerVisible(false);
+                setIsContainerVisible(true);
                 setSelectedAnswer(null);
                 setIsConfirmButtonDisabled(true);
                 setIsBuzzerButtonDisabled(false);
@@ -160,8 +165,11 @@ const MultipleChoicePage = () => {
         }
 
         const opponentDisconnected = () => {
-            //TODO: Zwischen-Screen der dir sagt, dass der Gegner das Spiel verlassen hat, du hast automatisch gewonnen.
-            navigate('/select/code/codeBattle');
+            setIsPopUpPlayerDisconnectedVisible(true);
+            setTimeout(() => {
+                setIsPopUpPlayerDisconnectedVisible(false);
+                navigate('/select/code/codeBattle');
+            }, 3000);
         }
 
         const handleSetQuestion = (question) => {
@@ -204,74 +212,82 @@ const MultipleChoicePage = () => {
     }, [buzzerMessage]);
 
     return (
-        <div className={styles.container}>
-            <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-            <div className={styles.questionAndTimer}>
-                <div className={styles.questionBox}>
-                    <div className={styles.questionContent}>
-                        <p className={styles.p}>{buzzerQuestion.question}</p>
+        <div className={styles.backgroundContainer}>
+            {isContainerVisible && (
+                <div className={styles.container}>
+                    <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+                    <div className={styles.questionAndTimer}>
+                        <div className={styles.questionBox}>
+                            <div className={styles.questionContent}>
+                                <p className={styles.p}>{buzzerQuestion.question}</p>
+                            </div>
+                            {remainingSeconds !== null && (
+                                <div className={styles.timer}>
+                                    Time remaining: <span
+                                    className={`${styles.seconds} ${remainingSeconds <= 5 ? styles.red : ''}`}>{remainingSeconds}s</span>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    {remainingSeconds !== null && (
-                        <div className={styles.timer}>
-                            Time remaining: <span
-                            className={`${styles.seconds} ${remainingSeconds <= 5 ? styles.red : ''}`}>{remainingSeconds}s</span>
+                    <form className={styles.form}>
+                        <label className={styles.answerOption}>
+                            <input
+                                type="radio"
+                                value="A"
+                                checked={selectedAnswer === 'A'}
+                                onChange={handleAnswerChange}
+                            />
+                            {buzzerQuestion.aanswer}
+                        </label>
+                        <label className={styles.answerOption}>
+                            <input
+                                type="radio"
+                                value="B"
+                                checked={selectedAnswer === 'B'}
+                                onChange={handleAnswerChange}
+                            />
+                            {buzzerQuestion.banswer}
+                        </label>
+                        <label className={styles.answerOption}>
+                            <input
+                                type="radio"
+                                value="C"
+                                checked={selectedAnswer === 'C'}
+                                onChange={handleAnswerChange}
+                            />
+                            {buzzerQuestion.canswer}
+                        </label>
+                        <label className={styles.answerOption}>
+                            <input
+                                type="radio"
+                                value="D"
+                                checked={selectedAnswer === 'D'}
+                                onChange={handleAnswerChange}
+                            />
+                            {buzzerQuestion.danswer}
+                        </label>
+                        <div className={styles.buttonRow}>
+                            <ConfirmButton isButtonDisabled={isConfirmButtonDisabled} handleSubmit={handleSubmit}/>
+                            <BuzzerButton toggle={toggleButton} disabled={isBuzzerButtonDisabled}/>
+                        </div>
+                    </form>
+                    {buzzerMessage && (
+                        <div className={styles.message}>
+                            {buzzerMessage}
                         </div>
                     )}
-                </div>
-            </div>
-            <form className={styles.form}>
-                <label className={styles.answerOption}>
-                    <input
-                        type="radio"
-                        value="A"
-                        checked={selectedAnswer === 'A'}
-                        onChange={handleAnswerChange}
-                    />
-                    {buzzerQuestion.aanswer}
-                </label>
-                <label className={styles.answerOption}>
-                    <input
-                        type="radio"
-                        value="B"
-                        checked={selectedAnswer === 'B'}
-                        onChange={handleAnswerChange}
-                    />
-                    {buzzerQuestion.banswer}
-                </label>
-                <label className={styles.answerOption}>
-                    <input
-                        type="radio"
-                        value="C"
-                        checked={selectedAnswer === 'C'}
-                        onChange={handleAnswerChange}
-                    />
-                    {buzzerQuestion.canswer}
-                </label>
-                <label className={styles.answerOption}>
-                    <input
-                        type="radio"
-                        value="D"
-                        checked={selectedAnswer === 'D'}
-                        onChange={handleAnswerChange}
-                    />
-                    {buzzerQuestion.danswer}
-                </label>
-                <div className={styles.buttonRow}>
-                    <ConfirmButton isButtonDisabled={isConfirmButtonDisabled} handleSubmit={handleSubmit}/>
-                    <BuzzerButton toggle={toggleButton} disabled={isBuzzerButtonDisabled}/>
-                </div>
-            </form>
-            {buzzerMessage && (
-                <div className={styles.message}>
-                    {buzzerMessage}
+                    {!isGameWinnerVisible && !isGameLoserVisible && (
+                        <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution}/>
+                    )}
+                    <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+                    <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+                    <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+                    <PopUpPlayerDisconnected isVisible={isPopUpPlayerDisconnectedVisible}/>
                 </div>
             )}
-            {!isGameWinnerVisible && !isGameLoserVisible && (
+            {!isContainerVisible && (
                 <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution}/>
             )}
-            <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-            <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-            <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
         </div>
     );
 };

@@ -14,9 +14,9 @@ const PopUpDeleteAccount = ({ closePopUp, isVisible }) => {
                         <div className={styles.deleteAccountText}>
                             Bist du dir wirklich sicher?
                         </div>
-                        <button className={styles.confirmButton}>Confirm</button>
+                        <button className={styles.confirmButton}>Bestätigen</button>
                     </div>
-                    <button className={styles.closeButton} onClick={closePopUp}>Close</button>
+                    <button className={styles.closeButton} onClick={closePopUp}>Schließen</button>
                 </div>
             </div>
         </>

@@ -7,8 +7,7 @@ const PopUpRoundWinner = ({ winner, isVisible, solution }) => {
   }
 
   return (
-    <>
-      <div className={styles.overlay} />
+    <>   
       <div className={styles.popup}>
         {winner === 'unentschieden' ? (
           <>

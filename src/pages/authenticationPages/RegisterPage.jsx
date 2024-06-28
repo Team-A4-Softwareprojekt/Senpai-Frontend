@@ -34,11 +34,11 @@ function RegisterPage() {
     // Validate form inputs
     const validate = () => {
         const newErrors = {};
-        if (!username) newErrors.username = 'Username is required';
-        if (!email) newErrors.email = 'Email is required';
-        if (!password) newErrors.password = 'Password is required';
-        if (!securityQuestion) newErrors.securityQuestion = 'Security question is required';
-        if (!securityAnswer) newErrors.securityAnswer = 'Security answer is required';
+        if (!username) newErrors.username = 'Benutzername ist erforderlich';
+        if (!email) newErrors.email = 'E-Mail ist erforderlich';
+        if (!password) newErrors.password = 'Passwort ist erforderlich';
+        if (!securityQuestion) newErrors.securityQuestion = 'Sicherheitsfrage ist erforderlich';
+        if (!securityAnswer) newErrors.securityAnswer = 'Sicherheitsantwort ist erforderlich';
         return newErrors;
     };
 
@@ -76,27 +76,27 @@ function RegisterPage() {
     return (
         <div className={styles.backgroundContainer}>
             <div className={styles.authenticationContainer}>
-                <div className={styles.h1}>Register</div>
+                <div className={styles.h1}>Registrieren</div>
                 <form onSubmit={handleRegister}>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" placeholder="Enter Username" value={username} onChange={handleUsernameChange} />
+                        <label htmlFor="username">Benutzername</label>
+                        <input type="text" placeholder="Benutzername eingeben" value={username} onChange={handleUsernameChange} />
                         {errors.username && <div className={styles.error}>{errors.username}</div>}
                     </div>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="email">Email</label>
-                        <input type="email" placeholder="Enter Email" value={email} onChange={handleEmailChange} />
+                        <label htmlFor="email">E-Mail</label>
+                        <input type="email" placeholder="E-Mail eingeben" value={email} onChange={handleEmailChange} />
                         {errors.email && <div className={styles.error}>{errors.email}</div>}
                     </div>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange} />
+                        <label htmlFor="password">Passwort</label>
+                        <input type="password" placeholder="Passwort eingeben" value={password} onChange={handlePasswordChange} />
                         {errors.password && <div className={styles.error}>{errors.password}</div>}
                     </div>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="securityQuestion">Security Question</label>
+                        <label htmlFor="securityQuestion">Sicherheitsfrage</label>
                         <select value={securityQuestion} onChange={handleSecurityQuestionChange}>
-                            <option value="">Select a security question</option>
+                            <option value="">Eine Sicherheitsfrage auswählen</option>
                             {securityQuestions.map((question, index) => (
                                 <option key={index} value={question}>{question}</option>
                             ))}
@@ -104,8 +104,8 @@ function RegisterPage() {
                         {errors.securityQuestion && <div className={styles.error}>{errors.securityQuestion}</div>}
                     </div>
                     <div className={styles.authenticationFormDiv}>
-                        <label htmlFor="securityAnswer">Security Answer</label>
-                        <input type="text" placeholder="Enter Security Answer" value={securityAnswer} onChange={handleSecurityAnswerChange} />
+                        <label htmlFor="securityAnswer">Sicherheitsantwort</label>
+                        <input type="text" placeholder="Eine Sicherheitsantwort eingeben" value={securityAnswer} onChange={handleSecurityAnswerChange} />
                         {errors.securityAnswer && <div className={styles.error}>{errors.securityAnswer}</div>}
                     </div>
                     <div className={styles.buttonDiv}>

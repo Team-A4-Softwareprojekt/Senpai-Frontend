@@ -1,29 +1,21 @@
 .buyPremiumContainer {
     position: absolute;
-    top: 2px; /* Abstand vom oberen Rand */
-    left: 251px;
+    top: 2px;
+    left: 289px;
 }
   
 .buyPremiumButton {
-    background: #2874a7;
-    color: white;
-    font-size: 25px; /* Schriftgröße des Buttons */
-    padding: 10px 10px; /* Innenabstand des Buttons */
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-size: 25px;
+    padding: 10px 10px;
     display: flex;
     align-items: center;
     font-weight: bold;
     cursor: pointer;
-    text-shadow: 
-    1px 1px 0 black,
-    -1px -1px 0 black,
-    -1px 1px 0 black,
-    1px -1px 0 black,
-    1px 0 0 black,
-    -1px 0 0 black,
-    0 1px 0 black,
-    0 -1px 0 black;
 }
 
 .buyPremiumButton:hover {
-    background: #7fb9cf;
+    background: #f3bfbf;
 }

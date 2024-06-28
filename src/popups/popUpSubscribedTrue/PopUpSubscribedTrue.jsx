@@ -42,12 +42,12 @@ const PopUpSubscribedTrue = ({ closePopUp, isVisible }) => {
             <div className={styles.overlay}></div>
             <div className={styles.popupContainer}>
                 <div className={styles.popupContent}>
-                    <h2 className={styles.popupHeader}>Du hast bereits Premium {":-)"}</h2>
+                    <div className={styles.popupHeader}>Du hast bereits Premium {":-)"}</div>
                         <div className={styles.cancelBox}>  
-                            <p>Verbleibende Restlaufzeit: <strong>{remainingTime}</strong> {remainingTime === 1 ? 'Tag' : 'Tage'}</p>
-                            <button className={styles.cancelButton} onClick={handleConfirmCancel}>Cancel Subscription</button>
+                            <div className={styles.p}>Verbleibende Restlaufzeit: <strong>{remainingTime}</strong> {remainingTime === 1 ? 'Tag' : 'Tage'}</div>
+                            <button className={styles.cancelButton} onClick={handleConfirmCancel}>Abo beenden</button>
                         </div> 
-                    <button className={styles.closeButton} onClick={closePopUp}>Close</button>
+                    <button className={styles.closeButton} onClick={closePopUp}>Schließen</button>
                 </div>
             </div>
         </>

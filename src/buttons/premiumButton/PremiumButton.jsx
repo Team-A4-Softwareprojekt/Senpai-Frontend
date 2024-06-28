@@ -5,7 +5,7 @@ const PremiumButton = ({ handleClick }) => {
   return (
     <div className={styles.buyPremiumContainer}>
       <button className={styles.buyPremiumButton} onClick={handleClick}>
-        Buy Premium
+        Premium kaufen
       </button>
     </div>
   );

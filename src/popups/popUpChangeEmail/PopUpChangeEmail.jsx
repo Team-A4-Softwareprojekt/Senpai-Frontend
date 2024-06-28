@@ -92,11 +92,11 @@ const PopUpChangeEmail = ({closePopUp, isVisible}) => {
                                 maxLength="100"
                             />
                         </div>
-                        <button className={styles.confirmButton} onClick={handleConfirm}>Confirm</button>
+                        <button className={styles.confirmButton} onClick={handleConfirm}>Bestätigen</button>
                     </div>
                     {message && <p className={styles.success}>{message}</p>}
                     {error && <p className={styles.error}>{error}</p>}
-                    <button className={styles.closeButton} onClick={handleClose}>Close</button>
+                    <button className={styles.closeButton} onClick={handleClose}>Schließen</button>
                 </div>
             </div>
         </>

@@ -1,8 +1,8 @@
 import styles from './CodeSenpaiPage.module.css';
 import SelectContentCard from '../../cards/selectContentCard/SelectContentCard.jsx';
-import codeChallengeImg from '../../assets/dailyChallengeCard.png';
-import codeBattleImg from '../../assets/codeBattleCard2.png';
-import codeExerciseImg from '../../assets/exerciseChallengeCard.png';
+import codeChallengeImg from '../../assets/codeChallenge.png';
+import codeBattleImg from '../../assets/codeBattle.png';
+import codeExerciseImg from '../../assets/codeExercise.png';
 import React, {useState, useEffect, useContext} from 'react';
 import HomeButton from '../../buttons/homeButton/HomeButton.jsx';
 import ChangeTopicButton from '../../buttons/changeTopicButton/ChangeTopicButton.jsx';
@@ -89,7 +89,7 @@ function codeSenpaiPage() {
                 <AccountButton handleClick={handleAccountClick} />
             </div>
             <div className={styles.h1}>
-                Choose your form of training
+                Wähle einen Trainingsmodus
             </div>
             <div className={styles.cardsGridContainer}>
                 <SelectContentCard 

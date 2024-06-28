@@ -120,10 +120,10 @@ const PopUpPremium = ({ closePopUp, isVisible }) => {
                                 <div className={styles.costLabel}>Verbleibendes Guthaben:</div>
                                 <div className={styles.costValue}>{playerData.credit - 5} Euro</div>
                             </div>
-                            <button className={styles.confirmButton} onClick={handleConfirmPurchase}>Confirm purchase</button>
+                            <button className={styles.confirmButton} onClick={handleConfirmPurchase}>Kauf bestätigen</button>
                         </div>
                     </div>
-                    <button className={styles.closeButton} onClick={closePopUp}>Close</button>
+                    <button className={styles.closeButton} onClick={closePopUp}>Schließen</button>
                 </div>
             </div>
             <PopUpPurchaseSuccess
