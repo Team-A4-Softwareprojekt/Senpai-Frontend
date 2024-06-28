@@ -15,14 +15,16 @@ import ManipulationP2Page from './pages/manipulationPage/ManipulationP2Page.jsx'
 import MultipleChoicePage from './pages/multipleChoicePage/MultipleChoicePage.jsx';
 import GapTextPage from './pages/buzzerPage/gapTextPage/GapTextPage.jsx';
 import NoPage from "./pages/noPage/NoPage.jsx";
-import { PlayerProvider } from './context/playerContext';
+import {PlayerProvider} from './context/playerContext';
+import {ScoreProvider} from "./context/scoreContext.jsx";
 import {BuzzerQuestionProvider} from "./context/buzzerQuestionContext.jsx";
 
 function App() {
 
     return (
         <div>
-            <PlayerProvider>           
+            <PlayerProvider> 
+              <ScoreProvider>
                 <BuzzerQuestionProvider>
                     <BrowserRouter>
                         <Routes>
@@ -44,6 +46,7 @@ function App() {
                         </Routes>
                     </BrowserRouter>
                 </BuzzerQuestionProvider>
+              </ScoreProvider>
             </PlayerProvider>
         </div>
     );

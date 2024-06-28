@@ -99,7 +99,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
                         ? 'lightgreen'
                         : 'lightcoral'
                         : 'transparent',
-                    color: 'white',
+                    color: 'black',
                   }}
                 />{' '}
               </span>

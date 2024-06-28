@@ -1,25 +1,48 @@
-.fillInTheBlanksDiv {
+.backgroundImage {
+    background-image: url('../../assets/clouds.jpg');
+    background-size: cover; /* This makes the background cover the entire area */
+    background-position: center; /* This centers the background image */
+    background-repeat: no-repeat; /* This prevents the background image from repeating */
+    height: 100vh; /* Ensures the background covers the full viewport height */
+    width: 100vw; /* Ensures the background covers the full viewport width */
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center child elements horizontally */
+    align-items: center; /* Center child elements vertically */
+}
+
+.centeredContainer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    width: 50vw;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    flex-direction: column; /* Arrange children in a column */
+    align-items: center; /* Center items horizontally */
+    max-width: 80%; /* Limit the width for better responsiveness */
+}
+.infoText {
+    color: rgb(78, 78, 78); /* Text color */
+    margin-bottom: 20px; /* Spacing */
+}
+.text {
+    padding: 10px 20px; /* Padding */
+    background-color: white;
+    text-align: center; /* Center text horizontally */
+    color: rgb(54, 54, 54); /* Text color */
+    margin-bottom: 20px; /* Spacing */
+    border-radius: 18px;
+    
 }
 
 .motivationText {
-    color: white;
-    font-size: 30px;
-    text-align: center;
-    margin-bottom: 20px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-}
-.text {
-    margin-top: 40px;
-    margin-bottom: 10px;
-    border: 3px solid white;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    font-size: 18px; /* Font size */
+    margin-bottom: 20px; /* Spacing */
+    color: rgb(54, 54, 54);
 }
 
+.fillInTheBlanksDiv {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    background: rgb(255, 255, 255); /* Semi-transparent background */
+    padding: 20px; /* Padding */
+    border-radius: 18px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for better visual */
+    margin-top: 20px; /* Top margin */
+}

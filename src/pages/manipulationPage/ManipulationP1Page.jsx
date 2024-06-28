@@ -9,8 +9,10 @@ import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
 import PopUpManipulationWordLimit from '../../popups/popUpManipulation/PopUpManipulationWordLimit.jsx';
 
-import styles from '../General.module.css';
+
 import styles2 from './ManipulationPage.module.css';
+import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
+import {ScoreContext} from "../../context/scoreContext.jsx";
 
 function ManipulationPage() {
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ function ManipulationPage() {
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
   const [actionText, setActionText] = useState('');
   const [codeTest, setCodeTest] = useState('');
+  const { ownPoints, opponentPoints } = useContext(ScoreContext);
   const [showWordLimitPopup, setShowWordLimitPopup] = useState(false); // State to manage word limit popup visibility
 
   const languages = [
@@ -81,7 +84,7 @@ function ManipulationPage() {
       setInitialCode(manipulationQuestion.code);
       setExpectedOutput(manipulationQuestion.outputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);
-      setActionText(`Change the code below. You have ${manipulationQuestion.permittedsymbols} characters left. Change the code so the output is not: ${manipulationQuestion.outputtext}`);
+      setActionText(`You have ${manipulationQuestion.permittedsymbols} characters left. Change the code so the output is not: ${manipulationQuestion.outputtext} when the input is ${manipulationQuestion.inputtext}`);
     }
   }, [manipulationQuestion]);
 
@@ -117,11 +120,14 @@ function ManipulationPage() {
   };
 
   return (
-    <>
+    <div className={styles2.backgroundImage} >
+      <HomeButton handleClick={handleHomeClick} />
+      <div className={styles2.whiteBackground}>
       <header className={styles2.header}>
-        <HomeButton handleClick={handleHomeClick} />
-        <h1>Manipulation</h1>
+        
+        <h1 className={styles2.manipulationText}>Manipulation</h1>
       </header>
+      <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
       <div>
         <h2 className={styles2.infoText}>
           {actionText}
@@ -137,7 +143,7 @@ function ManipulationPage() {
             name="UNIQUE_ID_OF_EDITOR"
             editorProps={{ $blockScrolling: true }}
             value={code}
-            style={{ width: '50vw', height: '300px' }}
+            style={{ width: '800px', height: '300px', fontSize: 18 }}
             readOnly={languages.find((lang) => lang.value === selectedLanguage).disabled}
           />
           <div className={styles2.footer}>
@@ -159,7 +165,8 @@ function ManipulationPage() {
       />
 
       <HomeButton handleClick={handleHomeClick} />
-    </>
+      </div>
+    </div>
   );
 }
 
