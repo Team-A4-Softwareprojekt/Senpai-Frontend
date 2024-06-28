@@ -1,75 +1,67 @@
-pre {
-    background-color: #f4f4f4;
-    padding: 10px;
-    border-left: 3px solid #ccc;
-    margin: 20px;
-    overflow: auto;
-    border-radius: 5px;
-}
 
-.title {
-    color: white;
-    font-size: 2rem;
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    border: 2px solid white;
-    padding: 10px;
-    margin-top: 50px;
-    margin-bottom: 70px;
+
+.manipulationText{
+    color: rgb(41, 41, 41);
 }
 
 .runButton {
     display: block;
     margin-left: auto;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #ffffff;
+    color: rgb(44, 44, 44);
     padding: 10px 20px;
     margin: 20px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
-    font-size: 1.5rem;
+    border-radius: 12px;
+    font-size: 1.8rem;
 }
 
 .runButton:hover {
-    background-color: #224d24;
+    background-color: #fd4564;
 }
 
 .editor {
-    margin: 20px;
-    padding: 20px;
-    border: 2px solid white;
+    margin: 10px;
+    padding: 10px;
     border-radius: 5px;
 }
 
-.languageDropdownContainer {
-    display: flex;
-    justify-content: right;
-    gap: 20px;
-    margin: 20px;
+
+
+.backgroundImage {
+    background-image: url('../../assets/clouds.jpg');
+    background-size: cover; /* This makes the background cover the entire area */
+    background-position: center; /* This centers the background image */
+    background-repeat: no-repeat; /* This prevents the background image from repeating */
+    height: 100vh; /* Ensures the background covers the full viewport height */
+    width: 100vw; /* Ensures the background covers the full viewport width */
 }
 
-.languageDropdown {
-    padding: 5px;
-    font-size: 0.8rem;
-    border-radius: 5px;
+.whiteBackground {
+    background-color: white;
+    border-radius: 18px; /* Optional: adds rounded corners */
+    
+    width: 70%;
+    height: 85%;
+    margin: 0 auto; /* Add this line to center the element horizontally */
+    display: flex; /* Add this line to enable flexbox */
+    flex-direction: column; /* Add this line to center the content vertically */
+    justify-content: center;
+    align-items: center;
 }
 
 .infoText {
-    color: rgb(255, 255, 255);
-  }
-  
-  .variable {
-    gap: 20px;
-    color: rgb(243, 243, 84);
-  }
+    color: rgb(78, 78, 78);
+}
 
 .footer {
+    background-image: linear-gradient(to right, #2bc5b898, #f04e5b);
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #333;
+    
     color: white;
     display: flex;
     justify-content: center; /* Center items horizontally */
