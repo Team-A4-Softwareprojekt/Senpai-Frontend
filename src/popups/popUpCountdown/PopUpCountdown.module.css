@@ -23,7 +23,6 @@
     justify-content: center;
     align-items: center;
     z-index: 100;
-    margin-top: 200px; /* Abstand zu den SelectCards */
     pointer-events: auto;
 }
 

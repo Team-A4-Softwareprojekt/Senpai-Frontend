@@ -60,6 +60,10 @@ const MultipleChoicePage = () => {
         console.log('isButtonDisabled: ' + isConfirmButtonDisabled);
     }
 
+    const formatTime = (time) => {
+        return time < 10 ? `0${time}` : time;
+    };
+
     useEffect(() => {
 
         const disableBuzzer = () => {
@@ -215,19 +219,17 @@ const MultipleChoicePage = () => {
         <div className={styles.backgroundContainer}>
             {isContainerVisible && (
                 <div className={styles.container}>
-                    <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-                    <div className={styles.questionAndTimer}>
-                        <div className={styles.questionBox}>
-                            <div className={styles.questionContent}>
-                                <p className={styles.p}>{buzzerQuestion.question}</p>
+                    <div className={styles.headerContainer}>
+                        <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
+                        {remainingSeconds !== null && (
+                            <div className={styles.timer}>
+                                Verbleibende Zeit:&nbsp;
+                                <strong> <span className={`${styles.seconds} ${remainingSeconds <= 5 ? styles.red : ''}`}>{formatTime(remainingSeconds)}s</span> </strong>
                             </div>
-                            {remainingSeconds !== null && (
-                                <div className={styles.timer}>
-                                    Verbleibende Zeit: 
-                                    <strong> <span className={`${styles.seconds} ${remainingSeconds <= 5 ? styles.red : ''}`}>{remainingSeconds}s</span> </strong>
-                                </div>
-                            )}
-                        </div>
+                        )}
+                    </div>
+                    <div className={styles.questionBox}>
+                        <p className={styles.p}>{buzzerQuestion.question}</p>
                     </div>
                     <form className={styles.form}>
                         <label className={styles.answerOption}>

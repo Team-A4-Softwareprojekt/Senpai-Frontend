@@ -30,8 +30,8 @@ const PopUpCountdown = ({ isVisible, closePopup, countdown }) => {
             <div className={styles.overlay} />
             <div className={styles.popup}>
                 <div className={styles.popupContent}>
-                    <h2>Opponent found, get ready!</h2>
-                    <h2>Match starts in&nbsp; 
+                    <h2>Gegner gefunden!</h2>
+                    <h2>Spiel startet in&nbsp; 
                         <span className={styles.timeleft}>{timeLeft}</span></h2>
                 </div>
             </div>

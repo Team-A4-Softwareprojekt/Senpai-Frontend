@@ -11,13 +11,13 @@ const PopUpRoundWinner = ({ winner, isVisible, solution }) => {
       <div className={styles.popup}>
         {winner === 'unentschieden' ? (
           <>
-            <p className={styles.p}>Nobody has answered correctly!</p>
-            <p className={styles.p}>The correct answer was: <span className={styles.solution}>{solution}</span></p>
+            <p className={styles.p}>Keiner hat richtig geantwortet!</p>
+            <p className={styles.p}>Die richtige Antwort war: <span className={styles.solution}>{solution}</span></p>
           </>
         ) : (
           <>
-            <p className={styles.p}><span className={styles.winner}>{winner}</span> has won this round!</p>
-            <p className={styles.p}>The correct answer was: <span className={styles.solution}>{solution}</span></p>
+            <p className={styles.p}><span className={styles.winner}>{winner}</span> hat die Runde gewonnen!</p>
+            <p className={styles.p}>Die richtige Antwort war: <span className={styles.solution}>{solution}</span></p>
           </>
         )}
       </div>
