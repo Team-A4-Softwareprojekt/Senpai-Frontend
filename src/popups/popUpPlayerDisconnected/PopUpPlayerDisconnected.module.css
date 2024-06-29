@@ -1,44 +1,22 @@
 /* src/popups/popUpPlayerDisconnected/PopUpPlayerDisconnected.module.css */
 
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 1);
-    z-index: 99;
-}
-
 .popup {
-    color: white !important;
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    min-width: 300px;
-    max-width: 350px;
+    background: white;
     padding: 20px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Neue Farben */
-    border-radius: 10px; /* Runde Ecken */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Neue Grenze */
-    z-index: 100;
-    font-size: 1.5em;
-}
-
-.winner {
-    color: #FFD700;
-    font-weight: bold;
-}
-
-.solution {
-    color: #FFD700;
-    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 5px solid black;
+    width: 400px;
+    max-width: 100%;
+    margin: 50px auto;
 }
 
 .p {
-    color: white;
+    text-align: center;
+    font-size: 24px;
+    color: black;
 }

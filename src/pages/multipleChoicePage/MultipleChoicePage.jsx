@@ -32,6 +32,7 @@ const MultipleChoicePage = () => {
     const [isPopUpTieVisible, setIsTieVisible] = useState(false);
     const [isBuzzerGameVisible, setIsBuzzerGameVisible] = useState(true);
     const [isGameFinished, setIsGameFinished] = useState(false);
+    const [isPlayerDisconnected, setIsPlayerDisconnected] = useState(false);
     const [remainingSeconds, setRemainingSeconds] = useState(null);
     const [ownPoints, setOwnPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
@@ -173,6 +174,8 @@ const MultipleChoicePage = () => {
         }
 
         const opponentDisconnected = () => {
+            setIsPlayerDisconnected(true);
+            setIsBuzzerGameVisible(false);
             setIsPopUpPlayerDisconnectedVisible(true);
             setTimeout(() => {
                 setIsPopUpPlayerDisconnectedVisible(false);
@@ -280,7 +283,6 @@ const MultipleChoicePage = () => {
                             {buzzerMessage}
                         </div>
                     )}
-                    <PopUpPlayerDisconnected isVisible={isPopUpPlayerDisconnectedVisible}/>
                 </div>
             )}
             {!isBuzzerGameVisible && (
@@ -292,6 +294,9 @@ const MultipleChoicePage = () => {
                     <PopUpGameLoser loser={loserGame} isVisible={isPopUpGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
                     <PopUpTie winner={winnerGame} isVisible={isPopUpTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
                 </>
+            )}
+            {isPlayerDisconnected && (
+                <PopUpPlayerDisconnected isVisible={isPopUpPlayerDisconnectedVisible}/>
             )}
         </div>
     );
