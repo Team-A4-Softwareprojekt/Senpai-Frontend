@@ -223,8 +223,8 @@ const MultipleChoicePage = () => {
                             </div>
                             {remainingSeconds !== null && (
                                 <div className={styles.timer}>
-                                    Time remaining: <span
-                                    className={`${styles.seconds} ${remainingSeconds <= 5 ? styles.red : ''}`}>{remainingSeconds}s</span>
+                                    Verbleibende Zeit: 
+                                    <strong> <span className={`${styles.seconds} ${remainingSeconds <= 5 ? styles.red : ''}`}>{remainingSeconds}s</span> </strong>
                                 </div>
                             )}
                         </div>

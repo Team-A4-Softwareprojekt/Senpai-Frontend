@@ -1,8 +1,8 @@
 .buzzerButton {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background-color: #002c8b; 
+  background-color: #86c9ff; 
   border: 2px solid white;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;

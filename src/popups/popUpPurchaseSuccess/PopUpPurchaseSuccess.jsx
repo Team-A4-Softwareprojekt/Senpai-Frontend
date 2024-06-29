@@ -6,7 +6,7 @@ const PopUpPurchaseSuccess = ({ closePopUp, isVisible }) => {
         if (isVisible) {
             const timer = setTimeout(() => {
                 closePopUp();
-            }, 5000);
+            }, 3000);
             return () => clearTimeout(timer);
         }
     }, [isVisible, closePopUp]);
@@ -18,8 +18,8 @@ const PopUpPurchaseSuccess = ({ closePopUp, isVisible }) => {
             <div className={styles.overlay}></div>
             <div className={styles.popupContainer}>
                 <div className={styles.popupContent}>
-                    <h2 className={styles.popupHeader}>Vielen Dank für deinen Einkauf</h2>
-                    <p>Wir wünschen dir viel Spaß mit der Premium-Mitgliedschaft!</p>
+                    <div className={styles.popupHeader}>Vielen Dank für deinen Einkauf</div>
+                    <p className={styles.p}>Wir wünschen dir viel Spaß mit der Premium-Mitgliedschaft!</p>
                 </div>
             </div>
         </>
