@@ -31,7 +31,7 @@ const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints }) => {
         />
         <ScoresFinal ownPoints={ownPoints} opponentPoints={opponentPoints} />
         <div className={styles.message}>
-          Dieses Spiel endete in einem Unentschieden!
+          Dieses Spiel endet in einem Unentschieden!
         </div>
         <ConfirmButton buttonText="OK" handleSubmit={handleTieConfirm} />
       </div>

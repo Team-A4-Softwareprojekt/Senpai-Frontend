@@ -33,7 +33,7 @@ const MultipleChoicePage = () => {
     const [isBuzzerGameVisible, setIsBuzzerGameVisible] = useState(true);
     const [isGameFinished, setIsGameFinished] = useState(false);
     const [isPlayerDisconnected, setIsPlayerDisconnected] = useState(false);
-    const [remainingSeconds, setRemainingSeconds] = useState(null);
+    const [remainingSeconds, setRemainingSeconds] = useState(20);
     const [ownPoints, setOwnPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
     const {playerName} = useContext(PlayerContext);
@@ -140,6 +140,7 @@ const MultipleChoicePage = () => {
             console.log('Received own points:', ownPointsReceived);
             console.log('Received opponent points:', opponentPointsReceived);
 
+            roundCounter = 0;
             setIsBuzzerGameVisible(false);
             setOwnPoints(ownPointsReceived);
             setOpponentPoints(opponentPointsReceived);
