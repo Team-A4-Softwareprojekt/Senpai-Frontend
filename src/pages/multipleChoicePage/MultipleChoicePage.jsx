@@ -280,11 +280,11 @@ const MultipleChoicePage = () => {
                             {buzzerMessage}
                         </div>
                     )}
-                    {!isPopUpGameWinnerVisible && !isPopUpGameLoserVisible && (
-                        <PopUpRoundWinner winner={winnerRound} isVisible={isPopUpRoundWinnerVisible} solution={solution}/>
-                    )}
                     <PopUpPlayerDisconnected isVisible={isPopUpPlayerDisconnectedVisible}/>
                 </div>
+            )}
+            {!isBuzzerGameVisible && (
+                <PopUpRoundWinner winner={winnerRound} isVisible={isPopUpRoundWinnerVisible} solution={solution}/>
             )}
             {isGameFinished && (
                 <>
