@@ -1,26 +1,15 @@
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 1);
-    z-index: 99;
-}
-
 .popup {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 400px;
+    width: 450px;
     padding: 20px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Neue Farben */
-    border-radius: 10px; /* Runde Ecken */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Neue Grenze */
+    border: 5px solid black;
     z-index: 100;
     display: flex;
     flex-direction: column;
@@ -30,16 +19,16 @@
 .message {
     margin-top: 5px;
     margin-bottom: 20px;
-    font-size: 1.0em;
-    font-weight: bold;
-    color: #fff;   
+    font-size: 20px;  
+    color: black;   
 }
 
 .playerWithBorder {
-    border: 2px solid white; /* Weiße Umrandung */
-    border-radius: 10px; /* Optional: Runde Ecken */
+    border: 3px solid black;
+    border-radius: 10px;
 }
 
 .name {
-    color: #FFD700;
+    color: blue;
+    font-weight: bold;
 }

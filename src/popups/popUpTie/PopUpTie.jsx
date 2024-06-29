@@ -21,18 +21,17 @@ const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints }) => {
 
   return (
     <>
-      <div className={styles.overlay} />
       <div className={styles.popup}>
         <Player
           autoplay
           loop
           src={animationData}
-          style={{ height: '350px', width: '350px' }}
+          style={{ height: '450px', width: '450px' }}
           className={styles.playerWithBorder}
         />
         <ScoresFinal ownPoints={ownPoints} opponentPoints={opponentPoints} />
         <div className={styles.message}>
-          This match ended in a tie!
+          Dieses Spiel endete in einem Unentschieden!
         </div>
         <ConfirmButton buttonText="OK" handleSubmit={handleTieConfirm} />
       </div>

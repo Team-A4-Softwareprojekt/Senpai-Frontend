@@ -13,6 +13,8 @@ import {PlayerContext} from '../../context/playerContext';
 import {useNavigate} from 'react-router-dom';
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 
+let roundCounter = 0;
+
 const MultipleChoicePage = () => {
     const navigate = useNavigate();
     const [question, setQuestion] = useState([]);
@@ -23,19 +25,20 @@ const MultipleChoicePage = () => {
     const [winnerRound, setWinnerRound] = useState('');
     const [winnerGame, setWinnerGame] = useState('');
     const [loserGame, setLoserGame] = useState('');
-    const [isGameLoserVisible, setIsGameLoserVisible] = useState(false);
-    const [isRoundWinnerVisible, setIsRoundWinnerVisible] = useState(false);
-    const [isGameWinnerVisible, setIsGameWinnerVisible] = useState(false);
-    const [isTieVisible, setIsTieVisible] = useState(false);
+    const [isPopUpPlayerDisconnectedVisible, setIsPopUpPlayerDisconnectedVisible] = useState(false);
+    const [isPopUpGameLoserVisible, setIsPopUpGameLoserVisible] = useState(false);
+    const [isPopUpRoundWinnerVisible, setIsPopUpRoundWinnerVisible] = useState(false);
+    const [isPopUpGameWinnerVisible, setIsPopUpGameWinnerVisible] = useState(false);
+    const [isPopUpTieVisible, setIsTieVisible] = useState(false);
+    const [isBuzzerGameVisible, setIsBuzzerGameVisible] = useState(true);
+    const [isGameFinished, setIsGameFinished] = useState(false);
     const [remainingSeconds, setRemainingSeconds] = useState(null);
     const [ownPoints, setOwnPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
     const {playerName} = useContext(PlayerContext);
     const {buzzerQuestion, setBuzzerQuestion} = useContext(BuzzerPlayerContext);
     const [buzzerMessage, setBuzzerMessage] = useState(null);
-    const [isContainerVisible, setIsContainerVisible] = useState(true);
-    const [isPopUpPlayerDisconnectedVisible, setIsPopUpPlayerDisconnectedVisible] = useState(false);
-
+    
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
     };
@@ -115,18 +118,17 @@ const MultipleChoicePage = () => {
             setWinnerRound(playerName);
             setSolution(solution);
             setBuzzerMessage(null);
-            setIsRoundWinnerVisible(true);
-            setIsContainerVisible(false);
-
-            console.log('Received own points:', ownPointsReceived);
-            console.log('Received opponent points:', opponentPointsReceived);
-
+            setIsPopUpRoundWinnerVisible(true);
+            setIsBuzzerGameVisible(false);
             setOwnPoints(ownPointsReceived);
             setOpponentPoints(opponentPointsReceived);
+            roundCounter++;
 
             setTimeout(() => {
-                setIsRoundWinnerVisible(false);
-                setIsContainerVisible(true);
+                if (roundCounter < 3) {
+                    setIsBuzzerGameVisible(true);
+                }
+                setIsPopUpRoundWinnerVisible(false);
                 setSelectedAnswer(null);
                 setIsConfirmButtonDisabled(true);
                 setIsBuzzerButtonDisabled(false);
@@ -137,15 +139,17 @@ const MultipleChoicePage = () => {
             console.log('Received own points:', ownPointsReceived);
             console.log('Received opponent points:', opponentPointsReceived);
 
+            setIsBuzzerGameVisible(false);
             setOwnPoints(ownPointsReceived);
             setOpponentPoints(opponentPointsReceived);
+            setIsGameFinished(true);
 
             if (ownPointsReceived > opponentPointsReceived) {
                 setWinnerGame(playerName);
-                setIsGameWinnerVisible(true);
+                setIsPopUpGameWinnerVisible(true);
             } else if (opponentPointsReceived > ownPointsReceived) {
                 setLoserGame(playerName);
-                setIsGameLoserVisible(true);
+                setIsPopUpGameLoserVisible(true);
             } else {
                 setIsTieVisible(true);
             }
@@ -177,9 +181,7 @@ const MultipleChoicePage = () => {
         }
 
         const handleSetQuestion = (question) => {
-            console.log(question);
             setBuzzerQuestion(question);
-            console.log(buzzerQuestion);
         };
 
         socket.on('DISABLE_BUZZER', disableBuzzer);
@@ -217,7 +219,7 @@ const MultipleChoicePage = () => {
 
     return (
         <div className={styles.backgroundContainer}>
-            {isContainerVisible && (
+            {isBuzzerGameVisible && (
                 <div className={styles.container}>
                     <div className={styles.headerContainer}>
                         <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
@@ -278,17 +280,18 @@ const MultipleChoicePage = () => {
                             {buzzerMessage}
                         </div>
                     )}
-                    {!isGameWinnerVisible && !isGameLoserVisible && (
-                        <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution}/>
+                    {!isPopUpGameWinnerVisible && !isPopUpGameLoserVisible && (
+                        <PopUpRoundWinner winner={winnerRound} isVisible={isPopUpRoundWinnerVisible} solution={solution}/>
                     )}
-                    <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-                    <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-                    <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
                     <PopUpPlayerDisconnected isVisible={isPopUpPlayerDisconnectedVisible}/>
                 </div>
             )}
-            {!isContainerVisible && (
-                <PopUpRoundWinner winner={winnerRound} isVisible={isRoundWinnerVisible} solution={solution}/>
+            {isGameFinished && (
+                <>
+                    <PopUpGameWinner winner={winnerGame} isVisible={isPopUpGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+                    <PopUpGameLoser loser={loserGame} isVisible={isPopUpGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+                    <PopUpTie winner={winnerGame} isVisible={isPopUpTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+                </>
             )}
         </div>
     );
