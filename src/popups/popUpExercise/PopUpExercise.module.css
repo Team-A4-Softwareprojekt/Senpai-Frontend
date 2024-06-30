@@ -52,10 +52,16 @@
     overflow-y: auto;
     padding-right: 15px;
     padding-left: 15px;
-    scrollbar-width: auto;
-    scrollbar-color: hsla(0, 0%, 3%, 0.5) hsl(0, 10%, 90%);
-    scroll-padding-block-start: 125%;
     padding: 10px;
+}
+
+.exerciseList::-webkit-scrollbar {
+    width: 8px;
+}
+
+.exerciseList::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 10px;
 }
 
 .exercisesHeader {

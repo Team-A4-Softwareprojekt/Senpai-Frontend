@@ -14,15 +14,15 @@ const PopUpExercise = ({ closePopUp, isVisible }) => {
                     <input className={styles.searchInput} type="text" placeholder="Exercise suchen"/>
                     <div className={styles.exerciseList}>
                         <ExerciseCard 
-                            exerciseName="Java: Classes 1"
+                            exerciseName="Java: Klassen 1"
                             exerciseStatus="Abgeschlossen"
                         />
                         <ExerciseCard 
-                            exerciseName="Java: Inheritance 1"
+                            exerciseName="Java: Vererbung 1"
                             exerciseStatus="In Bearbeitung" 
                         />
                         <ExerciseCard 
-                            exerciseName="Java: Polymorphism 2"
+                            exerciseName="Java: Polymorphie 2"
                             exerciseStatus="Nicht begonnen"
                         />
                         <ExerciseCard

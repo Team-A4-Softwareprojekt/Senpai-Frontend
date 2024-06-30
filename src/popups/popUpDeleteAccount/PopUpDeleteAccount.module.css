@@ -23,7 +23,7 @@
 }
 
 .closeButton, .confirmButton {
-    background: #dc3545;
+    background: #28a745;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -35,16 +35,16 @@
 }
 
 .closeButton:hover {
-    background: #c82333;
+    background: #218838;
 }
 
 .confirmButton {
-    background: #28a745;
+    background: #dc3545;
     margin-right: 10px;
 }
 
 .confirmButton:hover {
-    background: #218838;
+    background: #c82333;
 }
 
 .overlay {
