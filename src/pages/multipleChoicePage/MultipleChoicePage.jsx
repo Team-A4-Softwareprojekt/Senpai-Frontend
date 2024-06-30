@@ -300,7 +300,7 @@ const MultipleChoicePage = () => {
                 </>
             )}
             {isPlayerDisconnected && (
-                <PopUpPlayerDisconnected isVisible={isPopUpPlayerDisconnectedVisible}/>
+                <PopUpPlayerDisconnected isVisible={isPopUpPlayerDisconnectedVisible} resetRoundCounter={resetRoundCounter}/>
             )}
         </div>
     );
