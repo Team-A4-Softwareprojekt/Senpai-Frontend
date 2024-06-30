@@ -248,8 +248,18 @@ function ManipulationPage() {
                 <div className={styles2.manipulationContainer}>
                     <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
                     <div className={styles2.infoContainer}>
-                        <div className={styles2.infoBox}>Parameterwert: <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span></div>
-                        <div className={styles2.infoBox}>Konsolenausgabe: <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span></div>
+                        <div className={styles2.infoBox}>
+                            Parameterwert:
+                            <div className={styles2.dynamicContainer}>
+                                <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span>
+                            </div>
+                        </div>
+                        <div className={styles2.infoBox}>
+                            Konsolenausgabe:
+                            <div className={styles2.dynamicContainer}>
+                                <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <h2 className={styles2.infoText}>

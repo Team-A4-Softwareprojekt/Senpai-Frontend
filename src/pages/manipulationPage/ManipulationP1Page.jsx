@@ -24,6 +24,7 @@ function ManipulationPage() {
   const [alertMessage, setAlertMessage] = useState('');
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
   const [showInfoContainer, setShowInfoContainer] = useState(true);
+  const [showManipulationContainer, setShowManipulationContainer] = useState(true);
   const [actionText, setActionText] = useState('');
   const [codeTest, setCodeTest] = useState('');
   const { ownPoints, opponentPoints } = useContext(ScoreContext);
@@ -64,7 +65,8 @@ function ManipulationPage() {
     } else {
       // Display word limit popup
       setShowWordLimitPopup(true);
-      setAlertMessage('Du hast die zulässige Anzahl von Zeichenänderungen überschritten.');
+      setShowManipulationContainer(false);
+      //setAlertMessage('Du hast die zulässige Anzahl von Zeichenänderungen überschritten.');
     }
   };
 
@@ -118,28 +120,30 @@ function ManipulationPage() {
 
   const handleCloseWordLimitPopup = () => {
     setShowWordLimitPopup(false);
+    setShowManipulationContainer(true);
   };
 
   return (
     <div className={styles2.backgroundImage} >
+      {showManipulationContainer && (
       <div className={styles2.manipulationContainer}>
         <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
         {showInfoContainer && (
           <div className={styles2.infoContainer}>
             <div className={styles2.infoBox}>
-              Verbleibende Zeichen:
+                Verbleibende Zeichen:
               <div className={styles2.dynamicContainer}>
                 <span className={styles2.dynamicData}>{charactersLeft}</span>
               </div>
             </div>
             <div className={styles2.infoBox}>
-              Parameterwert:
+                Parameterwert:
               <div className={styles2.dynamicContainer}>
                 <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span>
               </div>
             </div>
             <div className={styles2.infoBox}>
-              Konsolenausgabe:
+                Konsolenausgabe:
               <div className={styles2.dynamicContainer}>
                 <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span>
               </div>
@@ -171,12 +175,13 @@ function ManipulationPage() {
             </button>
           </>
         )}
-        <PopUpManipulationWordLimit
-          isVisible={showWordLimitPopup}
-          closePopup={handleCloseWordLimitPopup}
-          message="You have exceeded the permitted number of character changes."
-        />
+
       </div>
+      )}
+      <PopUpManipulationWordLimit
+          isVisible={showWordLimitPopup}
+          closePopUp={handleCloseWordLimitPopup}
+      />
     </div>
   );
 }
