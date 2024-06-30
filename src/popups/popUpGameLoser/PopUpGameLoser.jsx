@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { socket } from '../../socket.js';
 import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
 
-const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints }) => {
+const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints, resetRoundCounter }) => {
   const navigate = useNavigate();
 
   if (!isVisible) {
@@ -17,6 +17,7 @@ const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints }) => {
   const handleLoserConfirm = () => {
     socket.emit('CLOSE_LOBBY');
     navigate('/select/code/codeBattle');
+    resetRoundCounter();
   };
 
   return (

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { socket } from '../../socket.js';
 import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
 
-const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints }) => {
+const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints, resetRoundCounter }) => {
   const navigate = useNavigate();
 
   if (!isVisible) {
@@ -17,6 +17,7 @@ const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints }) => {
   const handleTieConfirm = () => {
     socket.emit('CLOSE_LOBBY');
     navigate('/select/code/codeBattle');
+    resetRoundCounter();
   };
 
   return (

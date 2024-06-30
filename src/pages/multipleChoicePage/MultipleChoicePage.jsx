@@ -68,6 +68,10 @@ const MultipleChoicePage = () => {
         return time < 10 ? `0${time}` : time;
     };
 
+    const resetRoundCounter = () => {
+        roundCounter = 0;
+    };
+
     useEffect(() => {
 
         const disableBuzzer = () => {
@@ -140,7 +144,6 @@ const MultipleChoicePage = () => {
             console.log('Received own points:', ownPointsReceived);
             console.log('Received opponent points:', opponentPointsReceived);
 
-            roundCounter = 0;
             setIsBuzzerGameVisible(false);
             setOwnPoints(ownPointsReceived);
             setOpponentPoints(opponentPointsReceived);
@@ -291,9 +294,9 @@ const MultipleChoicePage = () => {
             )}
             {isGameFinished && (
                 <>
-                    <PopUpGameWinner winner={winnerGame} isVisible={isPopUpGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-                    <PopUpGameLoser loser={loserGame} isVisible={isPopUpGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-                    <PopUpTie winner={winnerGame} isVisible={isPopUpTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
+                    <PopUpGameWinner winner={winnerGame} isVisible={isPopUpGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} resetRoundCounter={resetRoundCounter}/>
+                    <PopUpGameLoser loser={loserGame} isVisible={isPopUpGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} resetRoundCounter={resetRoundCounter}/>
+                    <PopUpTie isVisible={isPopUpTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} resetRoundCounter={resetRoundCounter}/>
                 </>
             )}
             {isPlayerDisconnected && (
