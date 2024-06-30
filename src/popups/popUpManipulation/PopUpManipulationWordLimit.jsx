@@ -7,12 +7,9 @@ const PopUpManipulationWordLimit = ({ isVisible, closePopup }) => {
 
     return (
         <>
-            <div className={styles.overlay} />
             <div className={styles.popup}>
-                <div className={styles.popupContent}>
-                    <h2>You have exceeded the permitted number of character changes.</h2>
-                    <button onClick={closePopup}>Schließen</button>
-                </div>
+                You have exceeded the permitted number of character changes.
+                <button onClick={closePopup}>Schließen</button>
             </div>
         </>
     );

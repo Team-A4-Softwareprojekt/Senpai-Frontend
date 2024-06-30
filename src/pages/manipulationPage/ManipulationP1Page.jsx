@@ -23,6 +23,7 @@ function ManipulationPage() {
   const [expectedOutput, setExpectedOutput] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
+  const [showInfoContainer, setShowInfoContainer] = useState(true);
   const [actionText, setActionText] = useState('');
   const [codeTest, setCodeTest] = useState('');
   const { ownPoints, opponentPoints } = useContext(ScoreContext);
@@ -45,7 +46,8 @@ function ManipulationPage() {
 
     socket.emit('SUBMIT_CHANGES_MANIPULATION', { code: codeWithTest, expectedOutput });
     setShowEditor(false); // Hide editor after submission
-    setActionText('Warte bis dein Gegner fertig ist.');
+    setShowInfoContainer(false);
+    setActionText('Warte bis dein Gegner fertig ist...');
   };
 
   const onChange = (newCode) => {
@@ -62,6 +64,7 @@ function ManipulationPage() {
     } else {
       // Display word limit popup
       setShowWordLimitPopup(true);
+      setAlertMessage('Du hast die zulässige Anzahl von Zeichenänderungen überschritten.');
     }
   };
 
@@ -86,13 +89,13 @@ function ManipulationPage() {
     }
   }, [manipulationQuestion]);
 
-  useEffect(() => {
-    if (alertMessage) {
+  //useEffect(() => {
+    //if (alertMessage) {
       // Replace alert with custom popup
-      setShowWordLimitPopup(true); // Show the word limit popup instead of alert
-      setAlertMessage('');
-    }
-  }, [alertMessage]);
+      //setShowWordLimitPopup(true); // Show the word limit popup instead of alert
+      //setAlertMessage('Du hast die zulässige Anzahl von Zeichenänderungen überschritten.');
+    //}
+  //}, [alertMessage]);
 
   const handleStartNewRound = () => {
     console.log('Starting new round');
@@ -120,57 +123,59 @@ function ManipulationPage() {
   return (
     <div className={styles2.backgroundImage} >
       <div className={styles2.manipulationContainer}>
-      <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
-      <div className={styles2.infoContainer}>
-        <div className={styles2.infoBox}>
-          Verbleibende Zeichen:
-          <div className={styles2.dynamicContainer}>
-            <span className={styles2.dynamicData}>{charactersLeft}</span>
+        <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
+        {showInfoContainer && (
+          <div className={styles2.infoContainer}>
+            <div className={styles2.infoBox}>
+              Verbleibende Zeichen:
+              <div className={styles2.dynamicContainer}>
+                <span className={styles2.dynamicData}>{charactersLeft}</span>
+              </div>
+            </div>
+            <div className={styles2.infoBox}>
+              Parameterwert:
+              <div className={styles2.dynamicContainer}>
+                <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span>
+              </div>
+            </div>
+            <div className={styles2.infoBox}>
+              Konsolenausgabe:
+              <div className={styles2.dynamicContainer}>
+                <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span>
+              </div>
+            </div>
           </div>
+        )}
+        <div>
+          <h2 className={styles2.infoText}>
+            {actionText}
+          </h2>
         </div>
-        <div className={styles2.infoBox}>
-          Parameterwert:
-          <div className={styles2.dynamicContainer}>
-            <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span>
-          </div>
-        </div>
-        <div className={styles2.infoBox}>
-          Konsolenausgabe:
-          <div className={styles2.dynamicContainer}>
-            <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <h2 className={styles2.infoText}>
-          {actionText}
-        </h2>
-      </div>
-      {showEditor && (
-        <>
-          <div className={`${styles2.editor}`}>
-            <AceEditor
-              mode={selectedLanguage}
-              theme="monokai"
-              onChange={onChange}
-              name="UNIQUE_ID_OF_EDITOR"
-              editorProps={{ $blockScrolling: true }}
-              value={code}
-              style={{ width: '700px', height: '305px'}}
-              fontSize= {20}
-              readOnly={languages.find((lang) => lang.value === selectedLanguage).disabled}
-            />
-          </div>
-          <button onClick={submitCode} className={styles2.runButton}>
+        {showEditor && (
+          <>
+            <div className={`${styles2.editor}`}>
+              <AceEditor
+                mode={selectedLanguage}
+                theme="monokai"
+                onChange={onChange}
+                name="UNIQUE_ID_OF_EDITOR"
+                editorProps={{ $blockScrolling: true }}
+                value={code}
+                style={{ width: '700px', height: '305px' }}
+                fontSize={20}
+                readOnly={languages.find((lang) => lang.value === selectedLanguage).disabled}
+              />
+            </div>
+            <button onClick={submitCode} className={styles2.runButton}>
               Bestätigen
-          </button>
-        </>
-      )}
-      <PopUpManipulationWordLimit
-        isVisible={showWordLimitPopup}
-        closePopup={handleCloseWordLimitPopup}
-        message="You have exceeded the permitted number of character changes."
-      />
+            </button>
+          </>
+        )}
+        <PopUpManipulationWordLimit
+          isVisible={showWordLimitPopup}
+          closePopup={handleCloseWordLimitPopup}
+          message="You have exceeded the permitted number of character changes."
+        />
       </div>
     </div>
   );
