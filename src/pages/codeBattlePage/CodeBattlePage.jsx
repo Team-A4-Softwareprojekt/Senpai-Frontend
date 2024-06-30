@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styles from './CodeBattlePage.module.css';
 import SelectGameCard from '../../cards/selectGameCard/SelectGameCard.jsx';
-import buzzerImg from '../../assets/buzzer.png';
-import manipulationImg from '../../assets/manipulation.png';
-import limitationImg from '../../assets/limitation.png';
+import buzzerImg from '../../assets/buzzerGame.png';
+import manipulationImg from '../../assets/manipulationGame.png';
+import limitationImg from '../../assets/limitationGame.png';
 
 import slideShowGame from '../../assets/slideShowGame.png';
 import slideConfirmAnswer from '../../assets/slideConfirmAnswer.png';

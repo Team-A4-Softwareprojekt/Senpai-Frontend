@@ -4,7 +4,7 @@ import SelectContentCard from '../../cards/selectContentCard/SelectContentCard.j
 import codeSenpaiImage from '../../assets/codeSenpai2.png';
 import medSenpaiImage from '../../assets/medSenpai2.png';
 import mathSenpaiImage from '../../assets/mathSenpai2.png';
-import gymSenpaiImage from '../../assets/gymSenpai.png';
+import gymSenpaiImage from '../../assets/gymSenpai2.png';
 import PopUpMissingContent from '../../popups/popUpMissingContent/PopUpMissingContent.jsx';
 
 function SelectLearningContent() {

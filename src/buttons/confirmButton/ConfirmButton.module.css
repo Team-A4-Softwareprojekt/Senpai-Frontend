@@ -8,7 +8,7 @@
     transition: background-color 0.3s ease;
     font-weight: bold;
     font-size: 20px;
-  }
+}
   
 .submitButton:hover {
     background-color: #218838;
