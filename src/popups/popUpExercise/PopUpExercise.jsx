@@ -11,35 +11,35 @@ const PopUpExercise = ({ closePopUp, isVisible }) => {
                 <p className={styles.descriptionText}>Dies ist eine Vorschau:</p>
                 <div className={styles.exercisesDiv}>
                     <p className={styles.exercisesHeader}>Exercises</p>
-                    <input className={styles.searchInput} type="text" placeholder="Search exercise"/>
+                    <input className={styles.searchInput} type="text" placeholder="Exercise suchen"/>
                     <div className={styles.exerciseList}>
                         <ExerciseCard 
-                            exerciseName="Java: Classes 1"
-                            exerciseStatus="Finished"
+                            exerciseName="Java: Klassen 1"
+                            exerciseStatus="Abgeschlossen"
                         />
                         <ExerciseCard 
-                            exerciseName="Java: Inheritance 1"
-                            exerciseStatus="Pending" 
+                            exerciseName="Java: Vererbung 1"
+                            exerciseStatus="In Bearbeitung" 
                         />
                         <ExerciseCard 
-                            exerciseName="Java: Polymorphism 2"
-                            exerciseStatus="Unfinished"
+                            exerciseName="Java: Polymorphie 2"
+                            exerciseStatus="Nicht begonnen"
                         />
                         <ExerciseCard
                             exerciseName="Java: Arrays 3"
-                            exerciseStatus="Finished"
+                            exerciseStatus="Abgeschlossen"
                         />
                         <ExerciseCard 
                             exerciseName="Java: Generics 1"
-                            exerciseStatus="Unfinished"
+                            exerciseStatus="Nicht begonnen"
                         />
                         <ExerciseCard 
                             exerciseName="Java: Singleton Pattern 1"
-                            exerciseStatus="Pending"
+                            exerciseStatus="In Bearbeitung"
                         />   
                     </div>
                 </div>
-                <button className={styles.closeButton} onClick={closePopUp}>Close</button>
+                <button className={styles.closeButton} onClick={closePopUp}>Schließen</button>
             </div>
             </>
         )

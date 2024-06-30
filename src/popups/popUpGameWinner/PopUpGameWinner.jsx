@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { socket } from '../../socket.js';
 import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
 
-const PopUpGameWinner = ({ winner, isVisible, ownPoints, opponentPoints }) => {
+const PopUpGameWinner = ({ winner, isVisible, ownPoints, opponentPoints, resetRoundCounter }) => {
   const navigate = useNavigate();
 
   if (!isVisible) {
@@ -17,25 +17,26 @@ const PopUpGameWinner = ({ winner, isVisible, ownPoints, opponentPoints }) => {
   const handleWinnerConfirm = () => {
     socket.emit('CLOSE_LOBBY');
     navigate('/select/code/codeBattle');
+    resetRoundCounter();
   };
 
   return (
     <>
-      <div className={styles.overlay} />
       <div className={styles.popup}>
         <Player
           autoplay
           loop
           src={animationData}
-          style={{ height: '350px', width: '350px' }}
+          style={{ height: '450px', width: '450px' }}
           className={styles.playerWithBorder}
         />
         <ScoresFinal ownPoints={ownPoints} opponentPoints={opponentPoints} />
         <div className={styles.message}>
-          Congratulations <span className={styles.name}>{winner}</span>, you won this match!
+          Glückwunsch <span className={styles.name}>{winner}</span>, du hast das Spiel gewonnen!
         </div>
-        <ConfirmButton buttonText="Nice!" handleSubmit={handleWinnerConfirm} />
+        <ConfirmButton buttonText="Cool" handleSubmit={handleWinnerConfirm} />
       </div>
+     
     </>
   );
 };

@@ -13,13 +13,15 @@
     border-radius: 15px;
 }
 
-.userName{
+.userName {
+    color: black;
     font-size: 20px;
     font-weight: bold;
     margin: 0;
 }
 
-.streak{
+.streak {
+    color: black;
     font-size: 16px;
     margin: 0;
 }   

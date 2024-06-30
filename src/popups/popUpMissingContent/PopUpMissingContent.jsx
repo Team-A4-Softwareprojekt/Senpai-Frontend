@@ -13,7 +13,7 @@ const PopUpMissingContent = ({ closePopUp, isVisible }) => {
                 <div className={styles.popupContent}>
                     <h2 className={styles.popupHeader}>Wir arbeiten zurzeit fleißig an diesem Content. Bitte sei geduldig wie ein Zen-Meister {":-)"}</h2>
                     <img className={styles.img}src={missingContentImg} alt="Missing Content" />
-                    <button className={styles.closeButton} onClick={closePopUp}>Close</button>
+                    <button className={styles.closeButton} onClick={closePopUp}>Schließen</button>
                 </div>
             </div>
         </>

@@ -7,7 +7,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-weight: bold;
-    font-size: 1.0rem;
+    font-size: 20px;
   }
   
 .submitButton:hover {

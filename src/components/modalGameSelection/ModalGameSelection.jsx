@@ -12,7 +12,7 @@ function ModalGameSelection({ header, text, slides }) {
     return (
         <div>
             <button onClick={toggleModal} className={styles.button}>
-                Game rules
+                Spielregeln
             </button>
             {modal && (
                 <div className={styles.modal}>
@@ -20,7 +20,7 @@ function ModalGameSelection({ header, text, slides }) {
                     <div className={styles.content}>
                         <Slide slides={slides} />
                         <div className={styles.buttonContainer}>
-                            <button className={styles.button} onClick={toggleModal}>Close</button>
+                            <button className={styles.button} onClick={toggleModal}>Schließen</button>
                         </div>
                     </div>
                 </div>

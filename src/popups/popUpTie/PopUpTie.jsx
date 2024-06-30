@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { socket } from '../../socket.js';
 import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
 
-const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints }) => {
+const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints, resetRoundCounter }) => {
   const navigate = useNavigate();
 
   if (!isVisible) {
@@ -17,22 +17,22 @@ const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints }) => {
   const handleTieConfirm = () => {
     socket.emit('CLOSE_LOBBY');
     navigate('/select/code/codeBattle');
+    resetRoundCounter();
   };
 
   return (
     <>
-      <div className={styles.overlay} />
       <div className={styles.popup}>
         <Player
           autoplay
           loop
           src={animationData}
-          style={{ height: '350px', width: '350px' }}
+          style={{ height: '450px', width: '450px' }}
           className={styles.playerWithBorder}
         />
         <ScoresFinal ownPoints={ownPoints} opponentPoints={opponentPoints} />
         <div className={styles.message}>
-          This match ended in a tie!
+          Dieses Spiel endet in einem Unentschieden!
         </div>
         <ConfirmButton buttonText="OK" handleSubmit={handleTieConfirm} />
       </div>

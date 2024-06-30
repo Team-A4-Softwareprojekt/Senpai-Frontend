@@ -1,19 +1,25 @@
 // src/popups/popUpPlayerDisconnected/PopUpPlayerDisconnected.jsx
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './PopUpPlayerDisconnected.module.css';
 
-const PopUpPlayerDisconnected = ({ isVisible }) => {
+const PopUpPlayerDisconnected = ({ isVisible, resetRoundCounter }) => {
+  
+  useEffect(() => {
+    if (isVisible) {
+      resetRoundCounter();
+    }
+  }, [isVisible, resetRoundCounter]);
+
   if (!isVisible) {
     return null;
   }
 
   return (
     <>
-      <div className={styles.overlay} />
       <div className={styles.popup}>
-        <p className={styles.p}>Your opponent has disconnected!</p>
-        <p className={styles.p}>You win the game by default.</p>
+        <p className={styles.p}>Dein Gegner hat das Spiel verlassen!</p>
+        <p className={styles.p}>Dadurch gewinnst du automatisch.</p>
       </div>
     </>
   );

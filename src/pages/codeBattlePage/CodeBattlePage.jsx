@@ -325,8 +325,6 @@ function CodeBattlePage() {
                     handleClick={onBuzzerClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}
-                    modalHeader="Buzzer"
-                    modalText="Compete against another player. Answer questions by pressing a buzzer in a limited time."
                     selectedOption="Java"
                 />
                 <SelectGameCard 
@@ -336,8 +334,6 @@ function CodeBattlePage() {
                     handleClick={onManipulationClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}
-                    modalHeader="Manipulation"
-                    modalText="Compete against another player. Manipulate given Code or fix manipulated Code in a limited time."
                     selectedOption="JavaScript"
                 />
                 <SelectGameCard 
@@ -347,8 +343,6 @@ function CodeBattlePage() {
                     handleClick={onLimitationClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}
-                    modalHeader="Limitation"
-                    modalText="Compete with a partner against another team. Each one of you only has a restricted input for solving the problem in a limited time."
                     selectedOption="Python"
                 />
             </div>

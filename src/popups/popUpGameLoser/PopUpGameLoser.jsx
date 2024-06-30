@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { socket } from '../../socket.js';
 import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
 
-const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints }) => {
+const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints, resetRoundCounter }) => {
   const navigate = useNavigate();
 
   if (!isVisible) {
@@ -17,22 +17,22 @@ const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints }) => {
   const handleLoserConfirm = () => {
     socket.emit('CLOSE_LOBBY');
     navigate('/select/code/codeBattle');
+    resetRoundCounter();
   };
 
   return (
     <>
-      <div className={styles.overlay} />
       <div className={styles.popup}>
         <Player
           autoplay
           loop
           src={animationData}
-          style={{ height: '350px', width: '350px' }}
+          style={{ height: '450px', width: '450px' }}
           className={styles.playerWithBorder}
         />
         <ScoresFinal ownPoints={ownPoints} opponentPoints={opponentPoints} />
         <div className={styles.message}>
-          Sorry <span className={styles.name}>{loser}</span>, better luck next time!
+          Schade <span className={styles.name}>{loser}</span>, viel Erfolg nächstes Mal!
         </div>
         <ConfirmButton buttonText="OK" handleSubmit={handleLoserConfirm} />
       </div>

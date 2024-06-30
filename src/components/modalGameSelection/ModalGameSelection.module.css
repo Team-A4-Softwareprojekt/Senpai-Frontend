@@ -11,6 +11,7 @@
 .overlay {
     background: rgba(49,49,49,0.8);
 }
+
 .content {
     position: absolute;
     top: 50%;

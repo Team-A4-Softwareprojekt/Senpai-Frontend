@@ -29,15 +29,15 @@ const PopUpQueue = ({ isVisible, selectedGameMode, closePopup }) => {
                     <div className={styles.overlay} />
                     <div className={styles.popup}>
                         <div className={styles.popupContent}>
-                            <h2>Gamemode:&nbsp;<span className={styles.highlighted}>{selectedGameMode}</span></h2>
-                            <h2>Searching for opponent 
+                            <h2>Spielmodus:&nbsp;<span className={styles.highlighted}>{selectedGameMode}</span></h2>
+                            <h2>Suche nach Gegner 
                                 <span className={styles.dots}>
                                     <span className={styles.dot}>.</span>
                                     <span className={styles.dot}>.</span>
                                     <span className={styles.dot}>.</span>
                                 </span>
                             </h2>
-                            <button onClick={closePopup}>Cancel</button>
+                            <button onClick={closePopup}>Abbrechen</button>
                         </div>
                     </div>
                 </>

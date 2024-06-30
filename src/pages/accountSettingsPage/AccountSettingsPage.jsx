@@ -120,8 +120,9 @@ function AccountSettingsPage() {
                 </div>
                 {showFriendPopup && (
                     <div className={styles.overlay}>
-                        <div className={styles.friendPopup}>
-                            <input type="text" placeholder="Search friend" />
+                        <div className={styles.friendListPopUp}>
+                            <p className={styles.descriptionText}>Dies ist eine Vorschau:</p>
+                            <input type="text" placeholder="Freund suchen" />
                             <div className={styles.friendList}>
                                 <UserCard userName="Jane Doe" userEmail="jane.doe@gmail.com" userStreak="44" />
                                 <UserCard userName="John Smith" userEmail="john.smith@gmail.com" userStreak="30" />
@@ -129,7 +130,7 @@ function AccountSettingsPage() {
                                 <UserCard userName="Bob Anderson" userEmail="bob.anderson@gmail.com" userStreak="10" />
                                 <UserCard userName="Peter Neumann" userEmail="peter.neumann@gmail.com" userStreak="20" />
                             </div>
-                            <button className={styles.closeButton} onClick={toggleFriendPopup}>Close</button>
+                            <button className={styles.closeButton} onClick={toggleFriendPopup}>Schließen</button>
                         </div>
                     </div>
                 )}

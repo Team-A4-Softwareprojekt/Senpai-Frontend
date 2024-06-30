@@ -120,16 +120,35 @@
     align-items: center;
 }
 
-.friendPopup {
+.descriptionText {
+    color: black;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.friendListPopUp {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    background: white;
     padding: 20px;
+    border: 5px solid black;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1001;
+}
+
+.friendListPopUp input {
+    font-size: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .friendList {
@@ -137,7 +156,7 @@
     max-width: 250px;
     overflow-y: auto;
     margin-bottom: 20px;
-    border: 1px solid #ced4da;
+    border: 3px solid black;
     border-radius: 5px;
     padding: 10px;
 }
@@ -152,17 +171,17 @@
 }
 
 .closeButton {
-    margin-top: 10px;
-    padding: 10px 20px;
-    width: 100px;
-    height: 50px;
-    font-size: 18px;
-    font-weight: bold;
+    background: #dc3545;
     color: white;
-    background-color: #dc3545;
     border: none;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 20px;
+    font-size: 18px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .closeButton:hover {
