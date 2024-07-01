@@ -14,9 +14,9 @@ import manipulationSlide01 from '../../assets/manipulationSlide01.png';
 import manipulationSlide02 from '../../assets/manipulationSlide02.png';
 import manipulationSlide03 from '../../assets/manipulationSlide03.png';
 
-import buzzerGrayImg from '../../assets/buzzerGray.png';
-import manipulationGrayImg from '../../assets/manipulationGray.png';
-import limitationGrayImg from '../../assets/limitationGray.png';
+import buzzerGrayImg from '../../assets/buzzerGameGray.png';
+import manipulationGrayImg from '../../assets/manipulationGameGray.png';
+import limitationGrayImg from '../../assets/limitationGameGray.png';
 import brokenHeart from '../../assets/brokenHeart.png';
 import redHeart from '../../assets/redHeart.png';
 import goldenHeart from '../../assets/goldenHeart.png';
