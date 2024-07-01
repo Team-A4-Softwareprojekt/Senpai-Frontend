@@ -1,8 +1,42 @@
-import React from 'react';
+//DELETEACCOUNT
+
+import React, {useContext} from 'react';
 import styles from './PopUpDeleteAccount.module.css';
+import {URL} from '../../../url.js';
+import { useNavigate } from 'react-router-dom';
+import {PlayerContext} from "../../context/playerContext.jsx";
 
 const PopUpDeleteAccount = ({ closePopUp, isVisible }) => {
     if (!isVisible) return null;
+
+    const url = URL + '/deleteAccount';
+    const navigate = useNavigate();
+    const { playerName} = useContext(PlayerContext);
+
+    const handleConfirm = () => {
+
+        return fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ playerName })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    console.log(response)
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from server:', data);
+                navigate('/');
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    };
 
     return (
         <>
@@ -14,7 +48,7 @@ const PopUpDeleteAccount = ({ closePopUp, isVisible }) => {
                         <div className={styles.deleteAccountText}>
                             Bist du dir wirklich sicher?
                         </div>
-                        <button className={styles.confirmButton}>Bestätigen</button>
+                        <button className={styles.confirmButton}  onClick={handleConfirm}>Bestätigen</button>
                     </div>
                     <button className={styles.closeButton} onClick={closePopUp}>Schließen</button>
                 </div>

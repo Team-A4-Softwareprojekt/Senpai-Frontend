@@ -184,11 +184,15 @@ function CodeBattlePage() {
     
     // Function to render hearts based on player lives
     useEffect(() => {
+        const today = new Date();
+        const subEndDate = new Date(playerData.subenddate);
+        const remainingTime = Math.ceil((subEndDate - today) / (1000 * 60 * 60 * 24));
+
         const renderHearts = () => {
             const hearts = [];
             if (playerData && playerData.lives !== undefined) {
                 for (let i = 0; i < 3; i++) {
-                    if (playerData.subscribed === true && i < playerData.lives) {
+                    if (remainingTime > 0) {
                         hearts.push(<img key={i} src={goldenHeart} alt="Golden Heart" className={styles.goldenHeart} />);
                     } else {
                         if (i < playerData.lives) {
