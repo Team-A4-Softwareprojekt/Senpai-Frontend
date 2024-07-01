@@ -5,13 +5,13 @@ import buzzerImg from '../../assets/buzzerGame.png';
 import manipulationImg from '../../assets/manipulationGame.png';
 import limitationImg from '../../assets/limitationGame.png';
 
-import slideShowGame from '../../assets/slideShowGame.png';
-import slideConfirmAnswer from '../../assets/slideConfirmAnswer.png';
-import slideRightAnswer from '../../assets/slideRightAnswer.png';
-import slideWrongAnswer from '../../assets/slideWrongAnswer.png';
+import buzzerSlide1 from '../../assets/buzzerSlide1.png';
+import buzzerSlide2 from '../../assets/buzzerSlide2.png';
+import buzzerSlide3 from '../../assets/buzzerSlide3.png';
 
-import manipulationSlide01 from '../../assets/manipulationSlide01.png';
-import manipulationSlide02 from '../../assets/manipulationSlide02.png';
+import manipulationSlide1 from '../../assets/manipulationSlide1.png';
+import manipulationSlide2 from '../../assets/manipulationSlide2.png';
+
 import manipulationSlide03 from '../../assets/manipulationSlide03.png';
 
 import buzzerGrayImg from '../../assets/buzzerGameGray.png';
@@ -251,25 +251,34 @@ function CodeBattlePage() {
         setIsPopUpQueueVisible(false);
     };
 
+    const handleNoHeartsClick = () => {
+        console.log("No hearts click handled");
+        setIsPopUpNoHeartsVisible(true);
+    };
 
-    const slideTexts = [
-        "Zu Beginn jeder Runde siehst du eine Frage und vier Antwortmöglichkeiten. Wenn du die Frage beantworten möchtest, dann drücke auf den roten Buzzer unten rechts. Behalte den Timer im Auge und sei schneller als dein Gegner!",
-        "Nachdem du den Buzzer gedrückt hast, musst du innerhalb von 5 Sekunden deine Antwort bestätigen. Wenn du dies nicht tust oder falsch antwortest, dann bekommt dein Gegner die Möglichkeit die Frage zu beantworten.",
-        "Wenn du richtig geantwortet hast, dann bekommst du einen Punkt. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel.",
-        "Wenn du nach dem Drücken des Buzzers nicht innerhalb der vorgegebenen Zeit oder falsch antwortest, dann verlierst du einen Punkt."
+    const buzzerSlideTexts = [
+        "Zu Beginn jeder Runde siehst du eine Frage und vier Antwortmöglichkeiten. Wenn du die Frage beantworten möchtest, dann drücke auf den roten Buzzer unten rechts. Behalte die Zeit im Auge und sei schneller als dein Gegner!",
+        "Nachdem du den Buzzer gedrückt hast, musst du innerhalb von 5 Sekunden deine Antwort bestätigen. Wenn du richtig geantwortet hast, dann bekommst du einen Punkt.",
+        "Wenn du nach dem Drücken des Buzzers zu langsam oder falsch antwortest, dann verlierst du einen Punkt und dein Gegner bekommt die Möglichkeit die Frage zu beantworten. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel.",
+    ];
+
+    const buzzerSlides = [
+        { header: "Buzzer", text: buzzerSlideTexts[0], image: buzzerSlide1 },
+        { header: "Buzzer", text: buzzerSlideTexts[1], image: buzzerSlide2 },
+        { header: "Buzzer", text: buzzerSlideTexts[2], image: buzzerSlide3 },
     ];
 
     const manipulationSlideTexts = [
-        "Zu Beginn erhältst du einen Codeausschnitt, den du so verändern musst, dass er nicht mehr kompiliert. Zeige deine Fähigkeiten, indem du den Code geschickt manipulierst und deinen Gegner herausforderst.",
-        "Sobald du fertig bist, klicke auf den Submit-Button und warte auf deinen Gegner.",
-        "Wenn dein Gegner fertig ist, dann wird der Code deines Gegners angezeigt und du musst diesen reparieren."
+        "Zu Beginn erhältst du einen Codeausschnitt, den du so manipulieren musst, dass dieser nicht mehr kompiliert. Du hast nur eine begrenzte Anzahl an Zeichen zur Verfügung. Der Parameterwert ist der Wert, mit dem die Funktion innerhalb des nicht gezeigten console.log() im Hintergrund aufgerufen wird. Die Konsolenausgabe ist der erwartete Wert bei erfolgreicher Kompilierung. Jedes eingegebene 'console.log()' wird vom Compiler ignoriert und zählt nicht zur Manipulation. Sobald du fertig bist, klicke auf den Bestätigen Button.",
+        "Warte bis dein Gegner mit seiner Manipulation fertig ist.",
+        "Nachdem dein Gegner fertig ist, bekommst du seinen manipulierten Code, den du reparieren musst. Sobald du fertig bist, klicke auf den Kompilieren Button. Falls dein Code erfolgreich kompiliert, bekommst du einen Punkt. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel."
     ];
-    
-    const buzzerSlides = [
-        { header: "Buzzer", text: slideTexts[0], image: slideShowGame },
-        { header: "Buzzer", text: slideTexts[1], image: slideConfirmAnswer },
-        { header: "Buzzer", text: slideTexts[2], image: slideRightAnswer },
-        { header: "Buzzer", text: slideTexts[3], image: slideWrongAnswer },
+
+    const manipulationSlides = [
+        { header: "Manipulation", text: manipulationSlideTexts[0], image: manipulationSlide1 },
+        { header: "Manipulation", text: manipulationSlideTexts[1], image: manipulationSlide2 },
+        { header: "Manipulation", text: manipulationSlideTexts[2], image: manipulationSlide03 },
+
     ];
 
     const limitationInfoText = 
@@ -286,17 +295,6 @@ function CodeBattlePage() {
             text: limitationInfoText.trim(), 
         }];
 
-    const manipulationSlides = [
-        { header: "Manipulation", text: manipulationSlideTexts[0], image: manipulationSlide01 },
-        { header: "Manipulation", text: manipulationSlideTexts[1], image: manipulationSlide02 },
-        { header: "Manipulation", text: manipulationSlideTexts[2], image: manipulationSlide03 },
-
-    ];
-
-    const handleNoHeartsClick = () => {
-        console.log("No hearts click handled");
-        setIsPopUpNoHeartsVisible(true);
-    };
 
     if (loading) {
         return <div>Loading...</div>;

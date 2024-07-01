@@ -9,7 +9,13 @@
 }
 
 .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(49,49,49,0.8);
+    z-index: 1001;
 }
 
 .content {
@@ -18,13 +24,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
-    background: white;
+    background: hsl(212, 77%, 75%);
     color: white;
     padding: 14px 28px;
     border-radius: 19px;
     max-width: 550px;
     min-width: 300px;
     border: 5px solid black;
+    z-index: 1002;
 }
 
 .buttonContainer {

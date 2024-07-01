@@ -31,7 +31,7 @@
     height: 15px;
     width: 15px;
     margin: 0 5px;
-    background-color: lightgray;
+    background-color: white;
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
@@ -44,7 +44,16 @@
 .headerText {
     font-size: 30px;
     font-weight: bold;
-    color: black;
+    color: white;
     margin-bottom: 20px;
     text-align: center;
+    text-shadow: 
+    2px 2px 0 black,
+    -2px -2px 0 black,
+    -2px 2px 0 black,
+    2px -2px 0 black,
+    2px 0 0 black,
+    -2px 0 0 black,
+    0 2px 0 black,
+    0 -2px 0 black;
 }
