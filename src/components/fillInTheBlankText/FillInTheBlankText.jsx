@@ -21,6 +21,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   const {playerData, setPlayerData} = useContext(PlayerContext);
 
   const url = URL + '/streakForToday';
+  const url2 = URL + '/setMissedStreak';
 
   // Function to handle changes in the input fields
   const handleChange = (e, idx) => {
@@ -74,6 +75,32 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
 
   const handleHelp = () => {
     setHelpUsed(!helpUsed);
+
+    const today = new Date();
+    const missedStreak = new Date(playerData.missedstreak);
+
+    if(missedStreak !== today){
+      fetch(url2, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ playerName })
+      })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Response from server:', data);
+            setPlayerData({...playerData, missedstreak: today});
+          })
+          .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+          });
+    }
   };
 
   return (

@@ -17,7 +17,7 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [loginError, setLoginError] = useState('');
-    const { playerName, setPlayerName } = useContext(PlayerContext);
+    const { playerName, setPlayerName, playerData, setPlayerData } = useContext(PlayerContext);
 
     const url = URL + '/login';
 
@@ -55,7 +55,8 @@ function LoginPage() {
             .then(data => {
                 console.log('Response from server:', data);
                 if (data.success == true) {
-                    setPlayerName(data.username);
+                    setPlayerName(data.data.playername);
+                    setPlayerData(data.data);
                     navigate("/select");
                 } else {
                     setLoginError("Falscher Benutzername oder Passwort")
