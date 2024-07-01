@@ -46,7 +46,7 @@ function DailyChallengeGTPage() {
                     </div>
                 ) : (
                     <div className={styles2.fillInTheBlanksDiv}>
-                        <p>Loading question...</p>
+                        Frage wird geladen...
                     </div>
                 )}
             </div>

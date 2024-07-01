@@ -1,7 +1,10 @@
+.FillInTheBlankTextDiv {
+    color: black;
+}
+
 .buttonDiv {
     display: flex;
     justify-content: center;
     margin-top: 20px;
     color: rgb(44, 44, 44)
-    
 }

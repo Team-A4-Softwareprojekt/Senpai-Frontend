@@ -79,8 +79,8 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   };
 
   return (
-    <div className={styles2.FillInTheBlankTextDiv}>
-      <p>
+    <div>
+      <p className={styles2.FillInTheBlankTextDiv}>
         {words.map((word, index) => {
           if (blankIndices.includes(index)) {
             const blankIdx = blankIndices.indexOf(index);
@@ -112,19 +112,13 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
       </p>
       <div className={styles2.buttonDiv}>
         <button onClick={handleCheck} className={styles.button01}>
-          Check
+          Überprüfen
         </button>
         {allowHelp && (
           <button onClick={handleHelp} className={styles.button01}>
-            Help
+            Hilfe
           </button>
         )}
-        <div className={styles2.modal}>
-          <Modal
-            header='Fill In The Blank Text'
-            text='Please fill in the blanks with the correct words. Once you have filled in all the blanks, click the Check button to see if your answers are correct. Correct answers will be highlighted in green, while incorrect answers will be highlighted in red.'
-          />
-        </div>
       </div>
     </div>
   );

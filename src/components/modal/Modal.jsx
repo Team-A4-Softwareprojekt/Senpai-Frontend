@@ -27,7 +27,7 @@ function Modal({ header, text }) {
                         <h2 className={styles.popupHeader}>{header}</h2>
                         <p className={styles.text}>{text}</p>
                         <div className={styles.buttonContainer}>
-                            <button className={styles.closeButton} onClick={toggleModal}>Close</button>
+                            <button className={styles.closeButton} onClick={toggleModal}>Schließen</button>
                         </div>
                     </div>
                 </div>

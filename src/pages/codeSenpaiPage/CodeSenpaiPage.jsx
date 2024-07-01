@@ -96,7 +96,11 @@ function codeSenpaiPage() {
                     buttonText="Daily Challenge"
                     imageUrl={codeChallengeImg}
                     modalHeader="Daily Challenge" 
-                    modalText="Absolviere täglich eine neue Herausforderung und baue deine Streak auf."
+                    modalText={<>
+                        Absolviere täglich eine neue Herausforderung und baue deine Streak auf.<br/><br/>
+                        Fülle die Lücken mit den richtigen Wörtern aus. Sobald du alle Lücken ausgefüllt hast, kannst du auf den Button "Überprüfen" klicken.<br/><br/>
+                        Richtige Antworten werden grün hervorgehoben, während falsche Antworten rot hervorgehoben werden.
+                    </>}
                     className={styles.selectCard}
                     handleClick={handleDailyChallenge}
                 />

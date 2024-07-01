@@ -1,5 +1,5 @@
 .backgroundImage {
-    background-image: url('../../assets/clouds.jpg');
+    background-image: url('../../assets/cloudsBlurry.jpg');
     background-size: cover; /* This makes the background cover the entire area */
     background-position: center; /* This centers the background image */
     background-repeat: no-repeat; /* This prevents the background image from repeating */
@@ -41,6 +41,7 @@
     justify-content: center; /* Center content horizontally */
     align-items: center; /* Center content vertically */
     background: rgb(255, 255, 255); /* Semi-transparent background */
+    color: black;
     padding: 20px; /* Padding */
     border-radius: 18px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for better visual */
