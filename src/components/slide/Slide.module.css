@@ -1,5 +1,5 @@
 .slideContainer {
-    text-align: left;
+    text-align: center;
 }
 
 .image {
@@ -11,13 +11,14 @@
 }
 
 .textContainer {
-    background-color: #132e63;
-    border: 2px solid gold;
+    background-color: white;
+    border: 3px solid black;
+    color: black;
     padding: 10px;
     border-radius: 5px;
     margin-top: 15px;
     margin-bottom: 20px;
-    font-size: 17px;
+    font-size: 18px;
 }
 
 .navigationDots {
@@ -30,7 +31,7 @@
     height: 15px;
     width: 15px;
     margin: 0 5px;
-    background-color: white;
+    background-color: lightgray;
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
@@ -38,4 +39,12 @@
 
 .active {
     background-color: red;
+}
+
+.headerText {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+    text-align: center;
 }

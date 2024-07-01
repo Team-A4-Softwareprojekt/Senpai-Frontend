@@ -18,13 +18,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
-    background: linear-gradient(0deg, #1e3c72 0%, #396cc4 0%);
+    background: white;
     color: white;
     padding: 14px 28px;
     border-radius: 19px;
     max-width: 550px;
     min-width: 300px;
-    border: 3px solid white;
+    border: 5px solid black;
 }
 
 .buttonContainer {
