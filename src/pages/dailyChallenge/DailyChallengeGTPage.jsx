@@ -37,21 +37,23 @@ function DailyChallengeGTPage() {
 
     return (
         <div className={styles2.backgroundImage}>
-            <HomeButton handleClick={handleHomeClick}/>
-            <div className={styles2.centeredContainer}>
-                <div className={styles2.text}>
-                    <h1 className={styles2.infoText}>This is today's Daily Challenge</h1>
-                    <p className={styles2.motivationText}>Challenge yourself! Put your skills to the test.</p>
+            <div className={styles2.container}>
+                <HomeButton handleClick={handleHomeClick}/>
+                <div className={styles2.centeredContainer}>
+                    <div className={styles2.text}>
+                        <h1 className={styles2.infoText}>Das ist die heutige Daily Challenge</h1>
+                        <p className={styles2.motivationText}>Stelle dich der Herausforderung und überprüfe dein Wissen!</p>
+                    </div>
+                    {questionGT && questionGT.completedtext ? (
+                        <div className={styles2.fillInTheBlanksDiv}>
+                            <FillInTheBlankText text={questionGT.completedtext} blankIndices={blankIndices} allowHelp={true}/>
+                        </div>
+                    ) : (
+                        <div className={styles2.fillInTheBlanksDiv}>
+                            Frage wird geladen...
+                        </div>
+                    )}
                 </div>
-                {questionGT && questionGT.completedtext ? (
-                    <div className={styles2.fillInTheBlanksDiv}>
-                        <FillInTheBlankText text={questionGT.completedtext} blankIndices={blankIndices} allowHelp={true}/>
-                    </div>
-                ) : (
-                    <div className={styles2.fillInTheBlanksDiv}>
-                        Frage wird geladen...
-                    </div>
-                )}
             </div>
         </div>
     );

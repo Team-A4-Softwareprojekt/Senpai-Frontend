@@ -1,7 +1,5 @@
 import React, {useContext, useState} from 'react';
-import styles from '../../pages/General.module.css';
-import styles2 from './FillInTheBlankText.module.css';
-import Modal from '../modal/Modal.jsx';
+import styles from './FillInTheBlankText.module.css';
 import {PlayerContext} from '../../context/playerContext';
 import {URL} from "../../../url.js";
 import { useNavigate } from 'react-router-dom';
@@ -41,7 +39,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
       const allCorrect = newResults.every(result => result);
       if (allCorrect) {
         setIsWinner(true);
-        window.alert('Congratulations! You have answered all correctly on your first attempt!');
+        window.alert('Glückwunsch! Du hast alle Wörter im ersten Versuch gefunden!');
         // Add any additional logic for winning, such as notifying the server or updating the UI
 
         fetch(url, {
@@ -66,11 +64,11 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
             })
 
       } else {
-        window.alert('Not all answers are correct. Please try again.');
+        window.alert('Nicht alle eingegebenen Wörter sind korrekt. Bitte versuche es noch einmal.');
       }
       setFirstAttempt(false);
     } else {
-      window.alert('Check your answers and try again.');
+      window.alert('Überprüfe deine Antworten und versuche es noch einmal.');
     }
   };
 
@@ -80,7 +78,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
 
   return (
     <div>
-      <p className={styles2.FillInTheBlankTextDiv}>
+      <div className={styles.FillInTheBlankTextDiv}>
         {words.map((word, index) => {
           if (blankIndices.includes(index)) {
             const blankIdx = blankIndices.indexOf(index);
@@ -93,12 +91,13 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
                   onChange={(e) => handleChange(e, blankIdx)}
                   placeholder={helpUsed ? words[index] : ''}
                   style={{
-                    // Highlight the correct and incorrect answers
+                    // Adjust border color and increase font size
                     backgroundColor: show
                       ? results[blankIdx]
                         ? 'lightgreen'
                         : 'lightcoral'
-                        : 'transparent',
+                        : 'lightgray',  
+                    fontSize: '18px',
                     color: 'black',
                   }}
                 />{' '}
@@ -109,13 +108,14 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
             return <span key={index}>{word} </span>;
           }
         })}
-      </p>
-      <div className={styles2.buttonDiv}>
-        <button onClick={handleCheck} className={styles.button01}>
+      </div>
+      <hr className={styles.line}/>
+      <div className={styles.buttonDiv}>
+        <button onClick={handleCheck} className={styles.buttonCheck}>
           Überprüfen
         </button>
         {allowHelp && (
-          <button onClick={handleHelp} className={styles.button01}>
+          <button onClick={handleHelp} className={styles.buttonHelp}>
             Hilfe
           </button>
         )}
