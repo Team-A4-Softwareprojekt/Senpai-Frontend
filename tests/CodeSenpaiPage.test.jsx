@@ -2,7 +2,7 @@ import {describe, it} from 'vitest'; // Import von ViTest
 import {render, screen} from '@testing-library/react'; // Import der render-Funktion von @testing-library/react
 import {MemoryRouter} from "react-router-dom";
 import CodeSenpaiPage from "../src/pages/codeSenpaiPage/CodeSenpaiPage.jsx";
-import {MockPlayerProvider} from "./test-utils.jsx";
+import {MockPlayerProvider, MockGapTextContextProvider} from "./test-utils.jsx";
 
 
 describe("CodeSenpaiPage", () => {
@@ -10,7 +10,9 @@ describe("CodeSenpaiPage", () => {
         render(
             <MemoryRouter>
                 <MockPlayerProvider>
-                    <CodeSenpaiPage/>
+                    <MockGapTextContextProvider>
+                        <CodeSenpaiPage/>
+                    </MockGapTextContextProvider>
                 </MockPlayerProvider>
             </MemoryRouter>);
         //expect(screen.getByText("Senpai")).toBeInTheDocument();
