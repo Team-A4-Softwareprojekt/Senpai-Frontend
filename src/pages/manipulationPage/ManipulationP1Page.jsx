@@ -2,14 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
-import HomeButton from '../../buttons/homeButton/HomeButton.jsx';
 import { useNavigate } from 'react-router-dom';
 import { ManipulationPlayerContext } from '../../context/manipulationQuestionContext.jsx';
 import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
+import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
 import PopUpManipulationWordLimit from '../../popups/popUpManipulation/PopUpManipulationWordLimit.jsx';
-
-
 import styles2 from './ManipulationPage.module.css';
 import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
 import {ScoreContext} from "../../context/scoreContext.jsx";
@@ -25,6 +23,8 @@ function ManipulationPage() {
   const [expectedOutput, setExpectedOutput] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
+  const [showInfoContainer, setShowInfoContainer] = useState(true);
+  const [showManipulationContainer, setShowManipulationContainer] = useState(true);
   const [actionText, setActionText] = useState('');
   const [codeTest, setCodeTest] = useState('');
   const { ownPoints, opponentPoints } = useContext(ScoreContext);
@@ -47,7 +47,8 @@ function ManipulationPage() {
 
     socket.emit('SUBMIT_CHANGES_MANIPULATION', { code: codeWithTest, expectedOutput });
     setShowEditor(false); // Hide editor after submission
-    setActionText('Wait for the other player to submit their changes.');
+    setShowInfoContainer(false);
+    setActionText('Warte bis dein Gegner fertig ist...');
   };
 
   const onChange = (newCode) => {
@@ -60,10 +61,12 @@ function ManipulationPage() {
     if (changeCount <= manipulationQuestion.permittedsymbols) {
       setCode(newCode);
       setCharactersLeft(manipulationQuestion.permittedsymbols - changeCount);
-      setActionText(`Change the code below. You have ${manipulationQuestion.permittedsymbols - changeCount} characters left. Change the code so the output is not: ${expectedOutput}`);
+      //setActionText(`Change the code below. You have ${manipulationQuestion.permittedsymbols - changeCount} characters left. Change the code so the output is not: ${expectedOutput}`);
     } else {
       // Display word limit popup
       setShowWordLimitPopup(true);
+      setShowManipulationContainer(false);
+      //setAlertMessage('Du hast die zulässige Anzahl von Zeichenänderungen überschritten.');
     }
   };
 
@@ -84,17 +87,17 @@ function ManipulationPage() {
       setInitialCode(manipulationQuestion.code);
       setExpectedOutput(manipulationQuestion.outputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);
-      setActionText(`You have ${manipulationQuestion.permittedsymbols} characters left. Change the code so the output is not: ${manipulationQuestion.outputtext} when the input is ${manipulationQuestion.inputtext}`);
+      //setActionText(`Du hast ${manipulationQuestion.permittedsymbols} Zeichen übrig. Manipuliere den Code so, dass die Konsolenausgabe nicht ${manipulationQuestion.outputtext} ist. when the input is ${manipulationQuestion.inputtext}`);
     }
   }, [manipulationQuestion]);
 
-  useEffect(() => {
-    if (alertMessage) {
+  //useEffect(() => {
+    //if (alertMessage) {
       // Replace alert with custom popup
-      setShowWordLimitPopup(true); // Show the word limit popup instead of alert
-      setAlertMessage('');
-    }
-  }, [alertMessage]);
+      //setShowWordLimitPopup(true); // Show the word limit popup instead of alert
+      //setAlertMessage('Du hast die zulässige Anzahl von Zeichenänderungen überschritten.');
+    //}
+  //}, [alertMessage]);
 
   const handleStartNewRound = () => {
     console.log('Starting new round');
@@ -117,55 +120,68 @@ function ManipulationPage() {
 
   const handleCloseWordLimitPopup = () => {
     setShowWordLimitPopup(false);
+    setShowManipulationContainer(true);
   };
 
   return (
     <div className={styles2.backgroundImage} >
-      <HomeButton handleClick={handleHomeClick} />
-      <div className={styles2.whiteBackground}>
-      <header className={styles2.header}>
-        
-        <h1 className={styles2.manipulationText}>Manipulation</h1>
-      </header>
-      <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
-      <div>
-        <h2 className={styles2.infoText}>
-          {actionText}
-        </h2>
-      </div>
-
-      {showEditor && (
-        <div className={styles2.editor}>
-          <AceEditor
-            mode={selectedLanguage}
-            theme="monokai"
-            onChange={onChange}
-            name="UNIQUE_ID_OF_EDITOR"
-            editorProps={{ $blockScrolling: true }}
-            value={code}
-            style={{ width: '800px', height: '300px', fontSize: 18 }}
-            readOnly={languages.find((lang) => lang.value === selectedLanguage).disabled}
-          />
-          <div className={styles2.footer}>
-            <button onClick={submitCode} className={styles2.runButton}>
-              Submit
-            </button>
-            <Modal
-              header="This is the manipulation game mode"
-              text="In this game mode you have to manipulate the code so the output is not the same as the expected output. You have a limited number of characters you can change. If you have to wait, your next goal is to fix the mistakes to get to the expected output. Good luck!"
-            />
+      {showManipulationContainer && (
+      <div className={styles2.manipulationContainer}>
+        <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
+        {showInfoContainer && (
+          <div className={styles2.infoContainer}>
+            <div className={styles2.infoBox}>
+                Verbleibende Zeichen:
+              <div className={styles2.dynamicContainer}>
+                <span className={styles2.dynamicData}>{charactersLeft}</span>
+              </div>
+            </div>
+            <div className={styles2.infoBox}>
+                Parameterwert:
+              <div className={styles2.dynamicContainer}>
+                <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span>
+              </div>
+            </div>
+            <div className={styles2.infoBox}>
+                Konsolenausgabe:
+              <div className={styles2.dynamicContainer}>
+                <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span>
+              </div>
+            </div>
           </div>
+        )}
+        <div>
+          <h2 className={styles2.infoText}>
+            {actionText}
+          </h2>
         </div>
-      )}
+        {showEditor && (
+          <>
+            <div className={`${styles2.editor}`}>
+              <AceEditor
+                mode={selectedLanguage}
+                theme="monokai"
+                onChange={onChange}
+                name="UNIQUE_ID_OF_EDITOR"
+                editorProps={{ $blockScrolling: true }}
+                value={code}
+                style={{ width: '700px', height: '305px' }}
+                fontSize={20}
+                readOnly={languages.find((lang) => lang.value === selectedLanguage).disabled}
+              />
+            </div>
+            <button onClick={submitCode} className={styles2.runButton}>
+              Bestätigen
+            </button>
+          </>
+        )}
 
-      <PopUpManipulationWordLimit
-        isVisible={showWordLimitPopup}
-        closePopup={handleCloseWordLimitPopup}
-        message="You have exceeded the permitted number of character changes."
-      />
-
-      <HomeButton handleClick={handleHomeClick} />
       </div>
+      )}
+      <PopUpManipulationWordLimit
+          isVisible={showWordLimitPopup}
+          closePopUp={handleCloseWordLimitPopup}
+      />
     </div>
   );
 }

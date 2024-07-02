@@ -2,18 +2,17 @@ import React, {useEffect, useState, useContext} from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
-import HomeButton from '../../buttons/homeButton/HomeButton.jsx';
 import {useNavigate} from 'react-router-dom';
 import {ManipulationPlayerContext} from '../../context/manipulationQuestionContext.jsx';
 import {PlayerContext} from '../../context/playerContext.jsx';
 import {ScoreContext} from "../../context/scoreContext.jsx";
 import Modal from '../../components/modal/Modal';
 import {socket} from '../../socket.js';
-
+import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
 import PopUpManipulationCorrect from '../../popups/popUpManipulation/PopUpManipulationCorrect.jsx';
 import PopUpManipulationWrong from '../../popups/popUpManipulation/PopUpManipulationWrong.jsx';
 import styles2 from './ManipulationPage.module.css';
-import PopUpManipulationRoundEnd from "../../components/popUpManipulationRoundEnd/PopUpManipulationRoundEnd.jsx";
+import PopUpManipulationRoundEnd from "../../popups/popUpManipulationRoundEnd/PopUpManipulationRoundEnd.jsx";
 import PopUpGameWinner from "../../popups/popUpGameWinner/PopUpGameWinner.jsx";
 import PopUpGameLoser from "../../popups/popUpGameLoser/PopUpGameLoser.jsx";
 import PopUpTie from "../../popups/popUpTie/PopUpTie.jsx";
@@ -46,6 +45,7 @@ function ManipulationPage() {
     const [isGameLoserVisible, setIsGameLoserVisible] = useState(false);
     const [isGameWinnerVisible, setIsGameWinnerVisible] = useState(false);
     const [isTieVisible, setIsTieVisible] = useState(false);
+    const [isGameFinished, setIsGameFinished] = useState(false);
 
     const {ownPoints, opponentPoints, setOwnPoints, setOpponentPoints} = useContext(ScoreContext);
 
@@ -183,12 +183,13 @@ function ManipulationPage() {
             */
     };
 
-    const handleEndGame = (ownPointsReceived, opponentPointsReceived) => {
+    const handleGameEnd = (ownPointsReceived, opponentPointsReceived) => {
         console.log('Received own points:', ownPointsReceived);
         console.log('Received opponent points:', opponentPointsReceived);
 
         setOwnPoints(ownPointsReceived);
         setOpponentPoints(opponentPointsReceived);
+        setIsGameFinished(true);
 
         if (ownPointsReceived > opponentPointsReceived) {
             setWinnerGame(playerName);
@@ -211,14 +212,14 @@ function ManipulationPage() {
         socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
         socket.on('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
         socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
-        socket.on('END_MANIPULATION_GAME', handleEndGame);
+        socket.on('END_MANIPULATION_GAME', handleGameEnd);
 
 
         return () => {
             socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
             socket.off('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
             socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
-            socket.off('END_MANIPULATION_GAME', handleEndGame);
+            socket.off('END_MANIPULATION_GAME', handleGameEnd);
 
         };
     }, []);
@@ -235,65 +236,75 @@ function ManipulationPage() {
         setIsDisabled(true);
     };
 
+    const handlePopupClose = () => {
+        setPopupVisible(false);
+        setIsDisabled(false);
+    };
+
 
     return (
         <div className={styles2.backgroundImage}>
-          <HomeButton handleClick={handleHomeClick}/>
-          <div className={styles2.whiteBackground}>
-            <header className={styles2.header}>
-                
-                <h1 className={styles2.manipulationText}>Manipulation</h1>
-            </header>
-            <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-            <div>
-                <h2 className={styles2.infoText}>
-                    {isDisabled
-                        ? 'Wait for the other player to finish...'
-                        : `It's your turn. Change the code to achieve the desired output: ${expectedOutput} when the input is: ${manipulationQuestion.inputtext}`
-                    }
-                </h2>
-            </div>
-            {!isDisabled && (
-                <>
-                    <div className={styles2.editor}>
-                        <AceEditor
-                            mode={selectedLanguage}
-                            theme="monokai"
-                            onChange={onChange}
-                            name="UNIQUE_ID_OF_EDITOR"
-                            editorProps={{$blockScrolling: true}}
-                            value={code}
-                            style={{width: '50vw', height: '300px'}}
-                            className={styles2.enabledEditor}
-                        />
-                        <div className={styles2.footer}>
-                            <button
-                                onClick={executeCode}
-                                className={styles2.runButton}
-                            >
-                                Submit
-                            </button>
-                            <Modal
-                                header="This is the manipulation game mode"
-                                text="In this game mode you have to manipulate the code so the output is not the same as the expected output. You have a limited number of characters you can change. If you have to wait, your next goal is to fix the mistakes to get to the expected output. Good luck!"
-                            />
+            {!isPopupVisible && !isGameFinished && (
+                <div className={styles2.manipulationContainer}>
+                    <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
+                    <div className={styles2.infoContainer}>
+                        <div className={styles2.infoBox}>
+                            Parameterwert:
+                            <div className={styles2.dynamicContainer}>
+                                <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span>
+                            </div>
+                        </div>
+                        <div className={styles2.infoBox}>
+                            Konsolenausgabe:
+                            <div className={styles2.dynamicContainer}>
+                                <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span>
+                            </div>
                         </div>
                     </div>
-                </>
+                    <div>
+                        <h2 className={styles2.infoText}>
+                            {isDisabled
+                                ? 'Warte bis dein Gegner fertig ist...'
+                                : ``
+                            }
+                        </h2>
+                    </div>
+                    {!isDisabled && (
+                        <>
+                            <div className={styles2.editor}>
+                                <AceEditor
+                                    mode={selectedLanguage}
+                                    theme="monokai"
+                                    onChange={onChange}
+                                    name="UNIQUE_ID_OF_EDITOR"
+                                    editorProps={{ $blockScrolling: true }}
+                                    value={code}
+                                    style={{ width: '700px', height: '305px' }}
+                                    fontSize={20}
+                                    className={styles2.enabledEditor}
+                                />
+                            </div>
+                            <button onClick={executeCode} className={styles2.runButton}>
+                                Kompilieren
+                            </button>
+                        </>
+                    )}
+                    <PopUpManipulationCorrect isVisible={isPopupManipulationCorrectVisible} closePopup={handlePopupManipulationCorrectVisible} />
+                    <PopUpManipulationWrong isVisible={isPopupManipulationWrongVisible} closePopup={handlePopupManipulationWrongVisible} />
+
+                </div>
             )}
-            <PopUpManipulationRoundEnd isVisible={isPopupVisible} player1={playerData.playername} player2={enemyPlayer}
-                                       hasFoundErrorP1={hasFoundErrorP1} hasFoundErrorP2={hasFoundErrorP2}/>
-            <PopUpManipulationCorrect isVisible={isPopupManipulationCorrectVisible}
-                                      closePopup={handlePopupManipulationCorrectVisible}/>
-            <PopUpManipulationWrong isVisible={isPopupManipulationWrongVisible}
-                                    closePopup={handlePopupManipulationWrongVisible}/>
-
-            <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-            <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-            <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints}/>
-
-          </div>
-
+            <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
+            <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
+            <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
+            <PopUpManipulationRoundEnd
+                isVisible={isPopupVisible}
+                player1={playerData.playername}
+                player2={enemyPlayer}
+                hasFoundErrorP1={hasFoundErrorP1}
+                hasFoundErrorP2={hasFoundErrorP2}
+                onClose={handlePopupClose}
+            />
         </div>
     );
 }

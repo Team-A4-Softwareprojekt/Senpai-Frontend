@@ -1,5 +1,5 @@
 .backgroundImage {
-    background-image: url('../../assets/clouds.jpg');
+    background-image: url('../../assets/cloudsBlurry.jpg');
     background-size: cover; /* This makes the background cover the entire area */
     background-position: center; /* This centers the background image */
     background-repeat: no-repeat; /* This prevents the background image from repeating */
@@ -10,30 +10,41 @@
     align-items: center; /* Center child elements vertically */
 }
 
+.container {
+    background-color: white; /* Background color for the container */
+    border: 5px solid black; /* Black border */
+    border-radius: 18px; /* Rounded corners */
+    padding: 20px; /* Padding inside the container */
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for better visual */
+}
+
 .centeredContainer {
     display: flex;
     flex-direction: column; /* Arrange children in a column */
     align-items: center; /* Center items horizontally */
-    max-width: 80%; /* Limit the width for better responsiveness */
+    max-width: 100%; /* Limit the width for better responsiveness */
 }
+
 .infoText {
-    color: rgb(78, 78, 78); /* Text color */
+    color: black; /* Text color */
     margin-bottom: 20px; /* Spacing */
 }
+
 .text {
     padding: 10px 20px; /* Padding */
     background-color: white;
     text-align: center; /* Center text horizontally */
-    color: rgb(54, 54, 54); /* Text color */
+    color: black; /* Text color */
     margin-bottom: 20px; /* Spacing */
+    border: 3px solid black;
     border-radius: 18px;
-    
 }
 
 .motivationText {
     font-size: 18px; /* Font size */
     margin-bottom: 20px; /* Spacing */
-    color: rgb(54, 54, 54);
+    color: black;
 }
 
 .fillInTheBlanksDiv {
@@ -41,8 +52,11 @@
     justify-content: center; /* Center content horizontally */
     align-items: center; /* Center content vertically */
     background: rgb(255, 255, 255); /* Semi-transparent background */
-    padding: 20px; /* Padding */
+    color: black;
+    padding: 15px; /* Padding */
+    border: 3px solid black;
     border-radius: 18px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for better visual */
     margin-top: 20px; /* Top margin */
+    font-size: 18px;
 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styles from './SelectPlatformPage.module.css';
 import SelectContentCard from '../../cards/selectContentCard/SelectContentCard.jsx';
-import codeSenpaiImage from '../../assets/codeSenpai2.png';
-import medSenpaiImage from '../../assets/medSenpai2.png';
-import mathSenpaiImage from '../../assets/mathSenpai2.png';
+import codeSenpaiImage from '../../assets/codeSenpai.png';
+import medSenpaiImage from '../../assets/medSenpai.png';
+import mathSenpaiImage from '../../assets/mathSenpai.png';
 import gymSenpaiImage from '../../assets/gymSenpai.png';
 import PopUpMissingContent from '../../popups/popUpMissingContent/PopUpMissingContent.jsx';
 

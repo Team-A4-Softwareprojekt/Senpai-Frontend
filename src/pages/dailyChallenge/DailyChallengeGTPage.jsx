@@ -1,14 +1,17 @@
 import styles2 from './DailyChallengePage.module.css';  
 import FillInTheBlankText from '../../components/fillInTheBlankText/FillInTheBlankText.jsx';
 import { socket } from '../../socket.js';
-import { useEffect, useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import HomeButton from '../../buttons/homeButton/HomeButton.jsx';
 import {useNavigate} from 'react-router-dom';
+import {GapTextContext} from '../../context/gapTextQuestionContext.jsx';
 
 function DailyChallengeGTPage() {
     const navigate = useNavigate();
-    const [question, setQuestion] = useState(null);
-    const [blankIndices, setBlankIndices] = useState([]);
+    //const [question, setQuestion] = useState(null);
+    //const [blankIndices, setBlankIndices] = useState([]);
+
+    const {questionGT, setQuestionGT, blankIndices, setBlankIndices} = useContext(GapTextContext);
 
     const handleHomeClick = () => {
         navigate('/select/code');
@@ -17,7 +20,7 @@ function DailyChallengeGTPage() {
     useEffect(() => {
         const handleQuestionGapText = (question) => {  
             console.log('Received question:', question);
-            setQuestion(question);
+            setQuestionGT(question);
             const indices = question.missingwordpositions.split(',').map(Number);
             setBlankIndices(indices);
         };
@@ -34,21 +37,23 @@ function DailyChallengeGTPage() {
 
     return (
         <div className={styles2.backgroundImage}>
-            <HomeButton handleClick={handleHomeClick}/>
-            <div className={styles2.centeredContainer}>
-                <div className={styles2.text}>
-                    <h1 className={styles2.infoText}>This is today's Daily Challenge</h1>
-                    <p className={styles2.motivationText}>Challenge yourself! Put your skills to the test.</p>
+            <div className={styles2.container}>
+                <HomeButton handleClick={handleHomeClick}/>
+                <div className={styles2.centeredContainer}>
+                    <div className={styles2.text}>
+                        <h1 className={styles2.infoText}>Das ist die heutige Daily Challenge</h1>
+                        <p className={styles2.motivationText}>Stelle dich der Herausforderung und überprüfe dein Wissen!</p>
+                    </div>
+                    {questionGT && questionGT.completedtext ? (
+                        <div className={styles2.fillInTheBlanksDiv}>
+                            <FillInTheBlankText text={questionGT.completedtext} blankIndices={blankIndices} allowHelp={true}/>
+                        </div>
+                    ) : (
+                        <div className={styles2.fillInTheBlanksDiv}>
+                            Frage wird geladen...
+                        </div>
+                    )}
                 </div>
-                {question && question.completedtext ? (
-                    <div className={styles2.fillInTheBlanksDiv}>
-                        <FillInTheBlankText text={question.completedtext} blankIndices={blankIndices} allowHelp={true}/>
-                    </div>
-                ) : (
-                    <div className={styles2.fillInTheBlanksDiv}>
-                        <p>Loading question...</p>
-                    </div>
-                )}
             </div>
         </div>
     );

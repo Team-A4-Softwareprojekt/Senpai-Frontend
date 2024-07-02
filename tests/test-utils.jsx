@@ -3,7 +3,8 @@ import React from 'react';
 import { PlayerContext } from "../src/context/playerContext.jsx"; // Pfad anpassen
 import { vi } from 'vitest';
 import {BuzzerPlayerContext} from "../src/context/buzzerQuestionContext.jsx";
-import {ManipulationPlayerContext} from "../src/context/manipulationQuestionContext.jsx"; // Importieren von Vitest
+import {ManipulationPlayerContext} from "../src/context/manipulationQuestionContext.jsx";
+import {GapTextContext} from "../src/context/gapTextQuestionContext.jsx"; // Importieren von Vitest
 
 export const MockPlayerProvider = ({ children }) => {
     const mockPlayerData = {
@@ -41,5 +42,22 @@ export const MockSetManipulationQuestionProvider = ({ children }) => {
         <ManipulationPlayerContext.Provider value={mockManipulationQuestionData}>
             {children}
         </ManipulationPlayerContext.Provider>
+    );
+};
+
+export const MockGapTextContextProvider = ({ children }) => {
+    const mockGapTextQuestionData = {
+        questionGT: "Dies ist die question für GapText SpielModi",
+        setQuestionGT: vi.fn()
+    };
+    const mockGapTextblankIndicesData = {
+        blankIndices: "3,5,7",
+        setBlankIndices: vi.fn()
+    }
+
+    return (
+        <GapTextContext.Provider value={{mockGapTextQuestionData, mockGapTextblankIndicesData}}>
+            {children}
+        </GapTextContext.Provider>
     );
 };

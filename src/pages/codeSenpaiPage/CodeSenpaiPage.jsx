@@ -14,6 +14,7 @@ import PopUpSubscribedTrue from '../../popups/popUpSubscribedTrue/PopUpSubscribe
 import { useNavigate } from 'react-router-dom';
 import {socket, requestDailyChallengeQuestion} from '../../socket.js';
 import {PlayerContext} from '../../context/playerContext';
+import {GapTextContext} from '../../context/gapTextQuestionContext.jsx';
 
 /*
 This is the code-senpai page that holds an account button, amount of lives and three different
@@ -26,6 +27,7 @@ function codeSenpaiPage() {
     const navigate = useNavigate();
 
     const {playerData, setPlayerData} = useContext(PlayerContext);
+    const {questionGT, setQuestionGT, blankIndices, setBlankIndices} = useContext(GapTextContext);
 
     const handleHomeClick = () => {
         navigate('/select/code');
@@ -71,11 +73,19 @@ function codeSenpaiPage() {
                 navigate('/select/code/dailyChallenge/gapText');
             }
         };
-        //socket.on('RECEIVE_QUESTION_MULTIPLE_CHOICE',handleQuestionMultipleChoice );
+
+        const handleQuestionGapText = (question) => {
+            console.log('Received question:', question);
+            setQuestionGT(question);
+            const indices = question.missingwordpositions.split(',').map(Number);
+            setBlankIndices(indices);
+        };
+
         socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
+        socket.on('RECEIVE_QUESTION_GAP_TEXT', handleQuestionGapText);
 
         return () => {
-            // socket.off('RECEIVE_QUESTION_MULTIPLE_CHOICE',handleQuestionMultipleChoice );
+            socket.off('RECEIVE_QUESTION_GAP_TEXT', handleQuestionGapText);
             socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
         };
     }), [];
@@ -96,7 +106,11 @@ function codeSenpaiPage() {
                     buttonText="Daily Challenge"
                     imageUrl={codeChallengeImg}
                     modalHeader="Daily Challenge" 
-                    modalText="Absolviere täglich eine neue Herausforderung und baue deine Streak auf."
+                    modalText={<>
+                        Absolviere täglich eine neue Herausforderung und baue deine Streak auf.<br/><br/>
+                        Fülle die Lücken mit den richtigen Wörtern aus. Sobald du alle Lücken ausgefüllt hast, kannst du auf den Button "Überprüfen" klicken.<br/><br/>
+                        Richtige Antworten werden grün hervorgehoben, während falsche Antworten rot hervorgehoben werden.
+                    </>}
                     className={styles.selectCard}
                     handleClick={handleDailyChallenge}
                 />

@@ -22,7 +22,7 @@ const PopUpPurchaseFailure = ({ closePopUp, isVisible, addCredit }) => {
                         <button className={styles.addButton} onClick={addCreditHandler(20)}>20 Euro</button>
                         <button className={styles.addButton} onClick={addCreditHandler(50)}>50 Euro</button>
                     </div>
-                    <button className={styles.closeButton} onClick={closePopUp}>Close</button>
+                    <button className={styles.closeButton} onClick={closePopUp}>Schließen</button>
                 </div>
             </div>
         </>

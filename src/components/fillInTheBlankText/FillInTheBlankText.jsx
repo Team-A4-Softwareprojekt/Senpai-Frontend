@@ -1,7 +1,5 @@
 import React, {useContext, useState} from 'react';
-import styles from '../../pages/General.module.css';
-import styles2 from './FillInTheBlankText.module.css';
-import Modal from '../modal/Modal.jsx';
+import styles from './FillInTheBlankText.module.css';
 import {PlayerContext} from '../../context/playerContext';
 import {URL} from "../../../url.js";
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +21,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   const {playerData, setPlayerData} = useContext(PlayerContext);
 
   const url = URL + '/streakForToday';
+  const url2 = URL + '/setMissedStreak';
 
   // Function to handle changes in the input fields
   const handleChange = (e, idx) => {
@@ -41,7 +40,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
       const allCorrect = newResults.every(result => result);
       if (allCorrect) {
         setIsWinner(true);
-        window.alert('Congratulations! You have answered all correctly on your first attempt!');
+        window.alert('Glückwunsch! Du hast alle Wörter im ersten Versuch gefunden!');
         // Add any additional logic for winning, such as notifying the server or updating the UI
 
         fetch(url, {
@@ -66,21 +65,47 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
             })
 
       } else {
-        window.alert('Not all answers are correct. Please try again.');
+        window.alert('Nicht alle eingegebenen Wörter sind korrekt. Bitte versuche es noch einmal.');
       }
       setFirstAttempt(false);
     } else {
-      window.alert('Check your answers and try again.');
+      window.alert('Überprüfe deine Antworten und versuche es noch einmal.');
     }
   };
 
   const handleHelp = () => {
     setHelpUsed(!helpUsed);
+
+    const today = new Date();
+    const missedStreak = new Date(playerData.missedstreak);
+
+    if(missedStreak !== today){
+      fetch(url2, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ playerName })
+      })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Response from server:', data);
+            setPlayerData({...playerData, missedstreak: today});
+          })
+          .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+          });
+    }
   };
 
   return (
-    <div className={styles2.FillInTheBlankTextDiv}>
-      <p>
+    <div>
+      <div className={styles.FillInTheBlankTextDiv}>
         {words.map((word, index) => {
           if (blankIndices.includes(index)) {
             const blankIdx = blankIndices.indexOf(index);
@@ -93,12 +118,13 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
                   onChange={(e) => handleChange(e, blankIdx)}
                   placeholder={helpUsed ? words[index] : ''}
                   style={{
-                    // Highlight the correct and incorrect answers
+                    // Adjust border color and increase font size
                     backgroundColor: show
                       ? results[blankIdx]
                         ? 'lightgreen'
                         : 'lightcoral'
-                        : 'transparent',
+                        : 'lightgray',  
+                    fontSize: '18px',
                     color: 'black',
                   }}
                 />{' '}
@@ -109,22 +135,17 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
             return <span key={index}>{word} </span>;
           }
         })}
-      </p>
-      <div className={styles2.buttonDiv}>
-        <button onClick={handleCheck} className={styles.button01}>
-          Check
+      </div>
+      <hr className={styles.line}/>
+      <div className={styles.buttonDiv}>
+        <button onClick={handleCheck} className={styles.buttonCheck}>
+          Überprüfen
         </button>
         {allowHelp && (
-          <button onClick={handleHelp} className={styles.button01}>
-            Help
+          <button onClick={handleHelp} className={styles.buttonHelp}>
+            Hilfe
           </button>
         )}
-        <div className={styles2.modal}>
-          <Modal
-            header='Fill In The Blank Text'
-            text='Please fill in the blanks with the correct words. Once you have filled in all the blanks, click the Check button to see if your answers are correct. Correct answers will be highlighted in green, while incorrect answers will be highlighted in red.'
-          />
-        </div>
       </div>
     </div>
   );

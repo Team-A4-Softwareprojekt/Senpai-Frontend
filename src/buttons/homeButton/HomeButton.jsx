@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './HomeButton.module.css'; // Importiere die CSS-Datei
-import homeIcon from '../../assets/homeIcon2.png';
+import styles from './HomeButton.module.css';
+import homeIcon from '../../assets/homeIcon.png';
 
 const HomeButton = ({ handleClick }) => {
   return (

@@ -14,7 +14,7 @@ function StartPage() {
                 <div className={styles.senpaiText}>Senpai</div>
                 <div className={styles.startDiv}>
                     <button className={styles.button74} onClick={handleClick}>
-                        Start your journey
+                        Starte dein Training
                     </button>
                 </div>
                 <div className={styles.infoBox}>

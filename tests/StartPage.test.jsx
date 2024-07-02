@@ -33,7 +33,7 @@ describe("StartPage", () => {
     it("renders the Start page", () => {
         render(<MemoryRouter><StartPage/></MemoryRouter>);
         expect(screen.getByText("Senpai")).toBeInTheDocument();
-        expect(screen.getByText("Start your journey")).toBeInTheDocument();
+        expect(screen.getByText("Starte dein Training")).toBeInTheDocument();
         screen.debug();
     });
 

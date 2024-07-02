@@ -1,17 +1,18 @@
 import React from 'react';
 import styles from './PopUpManipulation.module.css';
 
-const PopUpManipulationWordLimit = ({ isVisible, closePopup }) => {
+const PopUpManipulationWordLimit = ({ isVisible, closePopUp }) => {
 
     if (!isVisible) return null;
 
     return (
         <>
-            <div className={styles.overlay} />
             <div className={styles.popup}>
-                <div className={styles.popupContent}>
-                    <h2>You have exceeded the permitted number of character changes.</h2>
-                    <button onClick={closePopup}>Schließen</button>
+                <div className={styles.infoText}>
+                    Du hast die zulässige Anzahl von Zeichenänderungen überschritten.
+                </div>
+                <div className={styles.buttonContainer}>
+                    <button className={styles.confirmButton} onClick={closePopUp}>Bestätigen</button>
                 </div>
             </div>
         </>

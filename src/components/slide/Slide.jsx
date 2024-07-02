@@ -10,7 +10,7 @@ function Slide({ slides }) {
 
     return (
         <div className={styles.slideContainer}>
-            <h2>{slides[currentSlide].header}</h2>
+            <div className={styles.headerText}>{slides[currentSlide].header}</div>
             {slides[currentSlide].image && (
                 <img src={slides[currentSlide].image} alt={slides[currentSlide].header} className={styles.image} />
             )}

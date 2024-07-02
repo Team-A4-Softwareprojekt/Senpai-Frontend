@@ -1,36 +1,31 @@
-
-
-.manipulationText{
-    color: rgb(41, 41, 41);
-}
-
 .runButton {
-    display: block;
-    margin-left: auto;
-    background-color: #ffffff;
-    color: rgb(44, 44, 44);
     padding: 10px 20px;
-    margin: 20px;
     border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
     cursor: pointer;
-    border-radius: 12px;
-    font-size: 1.8rem;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .runButton:hover {
-    background-color: #fd4564;
+    background-color: #218838;
 }
 
 .editor {
     margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid black;
+    background: lightblue;
 }
 
-
-
 .backgroundImage {
-    background-image: url('../../assets/clouds.jpg');
+    background-image: url('../../assets/codeBattleIngame.png');
     background-size: cover; /* This makes the background cover the entire area */
     background-position: center; /* This centers the background image */
     background-repeat: no-repeat; /* This prevents the background image from repeating */
@@ -38,12 +33,11 @@
     width: 100vw; /* Ensures the background covers the full viewport width */
 }
 
-.whiteBackground {
+.manipulationContainer {
     background-color: white;
-    border-radius: 18px; /* Optional: adds rounded corners */
-    
-    width: 70%;
-    height: 85%;
+    border-radius: 10px;
+    border: 5px solid black;
+    width: 900px;
     margin: 0 auto; /* Add this line to center the element horizontally */
     display: flex; /* Add this line to enable flexbox */
     flex-direction: column; /* Add this line to center the content vertically */
@@ -51,22 +45,34 @@
     align-items: center;
 }
 
-.infoText {
-    color: rgb(78, 78, 78);
+.infoBox {
+    background: white;
+    padding: 5px;
+    border: 3px solid black;
+    border-radius: 10px;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    text-align: center;
+    margin: 5px;
+    font-size: 22px;
+}
+  
+.infoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 800px;
 }
 
-.footer {
-    background-image: linear-gradient(to right, #2bc5b898, #f04e5b);
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    
-    color: white;
-    display: flex;
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    padding: 5px;
+.dynamicData {
+    color: blue;
+    font-weight: bold;
+}
+
+.infoText {
+    color: rgb(78, 78, 78);
 }
 
 /* For the AceEditor */
@@ -75,13 +81,12 @@
     color: #b0b0b0; /* Light gray text */
     pointer-events: none; /* Disable pointer events */
     opacity: 0.6; /* Reduced opacity */
-  }
+}
   
   /* For the Submit Button */
-  .disabledButton {
+.disabledButton {
     background-color: #d3d3d3; /* Light gray background */
     color: #a0a0a0; /* Light gray text */
     cursor: not-allowed; /* Show disabled cursor */
     opacity: 0.6; /* Reduced opacity */
-  }
-  
+}
