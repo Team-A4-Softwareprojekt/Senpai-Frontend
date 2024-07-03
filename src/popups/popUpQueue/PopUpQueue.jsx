@@ -37,7 +37,7 @@ const PopUpQueue = ({ isVisible, selectedGameMode, closePopUp }) => {
                                     <span className={styles.dot}>.</span>
                                 </span>
                             </h2>
-                            <button onClick={closePopup}>Abbrechen</button>
+                            <button onClick={closePopUp}>Abbrechen</button>
                         </div>
                     </div>
                 </>
