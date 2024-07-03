@@ -11,6 +11,7 @@ import PopUpManipulationWordLimit from '../../popups/popUpManipulation/PopUpMani
 import styles2 from './ManipulationPage.module.css';
 import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
 import {ScoreContext} from "../../context/scoreContext.jsx";
+import PopUpPlayerManipulationDisconnect from "../../popups/popUpPlayerDisconnected/PopUpPlayerManipulationDisconnect.jsx";
 
 function ManipulationPage() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function ManipulationPage() {
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
   const [charactersLeft, setCharactersLeft] = useState(0);
   const [expectedOutput, setExpectedOutput] = useState('');
+  const [inputParameterQuestion, setInputParameterQuestion] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
   const [showInfoContainer, setShowInfoContainer] = useState(true);
@@ -29,6 +31,8 @@ function ManipulationPage() {
   const [codeTest, setCodeTest] = useState('');
   const { ownPoints, opponentPoints } = useContext(ScoreContext);
   const [showWordLimitPopup, setShowWordLimitPopup] = useState(false); // State to manage word limit popup visibility
+  const [isPlayerDisconnected, setIsPlayerDisconnected] = useState(false);
+  const [isPopUpPlayerDisconnectedVisible, setIsPopUpPlayerDisconnectedVisible] = useState(false);
 
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -45,7 +49,7 @@ function ManipulationPage() {
   const submitCode = () => {
     let codeWithTest = code + '\n' + codeTest; // Concatenate code and codeTest with a newline
 
-    socket.emit('SUBMIT_CHANGES_MANIPULATION', { code: codeWithTest, expectedOutput });
+    socket.emit('SUBMIT_CHANGES_MANIPULATION', { code: codeWithTest, expectedOutput, inputParameterQuestion });
     setShowEditor(false); // Hide editor after submission
     setShowInfoContainer(false);
     setActionText('Warte bis dein Gegner fertig ist...');
@@ -86,6 +90,7 @@ function ManipulationPage() {
 
       setInitialCode(manipulationQuestion.code);
       setExpectedOutput(manipulationQuestion.outputtext);
+      setInputParameterQuestion(manipulationQuestion.inputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);
       //setActionText(`Du hast ${manipulationQuestion.permittedsymbols} Zeichen übrig. Manipuliere den Code so, dass die Konsolenausgabe nicht ${manipulationQuestion.outputtext} ist. when the input is ${manipulationQuestion.inputtext}`);
     }
@@ -109,12 +114,26 @@ function ManipulationPage() {
   };
 
   useEffect(() => {
+
+    const opponentDisconnected = () => {
+      setIsPlayerDisconnected(true);
+      setShowManipulationContainer(false);
+      setIsPopUpPlayerDisconnectedVisible(true);
+      setTimeout(() => {
+        setIsPopUpPlayerDisconnectedVisible(false);
+        navigate('/select/code/codeBattle');
+      }, 3000);
+    }
+
+
     socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
     socket.on('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
+    socket.on('OPPONENT_DISCONNECTED', opponentDisconnected);
 
     return () => {
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
       socket.off('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
+        socket.off('OPPONENT_DISCONNECTED', opponentDisconnected);
     };
   }, []);
 
@@ -139,13 +158,13 @@ function ManipulationPage() {
             <div className={styles2.infoBox}>
                 Parameterwert:
               <div className={styles2.dynamicContainer}>
-                <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span>
+                <span className={styles2.dynamicData}>{inputParameterQuestion}</span>
               </div>
             </div>
             <div className={styles2.infoBox}>
                 Konsolenausgabe:
               <div className={styles2.dynamicContainer}>
-                <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span>
+                <span className={styles2.dynamicData}>{expectedOutput}</span>
               </div>
             </div>
           </div>
@@ -182,6 +201,9 @@ function ManipulationPage() {
           isVisible={showWordLimitPopup}
           closePopUp={handleCloseWordLimitPopup}
       />
+      {isPlayerDisconnected && (
+          <PopUpPlayerManipulationDisconnect isVisible={isPopUpPlayerDisconnectedVisible}/>
+      )}
     </div>
   );
 }
