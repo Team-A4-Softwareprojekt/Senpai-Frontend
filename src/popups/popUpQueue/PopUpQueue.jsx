@@ -3,7 +3,7 @@ import styles from './PopUpQueue.module.css';
 import PopUpCountdown from '../../popups/popUpCountdown/PopUpCountdown.jsx';
 import {socket} from '../../socket.js';
 
-const PopUpQueue = ({ isVisible, selectedGameMode, closePopup }) => {
+const PopUpQueue = ({ isVisible, selectedGameMode, closePopUp }) => {
     const [opponentFound, setOpponentFound] = useState(false);
     const [countdown, setCountdown] = useState(null);
 
@@ -44,7 +44,7 @@ const PopUpQueue = ({ isVisible, selectedGameMode, closePopup }) => {
             ) : (
                 <PopUpCountdown 
                     isVisible={opponentFound} 
-                    closePopup={closePopup} 
+                    closePopUp={closePopUp} 
                     countdown={countdown} 
                 />
             )}

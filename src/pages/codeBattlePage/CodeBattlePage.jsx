@@ -216,7 +216,7 @@ function CodeBattlePage() {
         setIsPopUpMissingContentVisible(true);
     };
 
-    const closePopup = () => {
+    const closePopUp = () => {
         if (selectedGameMode === 'Buzzer') {
             leaveBuzzerQueue();
         } else if (selectedGameMode === 'Manipulation') {
@@ -323,18 +323,18 @@ function CodeBattlePage() {
             <PopUpQueue
                 isVisible={isPopUpQueueVisible}
                 selectedGameMode={selectedGameMode}
-                closePopup={closePopup}
+                closePopUp={closePopUp}
             />
 
             <PopUpCountdown
                 isVisible={isPopUpCountdownVisible}
-                closePopup={() => setIsPopUpCountdownVisible(false)}
+                closePopUp={() => setIsPopUpCountdownVisible(false)}
                 countdown={countdown} // Transfer countdown value to the component
             />
             
             <PopUpNoHearts
                 isVisible={isPopUpNoHeartsVisible}
-                closePopup={() => setIsPopUpNoHeartsVisible(false)}
+                closePopUp={() => setIsPopUpNoHeartsVisible(false)}
             />
 
             <PopUpPremium

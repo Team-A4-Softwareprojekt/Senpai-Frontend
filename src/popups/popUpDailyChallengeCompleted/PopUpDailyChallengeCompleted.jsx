@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from './PopUpDailyChallengeCompleted.module.css';
 
-const PopUpNoHearts = ({ isVisible, header, text, closePopup }) => {
+const PopUpDailyChallengeCompleted = ({ isVisible, header, text, closePopUp }) => {
     const [modal, setModal] = useState(false);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const PopUpNoHearts = ({ isVisible, header, text, closePopup }) => {
 
     const toggleModal = () => {
         setModal(false);
-        closePopup();
+        closePopUp();
     }
 
     const defaultText = [
@@ -38,4 +38,4 @@ const PopUpNoHearts = ({ isVisible, header, text, closePopup }) => {
     );
 }
 
-export default PopUpNoHearts;
+export default PopUpDailyChallengeCompleted;
