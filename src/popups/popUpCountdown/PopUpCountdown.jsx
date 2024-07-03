@@ -21,7 +21,7 @@ const PopUpCountdown = ({ isVisible, closePopUp, countdown }) => {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [isVisible, countdown, closePopup]);
+    }, [isVisible, countdown, closePopUp]);
 
     if (!isVisible) return null;
 
