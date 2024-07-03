@@ -9,7 +9,6 @@ import buzzerSlide2 from '../../assets/buzzerSlide2.png';
 import buzzerSlide3 from '../../assets/buzzerSlide3.png';
 import manipulationSlide1 from '../../assets/manipulationSlide1.png';
 import manipulationSlide2 from '../../assets/manipulationSlide2.png';
-import manipulationSlide3 from '../../assets/manipulationSlide03.png';
 import buzzerGrayImg from '../../assets/buzzerGameGray.png';
 import manipulationGrayImg from '../../assets/manipulationGameGray.png';
 import limitationGrayImg from '../../assets/limitationGameGray.png';
@@ -30,7 +29,7 @@ import {useNavigate} from 'react-router-dom';
 import {socket, startBuzzerQueue, leaveBuzzerQueue, startManipulationQueue, leaveManipulationQueue} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
-import { ManipulationPlayerContext } from "../../context/manipulationQuestionContext.jsx";
+import {ManipulationPlayerContext} from "../../context/manipulationQuestionContext.jsx";
 import {URL} from '../../../url.js';
 
 /*
@@ -245,15 +244,12 @@ function CodeBattlePage() {
 
     const manipulationSlideTexts = [
         "Zu Beginn erhältst du einen Codeausschnitt, den du so manipulieren musst, dass dieser nicht mehr kompiliert. Du hast nur eine begrenzte Anzahl an Zeichen zur Verfügung. Der Parameterwert ist der Wert, mit dem die Funktion innerhalb des nicht gezeigten console.log() im Hintergrund aufgerufen wird. Die Konsolenausgabe ist der erwartete Wert bei erfolgreicher Kompilierung. Jedes eingegebene 'console.log()' wird vom Compiler ignoriert und zählt nicht zur Manipulation. Sobald du fertig bist, klicke auf den Bestätigen Button.",
-        "Warte bis dein Gegner mit seiner Manipulation fertig ist.",
-        "Nachdem dein Gegner fertig ist, bekommst du seinen manipulierten Code, den du reparieren musst. Sobald du fertig bist, klicke auf den Kompilieren Button. Falls dein Code erfolgreich kompiliert, bekommst du einen Punkt. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel."
+        "Nachdem dein Gegner fertig ist, bekommst du seinen manipulierten Code, den du reparieren musst. Sobald du fertig bist, klicke auf den Kompilieren Button. Du wirst keine Konsolenausgabe sehen, weil die Kompilierung im Hintergrund erfolgt. Falls dein Code erfolgreich kompiliert, bekommst du einen Punkt. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel."
     ];
 
     const manipulationSlides = [
         { header: "Manipulation", text: manipulationSlideTexts[0], image: manipulationSlide1 },
         { header: "Manipulation", text: manipulationSlideTexts[1], image: manipulationSlide2 },
-        { header: "Manipulation", text: manipulationSlideTexts[2], image: manipulationSlide3 },
-
     ];
 
     const limitationInfoText = 

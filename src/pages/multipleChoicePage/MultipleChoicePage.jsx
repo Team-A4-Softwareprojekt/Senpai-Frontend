@@ -278,7 +278,7 @@ const MultipleChoicePage = () => {
                             {buzzerQuestion.danswer}
                         </label>
                         <div className={styles.buttonRow}>
-                            <ConfirmButton isButtonDisabled={isConfirmButtonDisabled} handleSubmit={handleSubmit}/>
+                            <ConfirmButton isButtonDisabled={isConfirmButtonDisabled} handleSubmit={handleSubmit} buttonText={"Bestätigen"}/>
                             <BuzzerButton toggle={toggleButton} disabled={isBuzzerButtonDisabled}/>
                         </div>
                     </form>
