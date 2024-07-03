@@ -11,19 +11,18 @@ import AccountButton from '../../buttons/accountButton/AccountButton';
 import PopUpExercise from '../../popups/popUpExercise/PopUpExercise.jsx';
 import PopUpPremium from '../../popups/popUpPremium/PopUpPremium.jsx';
 import PopUpSubscribedTrue from '../../popups/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
+import PopUpDailyChallengeCompleted from '../../popups/popUpDailyChallengeCompleted/PopUpDailyChallengeCompleted.jsx';
 import { useNavigate } from 'react-router-dom';
 import {socket, requestDailyChallengeQuestion} from '../../socket.js';
 import {PlayerContext} from '../../context/playerContext';
 import {GapTextContext} from '../../context/gapTextQuestionContext.jsx';
 
-/*
-This is the code-senpai page that holds an account button, amount of lives and three different
-game modes to choose from. Each game mode has a modal with the basic explanation of the mode
-*/
+
 function codeSenpaiPage() {
     const [isPopUpExerciseVisible, setIsPopUpExerciseVisible] = useState(false);
     const [isPopUpBuyPremiumVisible, setIsPopUpBuyPremiumVisible] = useState(false);
     const [isPopUpSubscribedTrueVisible, setIsPopUpSubscribedTrueVisible] = useState(false);
+    const [isPopUpDailyChallengeCompletedVisible, setIsPopUpDailyChallengeCompletedVisible] = useState(false);
     const navigate = useNavigate();
 
     const {playerData, setPlayerData} = useContext(PlayerContext);
@@ -44,11 +43,9 @@ function codeSenpaiPage() {
     const handleDailyChallenge = () => {
         if (playerData.streaktoday === false){
             requestDailyChallengeQuestion();
-        }else{
-            //TODO: Hier bitte ein nettes Popup einfügen
-            window.alert('You have already completed the daily challenge for today! Come back tomorrow and see which question is waiting for you.');
+        } else{
+            setIsPopUpDailyChallengeCompletedVisible(true);
         }
-        //navigate('/select/code/dailyChallenge');
     };
 
     const handleExerciseClick = () => {
@@ -106,10 +103,12 @@ function codeSenpaiPage() {
                     buttonText="Daily Challenge"
                     imageUrl={codeChallengeImg}
                     modalHeader="Daily Challenge" 
-                    modalText={<>
+                    modalText={
+                    <>
                         Absolviere täglich eine neue Herausforderung und baue deine Streak auf.<br/><br/>
                         Fülle die Lücken mit den richtigen Wörtern aus. Sobald du alle Lücken ausgefüllt hast, kannst du auf den Button "Überprüfen" klicken.<br/><br/>
-                        Richtige Antworten werden grün hervorgehoben, während falsche Antworten rot hervorgehoben werden.
+                        Richtige Antworten werden grün hervorgehoben, während falsche Antworten rot hervorgehoben werden.<br/><br/>
+                        Falls du Hilfe benötigst, kannst du auf den Button "Hilfe" klicken. Allerdings wird dadurch deine Streak zurückgesetzt.
                     </>}
                     className={styles.selectCard}
                     handleClick={handleDailyChallenge}
@@ -145,6 +144,11 @@ function codeSenpaiPage() {
             <PopUpSubscribedTrue
                 isVisible={isPopUpSubscribedTrueVisible}
                 closePopUp={() => setIsPopUpSubscribedTrueVisible(false)}
+            />
+
+            <PopUpDailyChallengeCompleted
+                isVisible={isPopUpDailyChallengeCompletedVisible}
+                closePopUp={() => setIsPopUpDailyChallengeCompletedVisible(false)}
             />
         </div>
     );

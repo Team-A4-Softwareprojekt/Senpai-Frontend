@@ -7,8 +7,8 @@ import ForgotPasswordPage from "./pages/authenticationPages/ForgotPasswordPage.j
 import SelectPlatformPage from "./pages/selectPlatformPage/SelectPlatformPage.jsx";
 import CodeSenpaiPage from "./pages/codeSenpaiPage/CodeSenpaiPage.jsx";
 import AccountSettingsPage from "./pages/accountSettingsPage/AccountSettingsPage.jsx";
-import DailyChallengeGTPage from "./pages/dailyChallenge/DailyChallengeGTPage.jsx";
-import DailyChallengeMCPage from "./pages/dailyChallenge/DailyChallengeMCPage.jsx";
+import DailyChallengeGTPage from "./pages/dailyChallengePage/DailyChallengeGTPage.jsx";
+import DailyChallengeMCPage from "./pages/dailyChallengePage/DailyChallengeMCPage.jsx";
 import CodeBattlePage from "./pages/codeBattlePage/CodeBattlePage.jsx";
 import ManipulationP1Page from './pages/manipulationPage/ManipulationP1Page.jsx';
 import ManipulationP2Page from './pages/manipulationPage/ManipulationP2Page.jsx';
