@@ -58,21 +58,20 @@ function ManipulationPage() {
   const onChange = (newCode) => {
     let codeLines = manipulationQuestion.code.split('\n');
     let lastLine = codeLines[codeLines.length - 1]; // Get the last line
-    const initialLength = initialCode.length - lastLine.length; // Initial code length without the last line
-    const currentLength = newCode.length;
+    const initialLength = initialCode.replace(/\s/g, '').length - lastLine.replace(/\s/g, '').length; // Initial code length without spaces and without the last line
+    const currentLength = newCode.replace(/\s/g, '').length;
     const changeCount = Math.abs(currentLength - initialLength);
-
+  
     if (changeCount <= manipulationQuestion.permittedsymbols) {
       setCode(newCode);
       setCharactersLeft(manipulationQuestion.permittedsymbols - changeCount);
-      //setActionText(`Change the code below. You have ${manipulationQuestion.permittedsymbols - changeCount} characters left. Change the code so the output is not: ${expectedOutput}`);
     } else {
       // Display word limit popup
       setShowWordLimitPopup(true);
       setShowManipulationContainer(false);
-      //setAlertMessage('Du hast die zulässige Anzahl von Zeichenänderungen überschritten.');
     }
   };
+  
 
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
