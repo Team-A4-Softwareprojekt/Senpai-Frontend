@@ -6,7 +6,7 @@ import BuzzerButton from '../../buttons/buzzerButton/BuzzerButton.jsx';
 import PopUpRoundWinner from '../../popups/popUpRoundWinner/PopUpRoundWinner.jsx';
 import PopUpGameWinner from '../../popups/popUpGameWinner/PopUpGameWinner.jsx';
 import PopUpGameLoser from '../../popups/popUpGameLoser/PopUpGameLoser.jsx';
-import PopUpTie from '../../popups/popUpTie/PopUpTie.jsx';
+import PopUpGameTie from '../../popups/popUpGameTie/PopUpGameTie.jsx';
 import PopUpPlayerDisconnected from '../../popups/popUpPlayerDisconnected/PopUpPlayerDisconnected.jsx';
 import ScoresRound from '../../components/scoresRound/ScoresRound.jsx';
 import {PlayerContext} from '../../context/playerContext';
@@ -296,7 +296,7 @@ const MultipleChoicePage = () => {
                 <>
                     <PopUpGameWinner winner={winnerGame} isVisible={isPopUpGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} resetRoundCounter={resetRoundCounter}/>
                     <PopUpGameLoser loser={loserGame} isVisible={isPopUpGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} resetRoundCounter={resetRoundCounter}/>
-                    <PopUpTie isVisible={isPopUpTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} resetRoundCounter={resetRoundCounter}/>
+                    <PopUpGameTie isVisible={isPopUpTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} resetRoundCounter={resetRoundCounter}/>
                 </>
             )}
             {isPlayerDisconnected && (

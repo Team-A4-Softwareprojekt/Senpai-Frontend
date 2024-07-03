@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import animationData from '../../animations/TieAnimation.json';
-import styles from './PopUpTie.module.css';
+import styles from './PopUpGameTie.module.css';
 import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
 import { useNavigate } from 'react-router-dom';
 import { socket } from '../../socket.js';
-import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
+import ScoresFinal from '../../components/scoresFinal/ScoresFinal.jsx';
 import {ScoreContext} from "../../context/scoreContext.jsx";
 
 const PopUpTie = ({ winner, isVisible, ownPoints, opponentPoints, resetRoundCounter }) => {

@@ -4,16 +4,12 @@ import SelectGameCard from '../../cards/selectGameCard/SelectGameCard.jsx';
 import buzzerImg from '../../assets/buzzerGame.png';
 import manipulationImg from '../../assets/manipulationGame.png';
 import limitationImg from '../../assets/limitationGame.png';
-
 import buzzerSlide1 from '../../assets/buzzerSlide1.png';
 import buzzerSlide2 from '../../assets/buzzerSlide2.png';
 import buzzerSlide3 from '../../assets/buzzerSlide3.png';
-
 import manipulationSlide1 from '../../assets/manipulationSlide1.png';
 import manipulationSlide2 from '../../assets/manipulationSlide2.png';
-
-import manipulationSlide03 from '../../assets/manipulationSlide03.png';
-
+import manipulationSlide3 from '../../assets/manipulationSlide03.png';
 import buzzerGrayImg from '../../assets/buzzerGameGray.png';
 import manipulationGrayImg from '../../assets/manipulationGameGray.png';
 import limitationGrayImg from '../../assets/limitationGameGray.png';
@@ -31,7 +27,7 @@ import PopUpPremium from '../../popups/popUpPremium/PopUpPremium.jsx';
 import PopUpSubscribedTrue from '../../popups/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
 import PopUpMissingContent from '../../popups/popUpMissingContent/PopUpMissingContent.jsx';
 import {useNavigate} from 'react-router-dom';
-import {socket, startBuzzerQueue, leaveBuzzerQueue, disconnectSocket, startManipulationQueue, leaveManipulationQueue} from '../../socket.js';
+import {socket, startBuzzerQueue, leaveBuzzerQueue, startManipulationQueue, leaveManipulationQueue} from '../../socket.js';
 import {PlayerContext} from "../../context/playerContext.jsx";
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 import { ManipulationPlayerContext } from "../../context/manipulationQuestionContext.jsx";
@@ -57,15 +53,7 @@ function CodeBattlePage() {
     const [countdown, setCountdown] = useState(null);
     const [hearts, setHearts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [player1Manipulation, setPlayer1Manipulation] = useState(false);
-    const [player2Manipulation, setPlayer2Manipulation] = useState(false);
 
-    
-
-    const handleSetQuestionManipulation = (question) => {   
-        console.log(question);
-        setManipulationQuestion(question);
-    };
 
     useEffect(() => {
         const url = URL + "/loadAccountData";
@@ -140,21 +128,7 @@ function CodeBattlePage() {
             setManipulationQuestion(question);
         };
 
-        /*
-        const handlePlayerOneManipulation = (player) => {
-            console.log('Player one:', player);
-            setPlayer1Manipulation(true);
-            navigate('/codebattle/manipulation/player1');
-        }
 
-        const handlePlayerTwoManipulation = (player) => {
-            console.log('Player two:', player);
-            setPlayer2Manipulation(true);
-            navigate('/codebattle/manipulation/player1');
-        }
-
-         */
-    
         // Register the event listeners
         socket.on('Buzzer_GameFound', handleGameFound);
         socket.on('Manipulation_GameFound', handleGameFoundManipulation);
@@ -164,8 +138,7 @@ function CodeBattlePage() {
         socket.on('MANIPULATION_COUNTDOWN', handleStartCountdown); 
         socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
         socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
-        //socket.on('PLAYER_ONE_MANIPULATION', handlePlayerOneManipulation);
-        //socket.on('PLAYER_TWO_MANIPULATION', handlePlayerTwoManipulation);
+
     
         // Clean up the listeners when the component is unmounted
         return () => {
@@ -177,8 +150,6 @@ function CodeBattlePage() {
             socket.off('MANIPULATION_COUNTDOWN', handleStartCountdown); 
             socket.off('SET_BUZZER_QUESTION', handleSetQuestion);
             socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
-            //socket.off('PLAYER_ONE_MANIPULATION', handlePlayerOneManipulation);
-            //socket.off('PLAYER_TWO_MANIPULATION', handlePlayerTwoManipulation);
         };
      }, [navigate, setBuzzerQuestion, setManipulationQuestion]);
     
@@ -281,7 +252,7 @@ function CodeBattlePage() {
     const manipulationSlides = [
         { header: "Manipulation", text: manipulationSlideTexts[0], image: manipulationSlide1 },
         { header: "Manipulation", text: manipulationSlideTexts[1], image: manipulationSlide2 },
-        { header: "Manipulation", text: manipulationSlideTexts[2], image: manipulationSlide03 },
+        { header: "Manipulation", text: manipulationSlideTexts[2], image: manipulationSlide3 },
 
     ];
 

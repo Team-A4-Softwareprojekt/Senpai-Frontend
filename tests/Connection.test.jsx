@@ -4,24 +4,19 @@ import {URL} from "../url.js";
 
 test('the URL should be the Render URL', () => {
     console.log(URL)
-    //expect(URL).toBe('http://localhost:3000');
     expect(URL).toBe('https://senpai-server.onrender.com');
 })
 
 
 test('should establish socket connection and receive CONNECTION_TEST_SUCCESSFULLY', () => {
-    //socket.connect();
     socket.emit('CONNECTION_TEST');
     socket.on('CONNECTION_TEST_SUCCESSFULLY', (answer) => {
         console.log(answer);
         expect(answer).toBe(true);
     });
-    //socket.disconnect()
 })
 
 test('should return true for valid test data', async () => {
-    //const response = await fetch('http://localhost:3000/connection_test?data=TEST');
-    //const response = await fetch('https://senpai-server.onrender.com/connection_test?data=TEST');
     const response = await fetch(URL + '/connection_test?data=TEST');
     const data = await response.json();
 
@@ -30,8 +25,6 @@ test('should return true for valid test data', async () => {
 });
 
 test('should return false for invalid test data', async () => {
-    //const response = await fetch('http://localhost:3000/connection_test?data=INVALID');
-    //const response = await fetch('https://senpai-server.onrender.com/connection_test?data=INVALID');
     const response = await fetch(URL + '/connection_test?data=INVALID');
     const data = await response.json();
 

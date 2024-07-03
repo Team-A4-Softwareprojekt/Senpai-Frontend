@@ -1,8 +1,8 @@
-import {describe, it} from 'vitest'; // Import von ViTest
-import {render, screen} from '@testing-library/react'; // Import der render-Funktion von @testing-library/react
+import {describe, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from "react-router-dom";
 import CodeBattlePage from "../src/pages/codeBattlePage/CodeBattlePage.jsx";
-import {MockBuzzerQuestionProvider, MockPlayerProvider, MockSetManipulationQuestionProvider} from "./test-utils.jsx"; // Pfad anpassen
+import {MockBuzzerQuestionProvider, MockPlayerProvider, MockSetManipulationQuestionProvider} from "./test-utils.jsx";
 
 
 describe("CodeBattlePage", () => {
@@ -18,8 +18,6 @@ describe("CodeBattlePage", () => {
                     </MockBuzzerQuestionProvider>
                 </MockPlayerProvider>
             </MemoryRouter>);
-        //expect(screen.getByText("Senpai")).toBeInTheDocument();
-        //expect(screen.getByText("Start Your Journey")).toBeInTheDocument();
         screen.debug();
     });
 
