@@ -28,11 +28,11 @@ const PopUpNoHearts = ({ isVisible, header, text, closePopup }) => {
         <div>
             <div className={styles.modal}>
                 <div onClick={toggleModal} className={styles.overlay}></div>
-                <div className={styles.content}>
-                    <h2>{header || "Herzen aufgebraucht"}</h2>
-                    <p>{text || defaultText}</p>
+                    <div className={styles.content}>
+                        <div className={styles.header}>{header || "Herzen aufgebraucht"}</div>
+                        <div className={styles.text}>{text || defaultText}</div>
                     <div className={styles.buttonContainer}>
-                        <button className={styles.button} onClick={toggleModal}>Close</button>
+                        <button className={styles.button} onClick={toggleModal}>Schließen</button>
                     </div>
                 </div>
             </div>
