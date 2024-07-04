@@ -3,9 +3,9 @@ import ModalGameSelection from '../../components/modalGameSelection/ModalGameSel
 import styles from './SelectGameCard.module.css';
 import { Link } from 'react-router-dom';
 
-function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick, handleNoHeartsClick, lives, selectedOption }) {
+function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick, handleNoHeartsClick, lives, time,selectedOption }) {
     const onButtonClick = () => {
-        if (lives === 0) {
+        if (lives === 0 && time <= 0) {
             handleNoHeartsClick();
         } else {
             handleClick();

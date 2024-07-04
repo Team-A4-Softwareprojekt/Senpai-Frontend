@@ -7,7 +7,7 @@ import PopUpRoundWinner from '../../popups/popUpRoundWinner/PopUpRoundWinner.jsx
 import PopUpGameWinner from '../../popups/popUpGameWinner/PopUpGameWinner.jsx';
 import PopUpGameLoser from '../../popups/popUpGameLoser/PopUpGameLoser.jsx';
 import PopUpGameTie from '../../popups/popUpGameTie/PopUpGameTie.jsx';
-import PopUpPlayerDisconnected from '../../popups/popUpPlayerDisconnected/PopUpPlayerDisconnected.jsx';
+import PopUpPlayerBuzzerDisconnect from '../../popups/popUpPlayerDisconnected/PopUpPlayerBuzzerDisconnect.jsx';
 import ScoresRound from '../../components/scoresRound/ScoresRound.jsx';
 import {PlayerContext} from '../../context/playerContext';
 import {useNavigate} from 'react-router-dom';
@@ -300,7 +300,7 @@ const MultipleChoicePage = () => {
                 </>
             )}
             {isPlayerDisconnected && (
-                <PopUpPlayerDisconnected isVisible={isPopUpPlayerDisconnectedVisible} resetRoundCounter={resetRoundCounter}/>
+                <PopUpPlayerBuzzerDisconnect isVisible={isPopUpPlayerDisconnectedVisible} resetRoundCounter={resetRoundCounter}/>
             )}
         </div>
     );
