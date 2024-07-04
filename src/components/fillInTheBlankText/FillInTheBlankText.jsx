@@ -68,14 +68,18 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
             })
 
       } else {
+        // Display a message if not all words are correct
         setActionText('Nicht alle eingegebenen Wörter sind korrekt');
+        // Add any additional logic for losing, such as notifying the server or updating the UI
         setTimeout(() => {
           navigate("/select/code");
           setPlayerData({...playerData, streaktoday: false});
         }, 3000);
       }
+      // Set firstAttempt to false after the first attempt
       setFirstAttempt(false);
     } else {
+      // Display a message if the user has already attempted the challenge
       setActionText('Überprüfe deine Antworten und versuche es noch einmal.');
     }
   };
@@ -85,8 +89,9 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
 
     const today = new Date();
     const missedStreak = new Date(playerData.missedstreak);
-
+    // Check if the player has already missed a streak today
     if(missedStreak !== today){
+      // Notify the server that the player has missed a streak
       fetch(url2, {
         method: 'POST',
         headers: {
