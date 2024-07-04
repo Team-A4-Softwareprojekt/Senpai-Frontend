@@ -8,6 +8,7 @@ import {GapTextContext} from '../../context/gapTextQuestionContext.jsx';
 
 function DailyChallengeGTPage() {
     const navigate = useNavigate();
+    
     //const [question, setQuestion] = useState(null);
     //const [blankIndices, setBlankIndices] = useState([]);
 

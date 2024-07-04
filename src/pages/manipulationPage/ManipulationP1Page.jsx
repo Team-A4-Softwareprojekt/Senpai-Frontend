@@ -72,6 +72,7 @@ function ManipulationPage() {
     }
   };
   
+  
 
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
