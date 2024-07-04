@@ -7,13 +7,21 @@ import mathSenpaiImage from '../../assets/mathSenpai.png';
 import gymSenpaiImage from '../../assets/gymSenpai.png';
 import PopUpMissingContent from '../../popups/popUpMissingContent/PopUpMissingContent.jsx';
 
+/**
+ * SelectLearningContent Component
+ * 
+ * This component displays a selection of learning platforms for users to choose from.
+ * It includes cards for each platform and a popup for unavailable content.
+ */
 function SelectLearningContent() {
     const [isPopUpMissingContentVisible, setPopUpMissingContentVisible] = useState(false);
 
+    // Function to show the missing content popup
     const showPopUpMissingContent = () => {
         setPopUpMissingContentVisible(true);
     };
 
+    // Function to hide the missing content popup
     const hidePopUpMissingContent = () => {
         setPopUpMissingContentVisible(false);
     };

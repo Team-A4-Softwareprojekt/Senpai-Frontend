@@ -74,7 +74,6 @@ function codeSenpaiPage() {
     useEffect(() => {
 
         const handleQuestionType = (table) => {
-            console.log('From table:', table);
             if (table === 'multiplechoicequestion') {
                 navigate('/select/code/dailyChallenge/multipleChoice');
             } else {
@@ -83,7 +82,6 @@ function codeSenpaiPage() {
         };
 
         const handleQuestionGapText = (question) => {
-            console.log('Received question:', question);
             setQuestionGT(question);
             const indices = question.missingwordpositions.split(',').map(Number);
             setBlankIndices(indices);
@@ -98,7 +96,7 @@ function codeSenpaiPage() {
         };
     }), [];
 
-    
+
     return (
         <div className={styles.backgroundContainer}>
             <div className={styles.buttonBar}>
