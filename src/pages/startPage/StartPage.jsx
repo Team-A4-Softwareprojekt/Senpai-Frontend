@@ -1,10 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./StartPage.module.css";
 
-// Component for the start page, including navigation to the login page
+/**
+ * StartPage Component
+ * 
+ * This component serves as the landing page for the Senpai application.
+ * It provides a brief introduction to the app's purpose and a button to start the training by navigating to the login page.
+ */
 function StartPage() {
     const navigate = useNavigate();
 
+    // Handle button click to navigate to the login page
     const handleClick = () => {
         navigate("./login");
     };
