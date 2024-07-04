@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import styles from './Slide.module.css';
 
+/**
+ * Slide Component
+ * 
+ * This component is responsible for displaying a series of slides.
+ * Each slide contains a header, an optional image, and some text.
+ * Users can navigate between slides using navigation dots.
+ */
 function Slide({ slides }) {
+
+    // State to keep track of the current slide index
     const [currentSlide, setCurrentSlide] = useState(0);
 
+    // Function to navigate to a specific slide by index
     const goToSlide = (index) => {
         setCurrentSlide(index);
     };
