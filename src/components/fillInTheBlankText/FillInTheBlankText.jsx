@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   const navigate = useNavigate();
+  const [actionText, setActionText] = useState('');
 
   const [inputs, setInputs] = useState(Array(blankIndices.length).fill(''));
   const [words, setWords] = useState(text.split(' '));
@@ -40,9 +41,9 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
       const allCorrect = newResults.every(result => result);
       if (allCorrect) {
         setIsWinner(true);
-        window.alert('Glückwunsch! Du hast alle Wörter im ersten Versuch gefunden!');
-        // Add any additional logic for winning, such as notifying the server or updating the UI
+        setActionText('Glückwunsch! Du hast alle Wörter im ersten Versuch gefunden!');
 
+        // Add any additional logic for winning, such as notifying the server or updating the UI
         fetch(url, {
           method: 'POST',
           headers: {
@@ -59,17 +60,27 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
             .then(data => {
               console.log('Response from server:', data.message);
               if (data.success === true) {
-                navigate("/select/code");
-                setPlayerData({...playerData, streaktoday: true});
+                setTimeout(() => {
+                  navigate("/select/code");
+                  setPlayerData({...playerData, streaktoday: true});
+                }, 3000);
               }
             })
 
       } else {
-        window.alert('Nicht alle eingegebenen Wörter sind korrekt. Bitte versuche es noch einmal.');
+        // Display a message if not all words are correct
+        setActionText('Nicht alle eingegebenen Wörter sind korrekt');
+        // Add any additional logic for losing, such as notifying the server or updating the UI
+        setTimeout(() => {
+          navigate("/select/code");
+          setPlayerData({...playerData, streaktoday: false});
+        }, 3000);
       }
+      // Set firstAttempt to false after the first attempt
       setFirstAttempt(false);
     } else {
-      window.alert('Überprüfe deine Antworten und versuche es noch einmal.');
+      // Display a message if the user has already attempted the challenge
+      setActionText('Überprüfe deine Antworten und versuche es noch einmal.');
     }
   };
 
@@ -78,8 +89,9 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
 
     const today = new Date();
     const missedStreak = new Date(playerData.missedstreak);
-
+    // Check if the player has already missed a streak today
     if(missedStreak !== today){
+      // Notify the server that the player has missed a streak
       fetch(url2, {
         method: 'POST',
         headers: {
@@ -137,6 +149,9 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
         })}
       </div>
       <hr className={styles.line}/>
+      <h3 className={styles.actiontext}>
+        {actionText}
+      </h3>
       <div className={styles.buttonDiv}>
         <button onClick={handleCheck} className={styles.buttonCheck}>
           Überprüfen

@@ -6,9 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import {ManipulationPlayerContext} from '../../context/manipulationQuestionContext.jsx';
 import {PlayerContext} from '../../context/playerContext.jsx';
 import {ScoreContext} from "../../context/scoreContext.jsx";
-import Modal from '../../components/modal/Modal';
 import {socket} from '../../socket.js';
-import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
 import PopUpManipulationCorrect from '../../popups/popUpManipulation/PopUpManipulationCorrect.jsx';
 import PopUpManipulationWrong from '../../popups/popUpManipulation/PopUpManipulationWrong.jsx';
 import styles2 from './ManipulationPage.module.css';
@@ -29,7 +27,6 @@ function ManipulationPage() {
     const [output, setOutput] = useState('');
     const [expectedOutput, setExpectedOutput] = useState('');
     const [inputParameterQuestion, setInputParameterQuestion] = useState('');
-    const [alertMessage, setAlertMessage] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
     const {setManipulationQuestion} = useContext(ManipulationPlayerContext);
     const [codeTest, setCodeTest] = useState('');
@@ -54,20 +51,7 @@ function ManipulationPage() {
 
     const {ownPoints, opponentPoints, setOwnPoints, setOpponentPoints} = useContext(ScoreContext);
 
-    //const [ownPoints, setOwnPoints] = useState(0);
-    //const [opponentPoints, setOpponentPoints] = useState(0);
-
-    const handleHomeClick = () => {
-        navigate('/select/code');
-    };
-
-    const languages = [
-        {value: 'javascript', label: 'JavaScript'},
-        {value: 'python', label: 'Python', disabled: true},
-        {value: 'java', label: 'Java', disabled: true},
-        {value: 'ruby', label: 'Ruby', disabled: true},
-    ];
-
+    // Function to execute the code
     const executeCode = () => {
         setIsDisabled(true);
         try {
@@ -101,58 +85,42 @@ function ManipulationPage() {
             const expected = expectedOutput
 
             if (resultOutput === expected) {
-                //setIsPopupManipulationCorrectVisible(true);
                 socket.emit('ADD_POINT_MANIPULATION');
                 socket.emit('ROUND_END_MANIPULATION', true);
-                // Hier bekommt der Spieler einen Punkt
             } else {
-                //setIsPopupManipulationWrongVisible(true);
-                socket.emit('ROUND_END_MANIPULATION', false);
-                // Hier bekommt der Spieler KEINEN Punkt
+                socket.emit('ROUND_END_MANIPULATION', false);  
             }
         } catch (error) {
             console.log(error);
             socket.emit('ROUND_END_MANIPULATION', false);
-            //setIsPopupManipulationWrongVisible(true);
         }
     };
 
-
+    // Function to handle changes in the editor
     const onChange = (newCode) => {
         setCode(newCode);
     };
 
-    const handleLanguageChange = (event) => {
-        setSelectedLanguage(event.target.value);
-    };
-
     useEffect(() => {
+        // Check if manipulationQuestion is not null
         if (manipulationQuestion) {
+            // Set initial code, expected output, input parameter, and characters left
             let codeLines = manipulationQuestion.code.split('\n');
             let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
             let codeTest = codeLines[codeLines.length - 1]; // Get the last line
 
+            // Set the code and codeTest
             setCode(codeExceptLastLine);
             setCodeTest(codeTest);
-            console.log('Code test:', codeTest);
             setOutput('');
             setExpectedOutput(manipulationQuestion.outputtext);
             setInputParameterQuestion(manipulationQuestion.inputtext);
         }
     }, [manipulationQuestion]);
 
-    useEffect(() => {
-        if (alertMessage) {
-            alert(alertMessage);
-            setAlertMessage('');
-        }
-    }, [alertMessage]);
-
+    // Socket event listeners
     const handleInputManipulation = (data) => {
-
-        console.log("handle Input manipulation");
         const {code, answer, input} = data;
-        console.log('Received code:', code);
 
         let codeLines = code.split('\n');
         let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
@@ -166,30 +134,18 @@ function ManipulationPage() {
         setOutput('');
         setIsDisabled(false);
     };
-
+    // Function to handle the start of a new round
     const handleStartNewRound = (nameP2, boolP1, boolP2, ownPointsReceived, opponentPointsReceived) => {
 
         setOwnPoints(ownPointsReceived);
         setOpponentPoints(opponentPointsReceived);
-
         console.log(nameP2)
-
         setHasFoundErrorP1(boolP1);
-
         setEnemyPlayer(nameP2);
         setHasFoundErrorP2(boolP2);
-
         setPopupVisible(true);
-
-
-        /*
-            console.log('Starting new round');
-            setTimeout(() => {
-              navigate('/codebattle/manipulation/player1');
-            }, 1000);
-            */
     };
-
+    // Function to handle the end of the game
     const handleGameEnd = (ownPointsReceived, opponentPointsReceived) => {
         console.log('Received own points:', ownPointsReceived);
         console.log('Received opponent points:', opponentPointsReceived);
@@ -209,14 +165,15 @@ function ManipulationPage() {
         }
     };
 
+    // Function to handle setting the question for manipulation
     const handleSetQuestionManipulation = (question) => {
         console.log(question);
         setManipulationQuestion(question);
     };
 
-
     useEffect(() => {
-
+        
+        // Function to handle the player disconnecting
         const opponentDisconnected = () => {
             setIsPlayerDisconnected(true);
             setShowManipulationContainer(false);
@@ -227,14 +184,14 @@ function ManipulationPage() {
             }, 3000);
         }
 
-
+        // Set up socket event listeners
         socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
         socket.on('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
         socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
         socket.on('END_MANIPULATION_GAME', handleGameEnd);
         socket.on('OPPONENT_DISCONNECTED', opponentDisconnected);
 
-
+        // Clean up socket event listeners
         return () => {
             socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
             socket.off('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
@@ -245,18 +202,21 @@ function ManipulationPage() {
         };
     }, []);
 
+    // Function to handle closing the word limit popup
     const handlePopupManipulationCorrectVisible = () => {
         socket.emit('ROUND_END_MANIPULATION', true);
         setIsPopupManipulationCorrectVisible(false);
         setIsDisabled(true);
     };
 
+    // Function to handle closing the word limit popup
     const handlePopupManipulationWrongVisible = () => {
         socket.emit('ROUND_END_MANIPULATION', false);
         setIsPopupManipulationWrongVisible(false);
         setIsDisabled(true);
     };
 
+    // Function to handle closing the word limit popup
     const handlePopupClose = () => {
         setPopupVisible(false);
         setIsDisabled(false);

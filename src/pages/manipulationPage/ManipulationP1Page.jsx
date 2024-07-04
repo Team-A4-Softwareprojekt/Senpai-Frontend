@@ -4,9 +4,7 @@ import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import { useNavigate } from 'react-router-dom';
 import { ManipulationPlayerContext } from '../../context/manipulationQuestionContext.jsx';
-import Modal from '../../components/modal/Modal';
 import { socket } from '../../socket.js';
-import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
 import PopUpManipulationWordLimit from '../../popups/popUpManipulation/PopUpManipulationWordLimit.jsx';
 import styles2 from './ManipulationPage.module.css';
 import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
@@ -23,7 +21,6 @@ function ManipulationPage() {
   const [charactersLeft, setCharactersLeft] = useState(0);
   const [expectedOutput, setExpectedOutput] = useState('');
   const [inputParameterQuestion, setInputParameterQuestion] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
   const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
   const [showInfoContainer, setShowInfoContainer] = useState(true);
   const [showManipulationContainer, setShowManipulationContainer] = useState(true);
@@ -42,10 +39,6 @@ function ManipulationPage() {
     // Add more languages as needed
   ];
 
-  const handleHomeClick = () => {
-    navigate('/select/code');
-  };
-
   const submitCode = () => {
     let codeWithTest = code + '\n' + codeTest; // Concatenate code and codeTest with a newline
 
@@ -55,6 +48,7 @@ function ManipulationPage() {
     setActionText('Warte bis dein Gegner fertig ist...');
   };
 
+  // Function to handle changes in the editor
   const onChange = (newCode) => {
     let codeLines = manipulationQuestion.code.split('\n');
     let lastLine = codeLines[codeLines.length - 1]; // Get the last line
@@ -71,40 +65,29 @@ function ManipulationPage() {
       setShowManipulationContainer(false);
     }
   };
-  
-
-  const handleLanguageChange = (event) => {
-    setSelectedLanguage(event.target.value);
-  };
 
   useEffect(() => {
+    // Check if manipulationQuestion is not null
     if (manipulationQuestion) {
+      // Set initial code, expected output, input parameter, and characters left
       let codeLines = manipulationQuestion.code.split('\n');
       let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
       let codeTest = codeLines[codeLines.length - 1]; // Get the last line
 
+      // Set the code and codeTest
       setCode(codeExceptLastLine);
       setCodeTest(codeTest);
-      console.log('Code test:', codeTest);
 
+      // Set the initial code, expected output, input parameter, and characters left
       setInitialCode(manipulationQuestion.code);
       setExpectedOutput(manipulationQuestion.outputtext);
       setInputParameterQuestion(manipulationQuestion.inputtext);
       setCharactersLeft(manipulationQuestion.permittedsymbols);
-      //setActionText(`Du hast ${manipulationQuestion.permittedsymbols} Zeichen übrig. Manipuliere den Code so, dass die Konsolenausgabe nicht ${manipulationQuestion.outputtext} ist. when the input is ${manipulationQuestion.inputtext}`);
     }
   }, [manipulationQuestion]);
 
-  //useEffect(() => {
-    //if (alertMessage) {
-      // Replace alert with custom popup
-      //setShowWordLimitPopup(true); // Show the word limit popup instead of alert
-      //setAlertMessage('Du hast die zulässige Anzahl von Zeichenänderungen überschritten.');
-    //}
-  //}, [alertMessage]);
-
+  // Socket event listeners
   const handleStartNewRound = () => {
-    console.log('Starting new round');
     navigate('/codebattle/manipulation/player2');
   };
 
@@ -113,29 +96,32 @@ function ManipulationPage() {
   };
 
   useEffect(() => {
-
     const opponentDisconnected = () => {
+      // Set player disconnected to true and show the player disconnected popup
       setIsPlayerDisconnected(true);
       setShowManipulationContainer(false);
       setIsPopUpPlayerDisconnectedVisible(true);
+      // Navigate to the code battle page after 3 seconds
       setTimeout(() => {
         setIsPopUpPlayerDisconnectedVisible(false);
         navigate('/select/code/codeBattle');
       }, 3000);
     }
 
-
+    // Set up socket event listeners
     socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
     socket.on('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
     socket.on('OPPONENT_DISCONNECTED', opponentDisconnected);
 
     return () => {
+      // Clean up socket event listeners
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
       socket.off('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
         socket.off('OPPONENT_DISCONNECTED', opponentDisconnected);
     };
   }, []);
 
+  // Function to handle closing the word limit popup
   const handleCloseWordLimitPopup = () => {
     setShowWordLimitPopup(false);
     setShowManipulationContainer(true);

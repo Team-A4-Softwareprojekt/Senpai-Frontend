@@ -10,6 +10,10 @@
     color: black;
 }
 
+.actiontext {
+    color: black;
+}
+
 .buttonCheck,
 .buttonHelp {
     background-color: #28a745;
