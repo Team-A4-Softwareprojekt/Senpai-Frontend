@@ -1,11 +1,14 @@
 import styles from './Authentication.module.css';
-import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
 import {URL} from '../../../url.js';
+import PopUpRegistrationSuccess from '../../popups/popUpRegistrationSuccess/PopUpRegistrationSuccess.jsx';
 
+// Main component function for the RegistrationPage
 function RegisterPage() {
     const navigate = useNavigate();
 
+    // State variables for form inputs and validation
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,7 +16,9 @@ function RegisterPage() {
     const [securityAnswer, setSecurityAnswer] = useState('');
     const [securityQuestions, setSecurityQuestions] = useState([]);
     const [errors, setErrors] = useState({});
-
+    const [actionText, setActionText] = useState('');
+    const [isPopUpRegistrationSuccessVisible, setIsPopUpRegistrationSuccessVisible] = useState(false);
+   
     const url = URL + '/security-questions';
 
     // Fetch security questions from the server
@@ -30,6 +35,15 @@ function RegisterPage() {
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const handleSecurityQuestionChange = (e) => setSecurityQuestion(e.target.value);
     const handleSecurityAnswerChange = (e) => setSecurityAnswer(e.target.value);
+
+    // Show success popup and redirect to login page
+    const handleRegistrationSuccess = () => {  
+        setIsPopUpRegistrationSuccessVisible(true);
+        setTimeout(() => {
+            setIsPopUpRegistrationSuccessVisible(false);
+            navigate("/login");
+        }, 3000);
+    };
 
     // Validate form inputs
     const validate = () => {
@@ -64,10 +78,9 @@ function RegisterPage() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    //TODO: Hier ein Popup, um zu zeigen, dass die Registrierung erfolgreich war
-                    navigate("/login");
+                    handleRegistrationSuccess();
                 } else {
-                    alert('Registration failed');
+                    setActionText(data.message);
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -75,6 +88,7 @@ function RegisterPage() {
 
     return (
         <div className={styles.backgroundContainer}>
+            {!isPopUpRegistrationSuccessVisible && (
             <div className={styles.authenticationContainer}>
                 <div className={styles.h1}>Registrieren</div>
                 <form onSubmit={handleRegister}>
@@ -108,11 +122,18 @@ function RegisterPage() {
                         <input type="text" placeholder="Eine Sicherheitsantwort eingeben" value={securityAnswer} onChange={handleSecurityAnswerChange} />
                         {errors.securityAnswer && <div className={styles.error}>{errors.securityAnswer}</div>}
                     </div>
+                    <div className={styles.registrationFail}>
+                        {actionText}
+                    </div>
                     <div className={styles.buttonDiv}>
-                        <button type="submit" className={styles.button}>Register</button>
+                        <button type="submit" className={styles.button}>Registrieren</button>
                     </div>
                 </form>
             </div>
+            )}
+            {isPopUpRegistrationSuccessVisible && (
+                 <PopUpRegistrationSuccess isVisible={isPopUpRegistrationSuccessVisible}/>
+            )}
         </div>
     );
 }

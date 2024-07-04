@@ -10,6 +10,7 @@ import PopUpPremium from '../../popups/popUpPremium/PopUpPremium.jsx';
 import PopUpSubscribedTrue from '../../popups/popUpSubscribedTrue/PopUpSubscribedTrue.jsx';
 import PopUpDeleteAccount from '../../popups/popUpDeleteAccount/PopUpDeleteAccount.jsx';
 
+// Component for managing account settings and displaying user information
 function AccountSettingsPage() {
     const navigate = useNavigate();
     const {playerData} = useContext(PlayerContext);
@@ -19,22 +20,23 @@ function AccountSettingsPage() {
     const [isPopUpPremiumVisible, setIsPopUpPremiumVisible] = useState(false);
     const [isPopUpSubscribedTrueVisible, setIsPopUpSubscribedTrueVisible] = useState(false);
     const [isPopUpDeleteAccountVisible, setIsPopUpDeleteAccountVisible] = useState(false);
-    const today = new Date();
-    const missedStreakDate = new Date(playerData.missedstreak);
 
-
+    // Navigate to the home page
     const handleHomeClick = () => {
         navigate('/select');
     };
 
+    // Show change email popup
     const handleChangeEmailClick = () => {
         setIsPopUpChangeEmailVisible(true);
     }
 
+    // Show change password popup
     const handleChangePasswordClick = () => {
         setIsPopUpChangePasswordVisible(true);
     }
 
+    // Show premium or subscribed popup based on subscription status
     const handleBuyPremiumClick = () => {
         if (playerData.subscribed === true) {
             setIsPopUpSubscribedTrueVisible(true);
@@ -43,48 +45,40 @@ function AccountSettingsPage() {
         }
     }
 
+    // Toggle friend list popup
     const toggleFriendPopup = () => {
         setShowFriendPopup(!showFriendPopup);
     };
 
+    // Logout and navigate to the start page
     const handleLogoutClick = () => {
         navigate('/');
     }
 
+    // Show delete account popup
     const handleDeleteAccountClick = () => {
         setIsPopUpDeleteAccountVisible(true);
     }
 
-
+    // Calculate the streak value based on player data
     const calculateStreak = () =>{
         let today = new Date();
         let missedStreakDate = new Date(playerData.missedstreak);
         let timeDifference = 0;
         let daysDifference = 0;
-        console.log(today.date);
-        console.log(playerData.missedstreak);
-
-
 
         if(playerData.streaktoday === false){
-            // Berechnen der Differenz in Millisekunden
             timeDifference = Math.abs(today.getTime() - missedStreakDate.getTime());
-            // Konvertieren der Differenz in Tage
-            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) - 2); // Verwende Math.ceil, um aufzurunden
-        }else{
-            // Berechnen der Differenz in Millisekunden
+            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) - 2);
+        } else {
             timeDifference = Math.abs(today.getTime() - missedStreakDate.getTime());
-
-            // Konvertieren der Differenz in Tage
-            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) -1); // Verwende Math.ceil, um aufzurunden
+            daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24) -1);
         }
-
-
         return daysDifference;
     }
 
     const streakValue = calculateStreak();
-    console.log(streakValue);
+
 
     return (
         <>

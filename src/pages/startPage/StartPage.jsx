@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./StartPage.module.css";
 
+// Component for the start page, including navigation to the login page
 function StartPage() {
     const navigate = useNavigate();
 
     const handleClick = () => {
-            navigate("./login");
+        navigate("./login");
     };
 
     return (
