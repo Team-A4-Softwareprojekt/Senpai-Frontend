@@ -32,7 +32,7 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
-    height: 140px;
+    height: 173px;
     width: 350px;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .infoRow strong {
-    width: 30%;
+    width: 40%;
     font-size: 20px;
 }
 

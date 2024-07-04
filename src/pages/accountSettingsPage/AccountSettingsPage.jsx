@@ -43,13 +43,18 @@ function AccountSettingsPage() {
         }
     }
 
+    const toggleFriendPopup = () => {
+        setShowFriendPopup(!showFriendPopup);
+    };
+
+    const handleLogoutClick = () => {
+        navigate('/');
+    }
+
     const handleDeleteAccountClick = () => {
         setIsPopUpDeleteAccountVisible(true);
     }
 
-    const toggleFriendPopup = () => {
-        setShowFriendPopup(!showFriendPopup);
-    };
 
     const calculateStreak = () =>{
         let today = new Date();
@@ -96,6 +101,9 @@ function AccountSettingsPage() {
                                 <div className={styles.infoRow}>
                                     <strong>E-Mail:</strong> <span>{playerData.email}</span>
                                 </div>
+                                <div className={styles.infoRow}>
+                                    <strong>Guthaben:</strong> <span>{playerData.credit}</span>
+                                </div>
                             </div>
                         </div>
                         <div className={styles.container}>
@@ -103,6 +111,9 @@ function AccountSettingsPage() {
                             <div className={styles.infoRowContainer}>
                                 <div className={styles.infoRow}>
                                     <strong>Streak:</strong> <span>{streakValue}</span>
+                                </div>
+                                <div className={styles.infoRow}>
+                                    <strong>Leben:</strong> <span>{playerData.lives}</span>
                                 </div>
                                 <div className={styles.infoRow}>
                                     <strong>Rang:</strong> <span>bald verfügbar</span>
@@ -115,6 +126,7 @@ function AccountSettingsPage() {
                         <button className={styles.button} onClick={handleChangePasswordClick}>Passwort ändern</button>
                         <button className={styles.button} onClick={handleBuyPremiumClick}>Premium kaufen</button>
                         <button className={styles.button} onClick={toggleFriendPopup}>Freundesliste</button>
+                        <button className={styles.button} onClick={handleLogoutClick}>Abmelden</button>
                         <button className={styles.deleteAccountButton} onClick={handleDeleteAccountClick}>Account löschen</button>
                     </div>
                 </div>
