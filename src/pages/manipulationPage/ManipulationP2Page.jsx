@@ -17,6 +17,7 @@ import PopUpGameWinner from "../../popups/popUpGameWinner/PopUpGameWinner.jsx";
 import PopUpGameLoser from "../../popups/popUpGameLoser/PopUpGameLoser.jsx";
 import PopUpGameTie from "../../popups/popUpGameTie/PopUpGameTie.jsx";
 import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
+import PopUpPlayerManipulationDisconnect from "../../popups/popUpPlayerDisconnected/PopUpPlayerManipulationDisconnect.jsx";
 
 function ManipulationPage() {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ function ManipulationPage() {
     const {playerName, playerData} = useContext(PlayerContext);
     const [output, setOutput] = useState('');
     const [expectedOutput, setExpectedOutput] = useState('');
+    const [inputParameterQuestion, setInputParameterQuestion] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
     const {setManipulationQuestion} = useContext(ManipulationPlayerContext);
@@ -34,6 +36,9 @@ function ManipulationPage() {
 
     const [isPopupManipulationCorrectVisible, setIsPopupManipulationCorrectVisible] = useState(false);
     const [isPopupManipulationWrongVisible, setIsPopupManipulationWrongVisible] = useState(false);
+    const [isPlayerDisconnected, setIsPlayerDisconnected] = useState(false);
+    const [isPopUpPlayerDisconnectedVisible, setIsPopUpPlayerDisconnectedVisible] = useState(false);
+    const [showManipulationContainer, setShowManipulationContainer] = useState(true);
 
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [enemyPlayer, setEnemyPlayer] = useState('');
@@ -132,6 +137,7 @@ function ManipulationPage() {
             console.log('Code test:', codeTest);
             setOutput('');
             setExpectedOutput(manipulationQuestion.outputtext);
+            setInputParameterQuestion(manipulationQuestion.inputtext);
         }
     }, [manipulationQuestion]);
 
@@ -145,7 +151,7 @@ function ManipulationPage() {
     const handleInputManipulation = (data) => {
 
         console.log("handle Input manipulation");
-        const {code, answer} = data;
+        const {code, answer, input} = data;
         console.log('Received code:', code);
 
         let codeLines = code.split('\n');
@@ -155,6 +161,7 @@ function ManipulationPage() {
         setCode(codeExceptLastLine);
         setCodeTest(codeTest);
         setExpectedOutput(answer);
+        setInputParameterQuestion(input);
         console.log('Expected output:', expectedOutput);
         setOutput('');
         setIsDisabled(false);
@@ -209,10 +216,23 @@ function ManipulationPage() {
 
 
     useEffect(() => {
+
+        const opponentDisconnected = () => {
+            setIsPlayerDisconnected(true);
+            setShowManipulationContainer(false);
+            setIsPopUpPlayerDisconnectedVisible(true);
+            setTimeout(() => {
+                setIsPopUpPlayerDisconnectedVisible(false);
+                navigate('/select/code/codeBattle');
+            }, 3000);
+        }
+
+
         socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
         socket.on('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
         socket.on('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
         socket.on('END_MANIPULATION_GAME', handleGameEnd);
+        socket.on('OPPONENT_DISCONNECTED', opponentDisconnected);
 
 
         return () => {
@@ -220,6 +240,7 @@ function ManipulationPage() {
             socket.off('ENABLE_INPUT_MANIPULATION', handleInputManipulation);
             socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
             socket.off('END_MANIPULATION_GAME', handleGameEnd);
+            socket.off('OPPONENT_DISCONNECTED', opponentDisconnected);
 
         };
     }, []);
@@ -244,20 +265,20 @@ function ManipulationPage() {
 
     return (
         <div className={styles2.backgroundImage}>
-            {!isPopupVisible && !isGameFinished && (
+            {!isPopupVisible && !isGameFinished && showManipulationContainer && (
                 <div className={styles2.manipulationContainer}>
                     <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
                     <div className={styles2.infoContainer}>
                         <div className={styles2.infoBox}>
                             Parameterwert:
                             <div className={styles2.dynamicContainer}>
-                                <span className={styles2.dynamicData}>{manipulationQuestion.inputtext}</span>
+                                <span className={styles2.dynamicData}>{inputParameterQuestion}</span>
                             </div>
                         </div>
                         <div className={styles2.infoBox}>
                             Konsolenausgabe:
                             <div className={styles2.dynamicContainer}>
-                                <span className={styles2.dynamicData}>{manipulationQuestion.outputtext}</span>
+                                <span className={styles2.dynamicData}>{expectedOutput}</span>
                             </div>
                         </div>
                     </div>
@@ -305,6 +326,9 @@ function ManipulationPage() {
                 hasFoundErrorP2={hasFoundErrorP2}
                 onClose={handlePopupClose}
             />
+            {isPlayerDisconnected && (
+                <PopUpPlayerManipulationDisconnect isVisible={isPopUpPlayerDisconnectedVisible}/>
+            )}
         </div>
     );
 }
