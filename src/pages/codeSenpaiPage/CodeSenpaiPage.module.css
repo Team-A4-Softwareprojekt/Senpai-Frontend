@@ -4,22 +4,22 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    margin-top: 20px; /* Add margin to create space between the title and cards */
-    justify-content: center; /* Center the cards within the container */
+    margin-top: 20px;
+    justify-content: center;
 }
 
 .selectCard {
-    width: 300px; /* Set a fixed width */
-    height: 400px; /* Set a fixed height */
-    overflow: auto; /* Add scrollbars if content overflows */
-    max-width: 100%; /* Allow cards to grow up to 100% of their parent container */
+    width: 300px;
+    height: 400px;
+    overflow: auto;
+    max-width: 100%;
 }
 
 .selectCard .content {
     padding: 20px;
-    overflow: hidden; /* Hide overflow content */
-    text-overflow: ellipsis; /* Truncate text if it overflows */
-    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .accountButtonContainer {
@@ -53,13 +53,13 @@
 }
 
 .backgroundContainer {
-    background-image: url('../../assets/cloudsBlurry.jpg'); /* Pfad zum Hintergrundbild */
-    background-size: cover; /* Bild wird so skaliert, dass der gesamte Container abgedeckt wird */
-    background-position: center; /* Bild wird in der Mitte des Containers zentriert */
-    background-repeat: no-repeat; /* Bild wird nicht wiederholt */
-    width: 100vw; /* Breite des Containers */
-    height: 98.9vh; /* Höhe des Containers */
-    padding-top: 10px; /* Add padding to push content below the button bar */
+    background-image: url('../../assets/cloudsBlurry.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 98.9vh;
+    padding-top: 10px;
 }
 
 .buttonBar {

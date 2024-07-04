@@ -17,41 +17,36 @@ import {socket, requestDailyChallengeQuestion} from '../../socket.js';
 import {PlayerContext} from '../../context/playerContext';
 import {GapTextContext} from '../../context/gapTextQuestionContext.jsx';
 
-
+/**
+ * The CodeSenpaiPage component handles the display and logic for selecting a training mode.
+ * It manages state for various popups, player data, and navigation.
+ * It also communicates with the server to fetch daily challenge questions and handle socket events.
+ */
 function codeSenpaiPage() {
+    const navigate = useNavigate();
     const [isPopUpExerciseVisible, setIsPopUpExerciseVisible] = useState(false);
     const [isPopUpBuyPremiumVisible, setIsPopUpBuyPremiumVisible] = useState(false);
     const [isPopUpSubscribedTrueVisible, setIsPopUpSubscribedTrueVisible] = useState(false);
     const [isPopUpDailyChallengeCompletedVisible, setIsPopUpDailyChallengeCompletedVisible] = useState(false);
-    const navigate = useNavigate();
-
     const {playerData, setPlayerData} = useContext(PlayerContext);
     const {questionGT, setQuestionGT, blankIndices, setBlankIndices} = useContext(GapTextContext);
 
+    // Handle home button click
     const handleHomeClick = () => {
         navigate('/select/code');
     };
 
+    // Handle account button click
     const handleAccountClick = () => {
         navigate('/account');
     };
 
+    // Handle change topic button click
     const handleChangeTopicClick = () => {
         navigate('/select');
     };
 
-    const handleDailyChallenge = () => {
-        if (playerData.streaktoday === false){
-            requestDailyChallengeQuestion();
-        } else{
-            setIsPopUpDailyChallengeCompletedVisible(true);
-        }
-    };
-
-    const handleExerciseClick = () => {
-        setIsPopUpExerciseVisible(true);
-    };
-
+    // Handle buy premium button click
     const handleBuyPremiumClick = () => {
         if (playerData.subscribed === true) {
             setIsPopUpSubscribedTrueVisible(true);
@@ -60,6 +55,22 @@ function codeSenpaiPage() {
         }
     };
 
+    // Handle daily challenge button click
+    const handleDailyChallenge = () => {
+        if (playerData.streaktoday === false){
+            requestDailyChallengeQuestion();
+        } else{
+            setIsPopUpDailyChallengeCompletedVisible(true);
+        }
+    };
+
+    // Handle exercise button click
+    const handleExerciseClick = () => {
+        setIsPopUpExerciseVisible(true);
+    };
+
+
+    // Handle socket events for receiving questions and question type
     useEffect(() => {
 
         const handleQuestionType = (table) => {
@@ -87,6 +98,7 @@ function codeSenpaiPage() {
         };
     }), [];
 
+    
     return (
         <div className={styles.backgroundContainer}>
             <div className={styles.buttonBar}>
