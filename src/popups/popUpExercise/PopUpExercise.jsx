@@ -2,6 +2,16 @@ import React from 'react';
 import styles from './PopUpExercise.module.css';
 import ExerciseCard from '../../cards/exerciseCard/ExerciseCard.jsx';
 
+/**
+ * PopUpExercise Component
+ * 
+ * This component renders a popup that displays a list of exercise cards.
+ * It includes a search input for filtering exercises and a close button.
+ * 
+ * Props:
+ * - `closePopUp`: Function to close the popup.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ */
 const PopUpExercise = ({ closePopUp, isVisible }) => {
     return (
         isVisible && (

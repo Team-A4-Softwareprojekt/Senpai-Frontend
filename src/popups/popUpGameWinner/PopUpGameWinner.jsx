@@ -8,21 +8,35 @@ import { socket } from '../../socket.js';
 import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
 import {ScoreContext} from "../../context/scoreContext.jsx";
 
+/**
+ * PopUpGameWinner Component
+ * 
+ * This component renders a popup that displays a winning animation, final scores, and a message for the winner.
+ * It also includes a button to confirm and reset the game state.
+ * 
+ * Props:
+ * - `winner`: The name of the winning player.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ * - `ownPoints`: The points scored by the winning player.
+ * - `opponentPoints`: The points scored by the opponent.
+ * - `resetRoundCounter`: Function to reset the round counter.
+ */
 const PopUpGameWinner = ({ winner, isVisible, ownPoints, opponentPoints, resetRoundCounter }) => {
   const navigate = useNavigate();
   const {setOwnPoints, setOpponentPoints} = useContext(ScoreContext);
 
+  // Return null if the popup is not visible
   if (!isVisible) {
     return null;
   }
 
+  // Handle confirmation of winning and reset the game state
   const handleWinnerConfirm = () => {
     setOwnPoints(0);
     setOpponentPoints(0);
     socket.emit('CLOSE_LOBBY');
     navigate('/select/code/codeBattle');
     resetRoundCounter();
-
   };
 
   return (

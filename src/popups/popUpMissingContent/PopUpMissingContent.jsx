@@ -2,8 +2,19 @@ import React from 'react';
 import styles from './PopUpMissingContent.module.css';
 import missingContentImg from '../../assets/missingContent.png';
 
+/**
+ * PopUpMissingContent Component
+ * 
+ * This component renders a popup that informs the user that the content is currently being developed.
+ * It includes an image and a button to close the popup.
+ * 
+ * Props:
+ * - `closePopUp`: Function to close the popup.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ */
 const PopUpMissingContent = ({ closePopUp, isVisible }) => {
 
+    // Return null if the popup is not visible
     if (!isVisible) return null;
 
     return (

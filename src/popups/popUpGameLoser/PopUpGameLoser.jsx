@@ -8,14 +8,29 @@ import { socket } from '../../socket.js';
 import ScoresFinal from '../../components/scoresFinal/ScoresFinal';
 import {ScoreContext} from "../../context/scoreContext.jsx";
 
+/**
+ * PopUpGameLoser Component
+ * 
+ * This component renders a popup that displays a losing animation, final scores, and a message to the loser.
+ * It also includes a button to confirm and reset the game state.
+ * 
+ * Props:
+ * - `loser`: The name of the losing player.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ * - `ownPoints`: The points scored by the losing player.
+ * - `opponentPoints`: The points scored by the opponent.
+ * - `resetRoundCounter`: Function to reset the round counter.
+ */
 const PopUpGameLoser = ({ loser, isVisible, ownPoints, opponentPoints, resetRoundCounter }) => {
   const navigate = useNavigate();
   const {setOwnPoints, setOpponentPoints} = useContext(ScoreContext);
 
+  // Return null if the popup is not visible
   if (!isVisible) {
     return null;
   }
 
+  // Handle confirmation of losing and reset the game state
   const handleLoserConfirm = () => {
     setOwnPoints(0);
     setOpponentPoints(0);

@@ -5,6 +5,17 @@ import PasswordEyeClosed from '../../assets/passwordEyeClosed.png';
 import PasswordEyeOpen from '../../assets/passwordEyeOpen.png';
 import {URL} from "../../../url.js";
 
+/**
+ * PopUpChangePassword Component
+ * 
+ * This component renders a popup that allows the user to change their password.
+ * It includes input fields for the new password and its confirmation, displays password validation messages,
+ * and provides feedback on the success or failure of the operation.
+ * 
+ * Props:
+ * - `closePopUp`: Function to close the popup.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ */
 const PopUpChangePassword = ({ closePopUp, isVisible }) => {
     const { playerData, setPlayerData } = useContext(PlayerContext);
     const [newPassword, setNewPassword] = useState('');
@@ -13,8 +24,10 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const url = URL + '/changePassword';
 
+    // Return null if the popup is not visible
     if (!isVisible) return null;
 
+    // Handle confirmation of password change
     const handleConfirm = () => {
         const passwordRules = [
             { regex: /.{8,}/, message: 'Das Passwort muss mindestens 8 Zeichen lang sein!' },
@@ -24,6 +37,7 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
             { regex: /[@$!%*?&]/, message: 'Das Passwort muss mindestens ein Sonderzeichen (@, $, !, %, *, ?, &) enthalten!' },
         ];
 
+        // Validate password against rules
         for (const rule of passwordRules) {
             if (!rule.regex.test(newPassword)) {
                 setMessage(rule.message);
@@ -31,6 +45,7 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
             }
         }
 
+        // Check if the passwords match
         if (newPassword !== confirmPassword) {
             setMessage('Die Passwörter stimmen nicht überein!');
             return;
@@ -38,6 +53,7 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
 
         let playerName = playerData.playername;
 
+        // Send request to change the password
         fetch(url, {
             method: 'POST',
             headers: {
@@ -54,20 +70,21 @@ const PopUpChangePassword = ({ closePopUp, isVisible }) => {
             .then(data => {
                 console.log('Response from server after Email change:', data);
 
+                // Handle successful password change
                 if(data.success == true) {
-                    // Update playerData password
                     setPlayerData({ ...playerData, playerpassword: newPassword });
                     setMessage('Dein Passwort wurde erfolgreich geändert.');
                 }
                 console.log(data.message);
-                //data.message kann als erfolgs meldung im popup verwendet werden
             });
     };
 
+    // Toggle the visibility of the password
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible);
     };
 
+    // Handle closing of the popup
     const handleClose = () => {
         setNewPassword('');
         setConfirmPassword('');
