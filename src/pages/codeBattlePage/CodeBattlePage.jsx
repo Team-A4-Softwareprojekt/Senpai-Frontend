@@ -304,6 +304,9 @@ function CodeBattlePage() {
         return <div>Loading...</div>;
     }
 
+    const today = new Date();
+    const subEndDate = new Date(playerData.subenddate);
+    const remainingTime = Math.ceil((subEndDate - today) / (1000 * 60 * 60 * 24));
 
     return( 
         <div className={styles.backgroundContainer}>
@@ -322,29 +325,32 @@ function CodeBattlePage() {
             <div className= {styles.cardsGridContainer}>      
                 <SelectGameCard 
                     buttonText= "Buzzer"
-                    imageUrl={playerData.lives > 0 ? buzzerImg : buzzerGrayImg}
+                    imageUrl={(remainingTime >= 0 || playerData.lives > 0) ? buzzerImg : buzzerGrayImg}
                     slides={buzzerSlides}
                     handleClick={onBuzzerClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}
+                    time={remainingTime}
                     selectedOption="Java"
                 />
                 <SelectGameCard 
                     buttonText= "Manipulation" 
-                    imageUrl={playerData.lives > 0 ? manipulationImg : manipulationGrayImg}
+                    imageUrl={(remainingTime >= 0 || playerData.lives > 0) ? manipulationImg : manipulationGrayImg}
                     slides = {manipulationSlides}
                     handleClick={onManipulationClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}
+                    time={remainingTime}
                     selectedOption="JavaScript"
                 />
                 <SelectGameCard 
                     buttonText="Limitation"
-                    imageUrl={playerData.lives > 0 ? limitationImg : limitationGrayImg}
+                    imageUrl={(remainingTime >= 0 || playerData.lives > 0) ? limitationImg : limitationGrayImg}
                     slides={limitationInfo}
                     handleClick={onLimitationClick}
                     handleNoHeartsClick={handleNoHeartsClick}
                     lives={playerData.lives}
+                    time={remainingTime}
                     selectedOption="Python"
                 />
             </div>

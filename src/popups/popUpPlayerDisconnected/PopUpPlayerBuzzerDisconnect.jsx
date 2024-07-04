@@ -1,10 +1,8 @@
-// src/popups/popUpPlayerDisconnected/PopUpPlayerDisconnected.jsx
-
 import React, { useEffect } from 'react';
 import styles from './PopUpPlayerDisconnected.module.css';
 
-const PopUpPlayerDisconnected = ({ isVisible, resetRoundCounter }) => {
-  
+const PopUpPlayerBuzzerDisconnect = ({ isVisible, resetRoundCounter }) => {
+
   useEffect(() => {
     if (isVisible) {
       resetRoundCounter();
@@ -25,4 +23,4 @@ const PopUpPlayerDisconnected = ({ isVisible, resetRoundCounter }) => {
   );
 };
 
-export default PopUpPlayerDisconnected;
+export default PopUpPlayerBuzzerDisconnect;
