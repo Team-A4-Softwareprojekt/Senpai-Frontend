@@ -32,16 +32,16 @@ import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 import {ManipulationPlayerContext} from "../../context/manipulationQuestionContext.jsx";
 import {URL} from '../../../url.js';
 
-/*
-This is the code battle page that holds an account button, amount of lives and three different
-game modes to choose from. Each game mode has a modal with the basic explanation of the mode
-*/
+/**
+ * The CodeBattlePage component handles the display and logic for selecting a game mode.
+ * It manages state for various popups, player data, and game mode selection.
+ * It also communicates with the server to fetch player data and handle socket events.
+ */
 function CodeBattlePage() {
-    const { playerName, playerData, setPlayerData } = useContext(PlayerContext);
-    const { buzzerQuestion, setBuzzerQuestion } = useContext(BuzzerPlayerContext);
-    const { setManipulationQuestion } = useContext(ManipulationPlayerContext);
-
     const navigate = useNavigate();
+    const {playerName, playerData, setPlayerData} = useContext(PlayerContext);
+    const {buzzerQuestion, setBuzzerQuestion} = useContext(BuzzerPlayerContext);
+    const {setManipulationQuestion} = useContext(ManipulationPlayerContext);
     const [isPopUpQueueVisible, setIsPopUpQueueVisible] = useState(false);
     const [isPopUpCountdownVisible, setIsPopUpCountdownVisible] = useState(false);
     const [isPopUpNoHeartsVisible, setIsPopUpNoHeartsVisible] = useState(false);
@@ -54,6 +54,7 @@ function CodeBattlePage() {
     const [loading, setLoading] = useState(true);
 
 
+    // Fetch player data from the server when the component mounts
     useEffect(() => {
         const url = URL + "/loadAccountData";
 
@@ -85,22 +86,24 @@ function CodeBattlePage() {
     }, [playerName, setPlayerData]);
 
 
+    // Handle socket events for game found, question type, countdown, and setting questions
     useEffect(() => {
-        const handleGameFound = (fullRoom) => {
-            console.log('Game found', fullRoom);
+
+        // Handle game found for the buzzer game mode
+        const handleGameFoundBuzzer = (fullRoom) => {
             setIsPopUpQueueVisible(false);
             setIsPopUpCountdownVisible(true);
         };
     
+        // Handle game found for the manipulation game mode
         const handleGameFoundManipulation = (fullRoom) => {
-            console.log('Game found Manipulation', fullRoom);
             setIsPopUpQueueVisible(false);
             setIsPopUpCountdownVisible(true);
 
         };
     
-        const handleQuestionType = (table) => {
-            console.log('From table:', table);
+        // Handle the question type for the buzzer game mode    
+        const handleQuestionTypeBuzzer = (table) => {
             if (table === 'multiplechoicequestion') {
                 navigate('/codebattle/buzzer/multiplechoice');
             } else {
@@ -108,50 +111,52 @@ function CodeBattlePage() {
             }
         };
 
+        // Handle the question type for the manipulation game mode
         const handleQuestionTypeManipulation = () => {
             navigate('/codebattle/manipulation/player1');
         };
     
+        // Handle the countdown for both game modes
         const handleStartCountdown = (countdown) => {
-            console.log('Countdown started', countdown);
             setCountdown(countdown);
         };
     
-        const handleSetQuestion = (question) => {
-            console.log(question);
+        // Handle setting the question for the buzzer game mode
+        const handleSetQuestionBuzzer = (question) => {
             setBuzzerQuestion(question);
         };
     
+        // Handle setting the question for the manipulation game mode
         const handleSetQuestionManipulation = (question) => {   
-            console.log(question);
             setManipulationQuestion(question);
         };
 
 
         // Register the event listeners
-        socket.on('Buzzer_GameFound', handleGameFound);
+        socket.on('Buzzer_GameFound', handleGameFoundBuzzer);
         socket.on('Manipulation_GameFound', handleGameFoundManipulation);
         socket.on('MANIPULATION_QUESTION_TYPE', handleQuestionTypeManipulation);
-        socket.on('BUZZER_QUESTION_TYPE', handleQuestionType);
+        socket.on('BUZZER_QUESTION_TYPE', handleQuestionTypeBuzzer);
         socket.on('BUZZER_COUNTDOWN', handleStartCountdown);
         socket.on('MANIPULATION_COUNTDOWN', handleStartCountdown); 
-        socket.on('SET_BUZZER_QUESTION', handleSetQuestion);
+        socket.on('SET_BUZZER_QUESTION', handleSetQuestionBuzzer);
         socket.on('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
 
     
         // Clean up the listeners when the component is unmounted
         return () => {
-            socket.off('Buzzer_GameFound', handleGameFound);
+            socket.off('Buzzer_GameFound', handleGameFoundBuzzer);
             socket.off('Manipulation_GameFound', handleGameFoundManipulation);
             socket.off('MANIPULATION_QUESTION_TYPE', handleGameFoundManipulation);
-            socket.off('BUZZER_QUESTION_TYPE', handleQuestionType);
+            socket.off('BUZZER_QUESTION_TYPE', handleQuestionTypeBuzzer);
             socket.off('BUZZER_COUNTDOWN', handleStartCountdown);
             socket.off('MANIPULATION_COUNTDOWN', handleStartCountdown); 
-            socket.off('SET_BUZZER_QUESTION', handleSetQuestion);
+            socket.off('SET_BUZZER_QUESTION', handleSetQuestionBuzzer);
             socket.off('SET_MANIPULATION_QUESTION', handleSetQuestionManipulation);
         };
      }, [navigate, setBuzzerQuestion, setManipulationQuestion]);
     
+
     // Function to render hearts based on player lives
     useEffect(() => {
         const today = new Date();
@@ -179,19 +184,22 @@ function CodeBattlePage() {
         setHearts(renderHearts());
     }, [playerData]);
 
-
+    // Handle home button click
     const handleHomeClick = () => {
         navigate('/select/code');
     };
 
+    // Handle account button click
     const handleAccountClick = () => {
         navigate('/account');
     };
 
+    // Handle change topic button click
     const handleChangeTopicClick = () => {
         navigate('/select');
     };
 
+    // Handle buy premium button click
     const handleBuyPremiumClick = () => {
         if (playerData.subscribed === true) {
             setIsPopUpSubscribedTrueVisible(true);
@@ -200,22 +208,26 @@ function CodeBattlePage() {
         }
     };
 
+    // Handle buzzer game mode selection
     const onBuzzerClick = () => {
         startBuzzerQueue(playerName);
         setSelectedGameMode('Buzzer');
         setIsPopUpQueueVisible(true);
     };
 
+    // Handle manipulation game mode selection
     const onManipulationClick = () => {
         startManipulationQueue(playerName);
         setSelectedGameMode('Manipulation');
         setIsPopUpQueueVisible(true);
     };
 
+    // Handle limitation game mode selection
     const onLimitationClick = () => {
         setIsPopUpMissingContentVisible(true);
     };
 
+    // Handle closing the popup
     const closePopUp = () => {
         if (selectedGameMode === 'Buzzer') {
             leaveBuzzerQueue();
@@ -225,33 +237,39 @@ function CodeBattlePage() {
         setIsPopUpQueueVisible(false);
     };
 
+    // Handle no hearts click
     const handleNoHeartsClick = () => {
         console.log("No hearts click handled");
         setIsPopUpNoHeartsVisible(true);
     };
 
+    // Text for the slides in the buzzer game mode
     const buzzerSlideTexts = [
         "Zu Beginn jeder Runde siehst du eine Frage und vier Antwortmöglichkeiten. Wenn du die Frage beantworten möchtest, dann drücke auf den roten Buzzer unten rechts. Behalte die Zeit im Auge und sei schneller als dein Gegner!",
         "Nachdem du den Buzzer gedrückt hast, musst du innerhalb von 5 Sekunden deine Antwort bestätigen. Wenn du richtig geantwortet hast, dann bekommst du einen Punkt.",
         "Wenn du nach dem Drücken des Buzzers zu langsam oder falsch antwortest, dann verlierst du einen Punkt und dein Gegner bekommt die Möglichkeit die Frage zu beantworten. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel.",
     ];
 
+    // Slides for the buzzer game mode
     const buzzerSlides = [
         { header: "Buzzer", text: buzzerSlideTexts[0], image: buzzerSlide1 },
         { header: "Buzzer", text: buzzerSlideTexts[1], image: buzzerSlide2 },
         { header: "Buzzer", text: buzzerSlideTexts[2], image: buzzerSlide3 },
     ];
 
+    // Text for the slides in the manipulation game mode
     const manipulationSlideTexts = [
         "Zu Beginn erhältst du einen Codeausschnitt, den du so manipulieren musst, dass dieser nicht mehr kompiliert. Du hast nur eine begrenzte Anzahl an Zeichen zur Verfügung. Der Parameterwert ist der Wert, mit dem die Funktion innerhalb des nicht gezeigten console.log() im Hintergrund aufgerufen wird. Die Konsolenausgabe ist der erwartete Wert bei erfolgreicher Kompilierung. Jedes eingegebene 'console.log()' wird vom Compiler ignoriert und zählt nicht zur Manipulation. Sobald du fertig bist, klicke auf den Bestätigen Button.",
         "Nachdem dein Gegner fertig ist, bekommst du seinen manipulierten Code, den du reparieren musst. Sobald du fertig bist, klicke auf den Kompilieren Button. Du wirst keine Konsolenausgabe sehen, weil die Kompilierung im Hintergrund erfolgt. Falls dein Code erfolgreich kompiliert, bekommst du einen Punkt. Der Spieler mit den meisten Punkten nach 3 Runden gewinnt das Spiel."
     ];
 
+    // Slides for the manipulation game mode
     const manipulationSlides = [
         { header: "Manipulation", text: manipulationSlideTexts[0], image: manipulationSlide1 },
         { header: "Manipulation", text: manipulationSlideTexts[1], image: manipulationSlide2 },
     ];
 
+    // Text for the limitation game mode
     const limitationInfoText = 
         `Dieser Spielmodi wird nur im „2vs2“ angeboten, sodass insgesamt vier Spieler teilnehmen müssen, damit das Spiel beginnen kann.
         Es wird eine Aufgabe präsentiert, die die beiden Teams in begrenzter Zeit lösen müssen.
@@ -260,6 +278,7 @@ function CodeBattlePage() {
         Aufgrund dessen müssen beide Spieler genau wissen, wie die Aufgabe gelöst werden kann, um das Spiel zu gewinnen.
         Das Gewinnerteam bekommt einen Punkt.`;
 
+    // Slide for the limitation game mode
     const limitationInfo = [
         { 
             header: "Limitation", 
@@ -267,10 +286,12 @@ function CodeBattlePage() {
         }];
 
 
+    // Render the component
     if (loading) {
         return <div>Loading...</div>;
     }
 
+    // Calculate the remaining time of the subscription
     const today = new Date();
     const subEndDate = new Date(playerData.subenddate);
     const remainingTime = Math.ceil((subEndDate - today) / (1000 * 60 * 60 * 24));

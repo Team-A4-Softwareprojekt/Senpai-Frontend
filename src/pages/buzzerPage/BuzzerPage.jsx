@@ -32,7 +32,6 @@ let roundCounter = 0;
  */
 const BuzzerPage = () => {
     const navigate = useNavigate();
-    const [question, setQuestion] = useState([]);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(true);
     const [isBuzzerButtonDisabled, setIsBuzzerButtonDisabled] = useState(false);
