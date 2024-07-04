@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styles from './PopUpNoHearts.module.css';
+import styles from './PopUpDailyChallengeCompleted.module.css';
 
-const PopUpNoHearts = ({ isVisible, header, text, closePopUp }) => {
+const PopUpDailyChallengeCompleted = ({ isVisible, header, text, closePopUp }) => {
     const [modal, setModal] = useState(false);
 
     useEffect(() => {
@@ -18,10 +18,8 @@ const PopUpNoHearts = ({ isVisible, header, text, closePopUp }) => {
     }
 
     const defaultText = [
-        "Du hast nicht mehr genug Herzen um weiterzuspielen. ",
-        "Deine Herzen werden nach 24 Stunden wieder automatisch aufgefüllt. ",
-        "Wenn du Premium kaufst, dann sind deine Herzen unbegrenzt und ",
-        "du kannst so viel spielen wie du möchtest :-)"
+        "Du hast heute bereits die Daily Challenge abgeschlossen! ",
+        "Komme morgen wieder um dein Wissen erneut zu testen :-)",
     ].join("");
 
     return (
@@ -29,7 +27,7 @@ const PopUpNoHearts = ({ isVisible, header, text, closePopUp }) => {
             <div className={styles.modal}>
                 <div onClick={toggleModal} className={styles.overlay}></div>
                     <div className={styles.content}>
-                        <div className={styles.header}>{header || "Herzen aufgebraucht"}</div>
+                        <div className={styles.header}>{header || "Daily Challenge abgeschlossen"}</div>
                         <div className={styles.text}>{text || defaultText}</div>
                     <div className={styles.buttonContainer}>
                         <button className={styles.button} onClick={toggleModal}>Schließen</button>
@@ -40,4 +38,4 @@ const PopUpNoHearts = ({ isVisible, header, text, closePopUp }) => {
     );
 }
 
-export default PopUpNoHearts;
+export default PopUpDailyChallengeCompleted;

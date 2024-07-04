@@ -15,7 +15,7 @@ import styles2 from './ManipulationPage.module.css';
 import PopUpManipulationRoundEnd from "../../popups/popUpManipulationRoundEnd/PopUpManipulationRoundEnd.jsx";
 import PopUpGameWinner from "../../popups/popUpGameWinner/PopUpGameWinner.jsx";
 import PopUpGameLoser from "../../popups/popUpGameLoser/PopUpGameLoser.jsx";
-import PopUpTie from "../../popups/popUpTie/PopUpTie.jsx";
+import PopUpGameTie from "../../popups/popUpGameTie/PopUpGameTie.jsx";
 import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
 import PopUpPlayerManipulationDisconnect from "../../popups/popUpPlayerDisconnected/PopUpPlayerManipulationDisconnect.jsx";
 
@@ -317,7 +317,7 @@ function ManipulationPage() {
             )}
             <PopUpGameWinner winner={winnerGame} isVisible={isGameWinnerVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
             <PopUpGameLoser loser={loserGame} isVisible={isGameLoserVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
-            <PopUpTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
+            <PopUpGameTie winner={winnerGame} isVisible={isTieVisible} ownPoints={ownPoints} opponentPoints={opponentPoints} />
             <PopUpManipulationRoundEnd
                 isVisible={isPopupVisible}
                 player1={playerData.playername}

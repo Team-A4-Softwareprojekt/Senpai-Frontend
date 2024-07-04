@@ -1,5 +1,5 @@
-import {describe, it} from 'vitest'; // Import von ViTest
-import {render, screen} from '@testing-library/react'; // Import der render-Funktion von @testing-library/react
+import {describe, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from "react-router-dom";
 import {MockPlayerProvider} from "./test-utils.jsx";
 import LoginPage from "../src/pages/authenticationPages/LoginPage.jsx";
@@ -13,8 +13,6 @@ describe("LoginPage", () => {
                     <LoginPage/>
                 </MockPlayerProvider>
             </MemoryRouter>);
-        //expect(screen.getByText("Senpai")).toBeInTheDocument();
-        //expect(screen.getByText("Start Your Journey")).toBeInTheDocument();
         screen.debug();
     });
 });

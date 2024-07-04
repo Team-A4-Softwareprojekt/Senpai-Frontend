@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PopUpCountdown.module.css';
 
-const PopUpCountdown = ({ isVisible, closePopup, countdown }) => {
+const PopUpCountdown = ({ isVisible, closePopUp, countdown }) => {
     const [timeLeft, setTimeLeft] = useState(countdown);
 
     useEffect(() => {
@@ -13,7 +13,7 @@ const PopUpCountdown = ({ isVisible, closePopup, countdown }) => {
             setTimeLeft((prevTimeLeft) => {
                 if (prevTimeLeft <= 1) {
                     clearInterval(timer);
-                    closePopup();
+                    closePopUp();
                     return 0;
                 }
                 return prevTimeLeft - 1;
@@ -21,7 +21,7 @@ const PopUpCountdown = ({ isVisible, closePopup, countdown }) => {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [isVisible, countdown, closePopup]);
+    }, [isVisible, countdown, closePopUp]);
 
     if (!isVisible) return null;
 

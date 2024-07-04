@@ -70,7 +70,7 @@ function LoginPage() {
     return (
         <div className={styles.backgroundContainer}>
             <div className={styles.authenticationContainer}>
-                <div className={styles.h1}>Login</div>
+                <div className={styles.h1}>Anmelden</div>
                 <form action="">
                     <div className={styles.authenticationFormDiv}>
                         <label htmlFor="username">Benutzername</label>
@@ -91,7 +91,7 @@ function LoginPage() {
 
                 </div>
                 <div className={styles.buttonDiv}>
-                    <button className={styles.button} onClick={handleLogin}>Login</button>
+                    <button className={styles.button} onClick={handleLogin}>Anmelden</button>
                 </div>
 
 
