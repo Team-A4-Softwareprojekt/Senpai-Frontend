@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import styles from './MultipleChoicePage.module.css';
+import styles from './BuzzerPage.module.css';
 import {socket} from '../../socket.js';
 import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
 import BuzzerButton from '../../buttons/buzzerButton/BuzzerButton.jsx';
@@ -9,13 +9,13 @@ import PopUpGameLoser from '../../popups/popUpGameLoser/PopUpGameLoser.jsx';
 import PopUpGameTie from '../../popups/popUpGameTie/PopUpGameTie.jsx';
 import PopUpPlayerBuzzerDisconnect from '../../popups/popUpPlayerDisconnected/PopUpPlayerBuzzerDisconnect.jsx';
 import ScoresRound from '../../components/scoresRound/ScoresRound.jsx';
-import {PlayerContext} from '../../context/playerContext';
+import {PlayerContext} from '../../context/playerContext.jsx';
 import {useNavigate} from 'react-router-dom';
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 
 let roundCounter = 0;
 
-const MultipleChoicePage = () => {
+const BuzzerPage = () => {
     const navigate = useNavigate();
     const [question, setQuestion] = useState([]);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -306,4 +306,4 @@ const MultipleChoicePage = () => {
     );
 };
 
-export default MultipleChoicePage;
+export default BuzzerPage;
