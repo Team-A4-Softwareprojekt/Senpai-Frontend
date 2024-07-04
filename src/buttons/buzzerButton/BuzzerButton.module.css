@@ -20,7 +20,7 @@
   content: '';
   width: 70%;
   height: 70%;
-  background-color: #ff0000; /* Dunkelblaue Farbe */
+  background-color: #ff0000;
   border-radius: 50%;
   position: absolute;
   top: 50%;
@@ -29,6 +29,6 @@
 }
 
 .buzzerButton:disabled {
-  background-color: #cccccc; /* ausgegraute Farbe */
+  background-color: #cccccc;
   cursor: not-allowed;
 }

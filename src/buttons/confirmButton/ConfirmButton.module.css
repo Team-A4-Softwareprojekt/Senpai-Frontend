@@ -15,6 +15,6 @@
 }
   
 .submitButton:disabled {
-    background-color: #cccccc; /* ausgegraute Farbe */
+    background-color: #cccccc;
     cursor: not-allowed;
 }
