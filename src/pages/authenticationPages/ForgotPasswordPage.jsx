@@ -1,26 +1,25 @@
 import styles from './Authentication.module.css';
 import {useNavigate} from 'react-router-dom';
-import React, {useContext, useEffect, useState} from "react";
-import {PlayerContext} from '../../context/playerContext.jsx';
+import React, {useState, useEffect} from "react";
 import {URL} from '../../../url.js';
+import PopUpPasswordChangeSuccess from '../../popups/popUpPasswordChangeSuccess/PopUpPasswordChangeSuccess.jsx';
 
-
+// Main component function for the ForgotPasswordPage
 function ForgotPasswordPage() {
-
-    // Navigate function
     const navigate = useNavigate();
 
     const url = URL + '/forgotPassword';
     const urlQuestion = URL + '/security-questions';
 
-
+    // State variables for form inputs and validation
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [securityQuestion, setSecurityQuestion] = useState('');
     const [securityAnswer, setSecurityAnswer] = useState('');
     const [securityQuestions, setSecurityQuestions] = useState([]);
     const [errors, setErrors] = useState({});
-
+    const [actionText, setActionText] = useState('');
+    const [isPopUpPasswordChangeSuccessVisible, setIsPopUpPasswordChangeSuccessVisible] = useState(false);
 
     // Fetch security questions from the server
     useEffect(() => {
@@ -37,6 +36,14 @@ function ForgotPasswordPage() {
     const handleSecurityQuestionChange = (e) => setSecurityQuestion(e.target.value);
     const handleSecurityAnswerChange = (e) => setSecurityAnswer(e.target.value);
 
+    // Show success popup and redirect to login page
+    const handlePasswordChangeSuccess = () => {
+        setIsPopUpPasswordChangeSuccessVisible(true);
+        setTimeout(() => {
+            setIsPopUpPasswordChangeSuccessVisible(false);
+            navigate('/login');
+        }, 3000);
+    };
 
     // Validate form inputs
     const validate = () => {
@@ -48,6 +55,7 @@ function ForgotPasswordPage() {
         return newErrors;
     };
 
+    // Handle password reset
     const handleReset = (event) => {
 
         event.preventDefault();
@@ -67,22 +75,22 @@ function ForgotPasswordPage() {
             .then(response => {
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Netzwerk Antwort war nicht in Ordnung.');
                 }
                 return response.json();
             })
             .then(data => {
                 if (data.success === true) {
-                    //TODO: data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
-                    console.log(data.message);
-                    navigate('/login');
+                    handlePasswordChangeSuccess();
+                } else {
+                    setActionText(data.message);
                 }
-
             });
     }
 
     return (
-        <div className={styles.backgroundContainer}> 
+        <div className={styles.backgroundContainer}>
+            {!isPopUpPasswordChangeSuccessVisible && (
             <div className={styles.authenticationContainer}>
                 <div className={styles.h1}>Passwort zurücksetzen</div>
                 <form onSubmit={handleReset}>
@@ -114,11 +122,18 @@ function ForgotPasswordPage() {
                                onChange={handleSecurityAnswerChange}/>
                         {errors.securityAnswer && <div className={styles.error}>{errors.securityAnswer}</div>}
                     </div>
+                    <div className={styles.passwordChangeFail}>
+                        {actionText}
+                    </div>
                     <div className={styles.buttonDiv}>
                         <button type="submit" className={styles.button}>Bestätigen</button>
                     </div>
                 </form>
             </div>
+            )}
+            {isPopUpPasswordChangeSuccessVisible && (
+                <PopUpPasswordChangeSuccess isVisible={isPopUpPasswordChangeSuccessVisible}/>
+            )}
         </div>
     );
 }

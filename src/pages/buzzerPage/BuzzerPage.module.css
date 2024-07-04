@@ -59,10 +59,10 @@
 }
 
 .timer .seconds {
-  color: inherit; /* inherits color from .timer */
-  width: 25px; /* Fix the width to prevent layout shift */
-  display: inline-block; /* Ensure it takes the fixed width */
-  text-align: center; /* Center align the text */
+  color: inherit;
+  width: 25px;
+  display: inline-block;
+  text-align: center;
 }
 
 .timer .seconds.red {
@@ -97,11 +97,11 @@
 }
 
 .backgroundContainer {
-  background-image: url('../../assets/codeBattleIngame.png'); /* Pfad zum Hintergrundbild */
-  background-size: cover; /* Bild wird so skaliert, dass der gesamte Container abgedeckt wird */
-  background-position: center; /* Bild wird in der Mitte des Containers zentriert */
-  background-repeat: no-repeat; /* Bild wird nicht wiederholt */
-  width: 100vw; /* Breite des Containers */
-  height: 98.9vh; /* Höhe des Containers */
-  padding-top: 10px; /* Add padding to push content below the button bar */
+  background-image: url('../../assets/codeBattleIngame.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 98.9vh;
+  padding-top: 10px;
 }

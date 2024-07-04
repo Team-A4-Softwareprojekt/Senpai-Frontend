@@ -2,13 +2,29 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './PopUpManipulationRoundEnd.module.css';
 
+/**
+ * PopUpManipulationRoundEnd Component
+ * 
+ * This component renders a popup that displays the results of a manipulation round, indicating whether the code compiled successfully for each player.
+ * It includes a button to confirm and close the popup, navigating to the next page.
+ * 
+ * Props:
+ * - `player1`: The name of the first player.
+ * - `player2`: The name of the second player.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ * - `hasFoundErrorP1`: Boolean indicating if player1's code compiled successfully.
+ * - `hasFoundErrorP2`: Boolean indicating if player2's code compiled successfully.
+ * - `onClose`: Function to close the popup.
+ */
 const PopUpManipulationRoundEnd = ({ player1, player2, isVisible, hasFoundErrorP1, hasFoundErrorP2, onClose  }) => {
     const navigate = useNavigate();
 
+    // Return null if the popup is not visible
     if (!isVisible) {
         return null;
     }
 
+    // Handle closing of the popup and navigate to the next page
     const handleClose = () => {
         onClose();
         navigate('/codebattle/manipulation/player1');

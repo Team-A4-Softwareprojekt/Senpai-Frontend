@@ -5,6 +5,16 @@ import PopUpPurchaseSuccess from '../popUpPurchaseSuccess/PopUpPurchaseSuccess.j
 import PopUpPurchaseFailure from '../popUpPurchaseFailure/PopUpPurchaseFailure.jsx';
 import {URL} from "../../../url.js";
 
+/**
+ * PopUpPremium Component
+ * 
+ * This component renders a popup that allows the user to purchase a premium membership.
+ * It includes options to confirm the purchase and handles success or failure of the transaction.
+ * 
+ * Props:
+ * - `closePopUp`: Function to close the popup.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ */
 const PopUpPremium = ({ closePopUp, isVisible }) => {
     const { playerData, setPlayerData } = useContext(PlayerContext);
     const [isSuccessVisible, setIsSuccessVisible] = useState(false);
@@ -12,8 +22,10 @@ const PopUpPremium = ({ closePopUp, isVisible }) => {
     const url = URL + '/startSubscription'
     const urlCurrency = URL + '/buyCurrency'
 
+    // Return null if the popup is not visible
     if (!isVisible) return null;
 
+    // Handle confirmation of premium purchase
     const handleConfirmPurchase = () => {
         if (playerData.credit >= 5) {
             const today = new Date();
@@ -51,17 +63,13 @@ const PopUpPremium = ({ closePopUp, isVisible }) => {
                             closePopUp();
                         }, 5000);
                     }
-
-                    //data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
                 });
-
-
-
         } else {
             setIsFailureVisible(true);
         }
     };
 
+    // Handle adding credit to the player's account
     const handleAddCredit = (amount) => {
 
         let playerName = playerData.playername;
@@ -82,14 +90,12 @@ const PopUpPremium = ({ closePopUp, isVisible }) => {
             .then(data => {
 
                 if(data.success === true) {
-                    // Update playerData email
                     setPlayerData({
                         ...playerData,
                         credit: playerData.credit + amount,
                     });
                 }
                 console.log(data.message);
-                //data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
             });
 
         setIsFailureVisible(false);

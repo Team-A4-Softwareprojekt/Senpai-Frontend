@@ -49,8 +49,8 @@
 
 .button {
     border-radius: 10px;
-    font-size: 20px; /* Schriftgröße des Buttons */
-    padding: 10px 15px; /* Innenabstand des Buttons */
+    font-size: 20px;
+    padding: 10px 15px;
     margin-top: 15px;
     display: flex;
     align-items: center;

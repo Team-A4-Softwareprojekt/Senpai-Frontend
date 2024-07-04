@@ -3,6 +3,16 @@ import styles from './PopUpChangeEmail.module.css';
 import {PlayerContext} from "../../context/playerContext.jsx";
 import {URL} from "../../../url.js";
 
+/**
+ * PopUpChangeEmail Component
+ * 
+ * This component renders a popup that allows the user to change their email address.
+ * It includes input fields for the new email and its confirmation, and displays messages based on the success or error of the operation.
+ * 
+ * Props:
+ * - `closePopUp`: Function to close the popup.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ */
 const PopUpChangeEmail = ({closePopUp, isVisible}) => {
     const {playerData, setPlayerData} = useContext(PlayerContext);
     const [newEmail, setNewEmail] = useState('');
@@ -11,17 +21,21 @@ const PopUpChangeEmail = ({closePopUp, isVisible}) => {
     const [error, setError] = useState('');
     const url = URL + '/changeEmail'
 
+    // Return null if the popup is not visible
     if (!isVisible) return null;
 
+    // Handle confirmation of email change
     const handleConfirm = () => {
-        setMessage(''); // Clear any previous messages
-        setError(''); // Clear any previous errors
+        setMessage('');
+        setError('');
         
+        // Validate email format
         if (!newEmail.includes('@')) {
             setError('Die E-Mail muss ein @-Zeichen beinhalten!');
             return;
         }
 
+        // Check if the emails match
         if (newEmail !== confirmEmail) {
             setError('Die E-Mails stimmen nicht überein!');
             return;
@@ -29,6 +43,7 @@ const PopUpChangeEmail = ({closePopUp, isVisible}) => {
 
         let playerName = playerData.playername;
 
+        // Send request to change the email
         fetch(url, {
             method: 'POST',
             headers: {
@@ -45,16 +60,16 @@ const PopUpChangeEmail = ({closePopUp, isVisible}) => {
             .then(data => {
                 console.log('Response from server after Email change:', data);
 
+                // Handle successful email change
                 if(data.success == true) {
-                    // Update playerData email
                     setPlayerData({...playerData, email: newEmail});
                     setMessage('Deine E-Mail wurde erfolgreich geändert.');
                 }
                 console.log(data.message);
-                //data.message kann als erfolgs meldung im popup verwendet werden 'email updated successfully'
             });
     };
 
+    // Handle closing of the popup
     const handleClose = () => {
         setNewEmail('');
         setConfirmEmail('');

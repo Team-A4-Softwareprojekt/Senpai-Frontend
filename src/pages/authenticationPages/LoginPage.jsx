@@ -11,33 +11,29 @@ the register page and the forgot password page
 */
 function LoginPage() {
 
-    // Navigate function
     const navigate = useNavigate();
-
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [loginError, setLoginError] = useState('');
     const { playerName, setPlayerName, playerData, setPlayerData } = useContext(PlayerContext);
-
     const url = URL + '/login';
 
-    // functions for updating the input formula
+    // Function to handle password input change
     const handlePasswordChange = (event) => {
         const newPassword = event.target.value;
         setPassword(newPassword);
     };
 
+    // Function to handle username input change
     const handleUsernameChange = (event) => {
         const newUsername = event.target.value;
         setUsername(newUsername);
     };
 
-    // Navigates to the selectlearningcontent page
+    // Function to handle login process
     const handleLogin = (event) => {
         event.preventDefault();
-        setLoginError(''); // Clear previous errors
-        console.log('Eingegebener Username:', username);
-        console.log('Eingegebenes Passwort:', password);
+        setLoginError('');
 
         fetch(url, {
             method: 'POST',
@@ -48,9 +44,9 @@ function LoginPage() {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Netzwerk Antwort war nicht in Ordnung.');
                 }
-                return response.json(); // Die Antwort als JSON lesen
+                return response.json();
             })
             .then(data => {
                 console.log('Response from server:', data);
@@ -59,11 +55,11 @@ function LoginPage() {
                     setPlayerData(data.data);
                     navigate("/select");
                 } else {
-                    setLoginError("Falscher Benutzername oder Passwort")
+                    setLoginError("Falscher Benutzername oder Passwort.")
                 }
             })
             .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
+                console.error('Es gab ein Problem mit der fetch Operation:', error);
             });
     }
 
@@ -74,13 +70,11 @@ function LoginPage() {
                 <form action="">
                     <div className={styles.authenticationFormDiv}>
                         <label htmlFor="username">Benutzername</label>
-                        <input id="username" type="text" placeholder="Benutzername eingeben" value={username}
-                               onChange={handleUsernameChange}/>
+                        <input id="username" type="text" placeholder="Benutzername eingeben" value={username} onChange={handleUsernameChange}/>
                     </div>
                     <div className={styles.authenticationFormDiv}>
                         <label htmlFor="password">Passwort</label>
-                        <input id="password" type="password" placeholder="Passwort eingeben" value={password}
-                               onChange={handlePasswordChange}/>
+                        <input id="password" type="password" placeholder="Passwort eingeben" value={password} onChange={handlePasswordChange}/>
                     </div>
                 </form>
                 {loginError && <div className={styles.error}>{loginError}</div>}
@@ -93,8 +87,6 @@ function LoginPage() {
                 <div className={styles.buttonDiv}>
                     <button className={styles.button} onClick={handleLogin}>Anmelden</button>
                 </div>
-
-
             </div>
         </div>
     );

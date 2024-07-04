@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import styles from './MultipleChoicePage.module.css';
+import styles from './BuzzerPage.module.css';
 import {socket} from '../../socket.js';
 import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
 import BuzzerButton from '../../buttons/buzzerButton/BuzzerButton.jsx';
@@ -9,15 +9,29 @@ import PopUpGameLoser from '../../popups/popUpGameLoser/PopUpGameLoser.jsx';
 import PopUpGameTie from '../../popups/popUpGameTie/PopUpGameTie.jsx';
 import PopUpPlayerBuzzerDisconnect from '../../popups/popUpPlayerDisconnected/PopUpPlayerBuzzerDisconnect.jsx';
 import ScoresRound from '../../components/scoresRound/ScoresRound.jsx';
-import {PlayerContext} from '../../context/playerContext';
+import {PlayerContext} from '../../context/playerContext.jsx';
 import {useNavigate} from 'react-router-dom';
 import {BuzzerPlayerContext} from "../../context/buzzerQuestionContext.jsx";
 
+// Used for the correct display of end screens
 let roundCounter = 0;
 
-const MultipleChoicePage = () => {
+/**
+ * BuzzerPage Component
+ * 
+ * This component handles the game logic for a buzzer-based quiz game.
+ * It manages the state of the game, including the current question, the selected answer,
+ * the state of the buzzer and confirm buttons, and the visibility of various popups.
+ * 
+ * It communicates with a socket server to handle events such as buzzing in, answering questions,
+ * and game state changes. The component also handles navigation to different question types
+ * and manages the timer for each round and turn.
+ * 
+ * The component uses several contexts to share state with other parts of the application,
+ * including PlayerContext for player information and BuzzerPlayerContext for question data.
+ */
+const BuzzerPage = () => {
     const navigate = useNavigate();
-    const [question, setQuestion] = useState([]);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(true);
     const [isBuzzerButtonDisabled, setIsBuzzerButtonDisabled] = useState(false);
@@ -40,77 +54,78 @@ const MultipleChoicePage = () => {
     const {buzzerQuestion, setBuzzerQuestion} = useContext(BuzzerPlayerContext);
     const [buzzerMessage, setBuzzerMessage] = useState(null);
     
+    // Handle answer selection
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
     };
 
+    // Handle form submission to compare the selected answer with the correct one
     const handleSubmit = () => {
         if (selectedAnswer !== null) {
             socket.emit('COMPARE_ANSWER', selectedAnswer);
         }
     };
 
-    /**
-     * this function enables or disables the "CONFIRM" button
-     * The "CONFIRM" button gets enabled after Buzzing
-     */
+    // Enable or disable the confirm button
     const toggleButton = () => {
         setIsConfirmButtonDisabled(!isConfirmButtonDisabled);
         setIsBuzzerButtonDisabled(true);
-
         setBuzzerMessage("Du hast den Buzzer gedrückt. Bestätige deine Antwort!"); 
-
         socket.emit('PLAYER_BUZZERED');
-        console.log('isButtonDisabled: ' + isConfirmButtonDisabled);
     }
 
+    // Format time for displaying the remaining time
     const formatTime = (time) => {
         return time < 10 ? `0${time}` : time;
     };
 
+    // Reset the round counter to 0
     const resetRoundCounter = () => {
         roundCounter = 0;
     };
 
     useEffect(() => {
 
+        // Disable the buzzer button
         const disableBuzzer = () => {
             setIsBuzzerButtonDisabled(true);
-            console.log('Buzzer disabled');
         };
 
+        // Enable the buzzer button
         const enableBuzzer = () => {
             setIsBuzzerButtonDisabled(false);
             setIsConfirmButtonDisabled(true);
-            console.log('Buzzer enabled');
         };
 
+        // Handle correct answer
         const handleCorrectAnswer = () => {
             setIsConfirmButtonDisabled(true);
             setIsBuzzerButtonDisabled(false);
         };
 
+        // Handle wrong answer
         const handleWrongAnswer = () => {
             setIsConfirmButtonDisabled(true);
             setIsBuzzerButtonDisabled(true);
             setBuzzerMessage("Deine Antwort war falsch. Jetzt ist dein Gegner dran!");
         };
 
+        // Handle opponent pressing the buzzer button
         const handleOpponentBuzzered = () => {
             if (buzzerMessage !== "Deine Antwort war falsch. Jetzt ist dein Gegner dran!") {
                 setBuzzerMessage("Dein Gegner hat den Buzzer schneller gedrückt!");
             }
         };
 
+        // Handle opponent's wrong answer
         const handleOpponentWrongAnswer = () => {
             setBuzzerMessage("Dein Gegner hat falsch geantwortet. Du kannst antworten!");
-
             setIsConfirmButtonDisabled(false);
             setIsBuzzerButtonDisabled(true);
             socket.emit('PLAYER_BUZZERED');
-            console.log("Handle Opponent Wrong Answer")
         };
 
+        // Navigate to the question type (multiple choice or gap text)
         const handleQuestionType = (table) => {
             if (table === 'multiplechoicequestion') {
                 navigate('/codebattle/buzzer/multiplechoice');
@@ -119,6 +134,7 @@ const MultipleChoicePage = () => {
             }
         };
 
+        // Handle the end of a round
         const handleRoundEnd = (playerName, solution, ownPointsReceived, opponentPointsReceived) => {
             setWinnerRound(playerName);
             setSolution(solution);
@@ -140,10 +156,8 @@ const MultipleChoicePage = () => {
             }, 3000);
         }
 
+        // Handle the end of the game
         const handleGameEnd = (ownPointsReceived, opponentPointsReceived) => {
-            console.log('Received own points:', ownPointsReceived);
-            console.log('Received opponent points:', opponentPointsReceived);
-
             setIsBuzzerGameVisible(false);
             setOwnPoints(ownPointsReceived);
             setOpponentPoints(opponentPointsReceived);
@@ -163,20 +177,22 @@ const MultipleChoicePage = () => {
             setIsBuzzerButtonDisabled(false);
         };
 
+        // Display the remaining round time
         const displayRoundTime = (remainingSecondsRound) => {
             setRemainingSeconds(remainingSecondsRound);
-            console.log('Round time left:', remainingSecondsRound);
         }
 
+        // Display the remaining turn time
         const displayTurnTime = (remainingSecondsTurn) => {
             setRemainingSeconds(remainingSecondsTurn);
-            console.log('Turn time left:', remainingSecondsTurn);
         }
 
+        // Trigger the buzzer action
         const triggerBuzzer = () => {
             toggleButton();
         }
 
+        // Handle opponent disconnection
         const opponentDisconnected = () => {
             setIsPlayerDisconnected(true);
             setIsBuzzerGameVisible(false);
@@ -187,6 +203,7 @@ const MultipleChoicePage = () => {
             }, 3000);
         }
 
+        // Set the question for the buzzer round
         const handleSetQuestion = (question) => {
             setBuzzerQuestion(question);
         };
@@ -306,4 +323,4 @@ const MultipleChoicePage = () => {
     );
 };
 
-export default MultipleChoicePage;
+export default BuzzerPage;

@@ -1,7 +1,20 @@
 import React from 'react';
 import styles from './PopUpRoundWinner.module.css';
 
+/**
+ * PopUpRoundWinner Component
+ * 
+ * This component renders a popup that displays the winner of the round and the correct solution.
+ * It handles both the cases when there is a winner and when the round ends in a tie.
+ * 
+ * Props:
+ * - `winner`: The name of the round winner or 'unentschieden' if it's a tie.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ * - `solution`: The correct solution for the round.
+ */
 const PopUpRoundWinner = ({ winner, isVisible, solution }) => {
+
+  // Return null if the popup is not visible
   if (!isVisible) {
     return null;
   }

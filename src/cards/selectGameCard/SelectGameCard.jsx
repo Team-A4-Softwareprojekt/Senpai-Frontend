@@ -3,7 +3,26 @@ import ModalGameSelection from '../../components/modalGameSelection/ModalGameSel
 import styles from './SelectGameCard.module.css';
 import { Link } from 'react-router-dom';
 
-function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick, handleNoHeartsClick, lives, time,selectedOption }) {
+/**
+ * SelectGameCard Component
+ * 
+ * This component is responsible for displaying a selectable game card with a button, image, dropdown, and modal for game rules.
+ * It takes several props to configure its behavior and content:
+ * - `buttonText`: The text to display on the button.
+ * - `imageUrl`: The URL of the image to display on the card.
+ * - `linkTo`: The URL to navigate to when the button is clicked.
+ * - `header`: The header text for the modal.
+ * - `text`: The content text for the modal.
+ * - `slides`: The slides to display in the modal.
+ * - `handleClick`: The function to call when the button is clicked (if the user has lives or time remaining).
+ * - `handleNoHeartsClick`: The function to call when the button is clicked (if the user has no lives and no time remaining).
+ * - `lives`: The number of lives the user has.
+ * - `time`: The remaining time for the user.
+ * - `selectedOption`: The initially selected programming language option in the dropdown.
+ */
+function SelectGameCard({ buttonText, imageUrl, linkTo, header, text, slides, handleClick, handleNoHeartsClick, lives, time, selectedOption }) {
+
+    // Handle button click, calling the appropriate function based on the user's lives and time
     const onButtonClick = () => {
         if (lives === 0 && time <= 0) {
             handleNoHeartsClick();

@@ -1,18 +1,29 @@
-//DELETEACCOUNT
-
 import React, {useContext} from 'react';
 import styles from './PopUpDeleteAccount.module.css';
 import {URL} from '../../../url.js';
 import { useNavigate } from 'react-router-dom';
 import {PlayerContext} from "../../context/playerContext.jsx";
 
+/**
+ * PopUpDeleteAccount Component
+ * 
+ * This component renders a popup that allows the user to delete their account.
+ * It includes a confirmation message and buttons to confirm or cancel the action.
+ * 
+ * Props:
+ * - `closePopUp`: Function to close the popup.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ */
 const PopUpDeleteAccount = ({ closePopUp, isVisible }) => {
+
+    // Return null if the popup is not visible
     if (!isVisible) return null;
 
     const url = URL + '/deleteAccount';
     const navigate = useNavigate();
     const { playerName} = useContext(PlayerContext);
 
+    // Handle confirmation of account deletion
     const handleConfirm = () => {
 
         return fetch(url, {

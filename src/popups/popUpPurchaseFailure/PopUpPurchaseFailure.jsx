@@ -1,10 +1,23 @@
 import React from 'react';
 import styles from './PopUpPurchaseFailure.module.css';
 
+/**
+ * PopUpPurchaseFailure Component
+ * 
+ * This component renders a popup that informs the user they do not have enough credit to make a purchase.
+ * It includes options to add credit and a button to close the popup.
+ * 
+ * Props:
+ * - `closePopUp`: Function to close the popup.
+ * - `isVisible`: Boolean indicating if the popup is visible or not.
+ * - `addCredit`: Function to add credit to the user's account.
+ */
 const PopUpPurchaseFailure = ({ closePopUp, isVisible, addCredit }) => {
+
+    // Return null if the popup is not visible
     if (!isVisible) return null;
 
-    // Wrapper-Funktion für die Übergabe des Guthabens
+    // Handler function to add specific amount of credit
     const addCreditHandler = (credit) => () => addCredit(credit);
 
     return (

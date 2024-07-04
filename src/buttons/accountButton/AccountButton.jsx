@@ -5,17 +5,25 @@ import accountIcon from '../../assets/accountIcon.png';
 import { PlayerContext } from '../../context/playerContext';
 import {URL} from '../../../url.js';
 
+/**
+ * AccountButton Component
+ * 
+ * This component renders a button that navigates to the account page.
+ * It fetches the player's account data from the server before navigating.
+ */
 const AccountButton = () => {
     const url = URL + "/loadAccountData";
     const navigate = useNavigate();
     const { playerName, setPlayerData } = useContext(PlayerContext);
 
+    // Handle button click to load player data and navigate to the account page
     const handleClick = () => {
         loadPlayerData().then(() => {
             navigate('/account');
         });
     };
 
+    // Function to fetch player data from the server
     const loadPlayerData = () => {
 
         return fetch(url, {

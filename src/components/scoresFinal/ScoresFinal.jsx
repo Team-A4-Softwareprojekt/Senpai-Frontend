@@ -1,6 +1,12 @@
 import React from 'react';
 import styles from './ScoresFinal.module.css';
 
+/**
+ * ScoresFinal Component
+ * 
+ * This component is responsible for displaying the final scores of the player and the opponent.
+ * It takes in two props, `ownPoints` and `opponentPoints`, which represent the player's points and the opponent's points respectively.
+ */
 const ScoresFinal = ({ ownPoints, opponentPoints }) => {
   return (
     <div className={styles.scores}>

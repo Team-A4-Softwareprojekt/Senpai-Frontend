@@ -12,8 +12,7 @@ import DailyChallengeMCPage from "./pages/dailyChallengePage/DailyChallengeMCPag
 import CodeBattlePage from "./pages/codeBattlePage/CodeBattlePage.jsx";
 import ManipulationP1Page from './pages/manipulationPage/ManipulationP1Page.jsx';
 import ManipulationP2Page from './pages/manipulationPage/ManipulationP2Page.jsx';
-import MultipleChoicePage from './pages/multipleChoicePage/MultipleChoicePage.jsx';
-import GapTextPage from './pages/buzzerPage/gapTextPage/GapTextPage.jsx';
+import BuzzerPage from './pages/buzzerPage/BuzzerPage.jsx';
 import NoPage from "./pages/noPage/NoPage.jsx";
 import {PlayerProvider} from './context/playerContext';
 import {ScoreProvider} from "./context/scoreContext.jsx";
@@ -39,8 +38,7 @@ function App() {
                                     <Route path="/select/code/dailyChallenge/gapText" element={<DailyChallengeGTPage/>}/>
                                     <Route path="/select/code/dailyChallenge/multipleChoice" element={<DailyChallengeMCPage/>}/>
                                     <Route path="/select/code/codeBattle" element={<CodeBattlePage/>}/>
-                                    <Route path="/codebattle/buzzer/multiplechoice" element={<MultipleChoicePage/>}/>
-                                    <Route path="/codebattle/buzzer/gaptext" element={<GapTextPage/>}/>
+                                    <Route path="/codebattle/buzzer/multiplechoice" element={<BuzzerPage/>}/>
                                     <Route path="/codebattle/manipulation/player1" element={<ManipulationP1Page/>}/>
                                     <Route path="/codebattle/manipulation/player2" element={<ManipulationP2Page/>}/>
                                     <Route path="/account" element={<AccountSettingsPage/>}/>

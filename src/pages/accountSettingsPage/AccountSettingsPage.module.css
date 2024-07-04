@@ -193,10 +193,10 @@
 }
 
 .backgroundContainer {
-    background-image: url('../../assets/cloudsBlurry.jpg'); /* Pfad zum Hintergrundbild */
-    background-size: cover; /* Bild wird so skaliert, dass der gesamte Container abgedeckt wird */
-    background-position: center; /* Bild wird in der Mitte des Containers zentriert */
-    background-repeat: no-repeat; /* Bild wird nicht wiederholt */
-    width: 100vw; /* Breite des Containers */
-    height: 100vh; /* Höhe des Containers */
+    background-image: url('../../assets/cloudsBlurry.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
 }

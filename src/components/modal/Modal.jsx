@@ -1,16 +1,18 @@
 import styles from './Modal.module.css';
 import React, { useState } from "react";
 
-/*
-This is a basic modal component that holds text and a close button
-The header and text parameters are set when the component is initialized
-*/
+/**
+ * Modal Component
+ * 
+ * This component displays a button that, when clicked, opens a modal displaying a header and text.
+ * The modal includes an overlay to close it when clicked outside of the content and a close button inside the modal.
+ */
 function Modal({ header, text }) {
 
-    // Modal is a boolean and setModal is the setter function for the boolean
+    // State to control the visibility of the modal
     const [modal, setModal] = useState(false);
 
-    // Simple toggle function that sets the boolean to the opposite when called
+    // Function to toggle the modal visibility
     const toggleModal = () => {
         setModal(!modal)
     }

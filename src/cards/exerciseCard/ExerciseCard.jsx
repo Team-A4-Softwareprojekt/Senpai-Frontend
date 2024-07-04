@@ -1,8 +1,17 @@
 import styles from './ExerciseCard.module.css';
 
+/**
+ * ExerciseCard Component
+ * 
+ * This component is responsible for displaying the name and status of an exercise.
+ * It takes two props:
+ * - `exerciseName`: The name of the exercise.
+ * - `exerciseStatus`: The current status of the exercise (e.g., "Abgeschlossen", "In Bearbeitung").
+ */
 function ExerciseCard({ exerciseName, exerciseStatus }) {
     let statusClass;
 
+    // Determine the CSS class to apply based on the exercise status
     if (exerciseStatus === 'Abgeschlossen') {
       statusClass = styles.finished;
     } else if (exerciseStatus === 'In Bearbeitung') {
