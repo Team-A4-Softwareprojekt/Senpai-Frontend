@@ -4,16 +4,23 @@ import {PlayerContext} from '../../context/playerContext';
 import {URL} from "../../../url.js";
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * FillInTheBlankText Component
+ * 
+ * This component renders a text with fill-in-the-blank inputs for the user to complete.
+ * It provides functionalities to check the answers and request help. 
+ * 
+ * Props:
+ * - `text`: The text containing the blanks.
+ * - `blankIndices`: An array of indices indicating the positions of the blanks.
+ * - `allowHelp`: Boolean to indicate if the help button should be displayed.
+ */
 function FillInTheBlankText({ text, blankIndices, allowHelp }) {
   const navigate = useNavigate();
   const [actionText, setActionText] = useState('');
-
   const [inputs, setInputs] = useState(Array(blankIndices.length).fill(''));
   const [words, setWords] = useState(text.split(' '));
-
-  // Set initial state for modal
   const [show, setShow] = useState(false);
-  // Set initial state for results
   const [results, setResults] = useState(Array(blankIndices.length).fill(false));
   const [firstAttempt, setFirstAttempt] = useState(true);
   const [isWinner, setIsWinner] = useState(false);
@@ -43,7 +50,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
         setIsWinner(true);
         setActionText('Glückwunsch! Du hast alle Wörter im ersten Versuch gefunden!');
 
-        // Add any additional logic for winning, such as notifying the server or updating the UI
+        // Notify server of streak success
         fetch(url, {
           method: 'POST',
           headers: {
@@ -70,7 +77,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
       } else {
         // Display a message if not all words are correct
         setActionText('Nicht alle eingegebenen Wörter sind korrekt');
-        // Add any additional logic for losing, such as notifying the server or updating the UI
+        // Set streaktoday to false and navigate back
         setTimeout(() => {
           navigate("/select/code");
           setPlayerData({...playerData, streaktoday: false});
@@ -84,6 +91,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
     }
   };
 
+  // Function to handle help button click
   const handleHelp = () => {
     setHelpUsed(!helpUsed);
 

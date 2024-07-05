@@ -26,11 +26,11 @@
 
 .backgroundImage {
     background-image: url('../../assets/codeBattleIngame.png');
-    background-size: cover; /* This makes the background cover the entire area */
-    background-position: center; /* This centers the background image */
-    background-repeat: no-repeat; /* This prevents the background image from repeating */
-    height: 100vh; /* Ensures the background covers the full viewport height */
-    width: 100vw; /* Ensures the background covers the full viewport width */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
 }
 
 .manipulationContainer {
@@ -38,9 +38,9 @@
     border-radius: 10px;
     border: 5px solid black;
     width: 900px;
-    margin: 0 auto; /* Add this line to center the element horizontally */
-    display: flex; /* Add this line to enable flexbox */
-    flex-direction: column; /* Add this line to center the content vertically */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

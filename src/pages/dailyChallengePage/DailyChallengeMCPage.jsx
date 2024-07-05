@@ -3,7 +3,6 @@ import styles2 from './DailyChallengePage.module.css';
 import { useEffect, useState } from 'react';
 import { socket } from '../../socket.js';
 import ConfirmButton from '../../buttons/confirmButton/ConfirmButton.jsx';
-import BuzzerButton from '../../buttons/buzzerButton/BuzzerButton.jsx';
 
 function DailyChallengeMCPage() {
     const [question, setQuestion] = useState(null);
