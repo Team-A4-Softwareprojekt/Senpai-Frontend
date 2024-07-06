@@ -17,9 +17,47 @@ import PopUpGameTie from "../../popups/popUpGameTie/PopUpGameTie.jsx";
 import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
 import PopUpPlayerManipulationDisconnect from "../../popups/popUpPlayerDisconnected/PopUpPlayerManipulationDisconnect.jsx";
 
+/**
+ * ManipulationPage Component
+ * 
+ * This component renders the manipulation game page where players can manipulate
+ * a given piece of code. It provides functionalities to submit the code, execute it,
+ * and check the results against the expected output.
+ * 
+ * Props:
+ * - None
+ * 
+ * Context:
+ * - ManipulationPlayerContext: Manages the state of the manipulation question.
+ * - PlayerContext: Manages the state of the player data.
+ * - ScoreContext: Manages the state of the scores.
+ * 
+ * State:
+ * - code: The current code being manipulated.
+ * - selectedLanguage: The programming language selected for the editor.
+ * - output: The output of the executed code.
+ * - expectedOutput: The expected output of the code after manipulation.
+ * - inputParameterQuestion: The input parameter for the question.
+ * - isDisabled: Boolean to control the state of the submit button.
+ * - codeTest: The test code to append to the main code.
+ * - isPopupManipulationCorrectVisible: Boolean to control the visibility of the correct answer popup.
+ * - isPopupManipulationWrongVisible: Boolean to control the visibility of the wrong answer popup.
+ * - isPlayerDisconnected: Boolean to check if the opponent player is disconnected.
+ * - isPopUpPlayerDisconnectedVisible: Boolean to control the visibility of the player disconnected popup.
+ * - showManipulationContainer: Boolean to control the visibility of the manipulation container.
+ * - isPopupVisible: Boolean to control the visibility of the round end popup.
+ * - enemyPlayer: The name of the enemy player.
+ * - hasFoundErrorP1: Boolean to check if player 1 has found an error.
+ * - hasFoundErrorP2: Boolean to check if player 2 has found an error.
+ * - winnerGame: The name of the game winner.
+ * - loserGame: The name of the game loser.
+ * - isGameLoserVisible: Boolean to control the visibility of the game loser popup.
+ * - isGameWinnerVisible: Boolean to control the visibility of the game winner popup.
+ * - isTieVisible: Boolean to control the visibility of the game tie popup.
+ * - isGameFinished: Boolean to check if the game is finished.
+ */
 function ManipulationPage() {
     const navigate = useNavigate();
-
     const [code, setCode] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState('javascript');
     const {manipulationQuestion} = useContext(ManipulationPlayerContext);
@@ -30,25 +68,21 @@ function ManipulationPage() {
     const [isDisabled, setIsDisabled] = useState(true);
     const {setManipulationQuestion} = useContext(ManipulationPlayerContext);
     const [codeTest, setCodeTest] = useState('');
-
     const [isPopupManipulationCorrectVisible, setIsPopupManipulationCorrectVisible] = useState(false);
     const [isPopupManipulationWrongVisible, setIsPopupManipulationWrongVisible] = useState(false);
     const [isPlayerDisconnected, setIsPlayerDisconnected] = useState(false);
     const [isPopUpPlayerDisconnectedVisible, setIsPopUpPlayerDisconnectedVisible] = useState(false);
     const [showManipulationContainer, setShowManipulationContainer] = useState(true);
-
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [enemyPlayer, setEnemyPlayer] = useState('');
     const [hasFoundErrorP1, setHasFoundErrorP1] = useState(false);
     const [hasFoundErrorP2, setHasFoundErrorP2] = useState(false);
-
     const [winnerGame, setWinnerGame] = useState('');
     const [loserGame, setLoserGame] = useState('');
     const [isGameLoserVisible, setIsGameLoserVisible] = useState(false);
     const [isGameWinnerVisible, setIsGameWinnerVisible] = useState(false);
     const [isTieVisible, setIsTieVisible] = useState(false);
     const [isGameFinished, setIsGameFinished] = useState(false);
-
     const {ownPoints, opponentPoints, setOwnPoints, setOpponentPoints} = useContext(ScoreContext);
 
     // Function to execute the code
@@ -107,7 +141,7 @@ function ManipulationPage() {
             // Set initial code, expected output, input parameter, and characters left
             let codeLines = manipulationQuestion.code.split('\n');
             let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
-            let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+            let codeTest = codeLines[codeLines.length - 1];
 
             // Set the code and codeTest
             setCode(codeExceptLastLine);
@@ -121,35 +155,29 @@ function ManipulationPage() {
     // Socket event listeners
     const handleInputManipulation = (data) => {
         const {code, answer, input} = data;
-
         let codeLines = code.split('\n');
         let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
-        let codeTest = codeLines[codeLines.length - 1]; // Get the last line
-        console.log('Code test:', codeTest);
+        let codeTest = codeLines[codeLines.length - 1];
         setCode(codeExceptLastLine);
         setCodeTest(codeTest);
         setExpectedOutput(answer);
         setInputParameterQuestion(input);
-        console.log('Expected output:', expectedOutput);
         setOutput('');
         setIsDisabled(false);
     };
+
     // Function to handle the start of a new round
     const handleStartNewRound = (nameP2, boolP1, boolP2, ownPointsReceived, opponentPointsReceived) => {
-
         setOwnPoints(ownPointsReceived);
         setOpponentPoints(opponentPointsReceived);
-        console.log(nameP2)
         setHasFoundErrorP1(boolP1);
         setEnemyPlayer(nameP2);
         setHasFoundErrorP2(boolP2);
         setPopupVisible(true);
     };
+
     // Function to handle the end of the game
     const handleGameEnd = (ownPointsReceived, opponentPointsReceived) => {
-        console.log('Received own points:', ownPointsReceived);
-        console.log('Received opponent points:', opponentPointsReceived);
-
         setOwnPoints(ownPointsReceived);
         setOpponentPoints(opponentPointsReceived);
         setIsGameFinished(true);
@@ -167,12 +195,10 @@ function ManipulationPage() {
 
     // Function to handle setting the question for manipulation
     const handleSetQuestionManipulation = (question) => {
-        console.log(question);
         setManipulationQuestion(question);
     };
 
-    useEffect(() => {
-        
+    useEffect(() => {  
         // Function to handle the player disconnecting
         const opponentDisconnected = () => {
             setIsPlayerDisconnected(true);
@@ -202,21 +228,21 @@ function ManipulationPage() {
         };
     }, []);
 
-    // Function to handle closing the word limit popup
+    // Function to handle closing the correct answer popup
     const handlePopupManipulationCorrectVisible = () => {
         socket.emit('ROUND_END_MANIPULATION', true);
         setIsPopupManipulationCorrectVisible(false);
         setIsDisabled(true);
     };
 
-    // Function to handle closing the word limit popup
+    // Function to handle closing the wrong answer popup
     const handlePopupManipulationWrongVisible = () => {
         socket.emit('ROUND_END_MANIPULATION', false);
         setIsPopupManipulationWrongVisible(false);
         setIsDisabled(true);
     };
 
-    // Function to handle closing the word limit popup
+    // Function to handle closing the round end popup
     const handlePopupClose = () => {
         setPopupVisible(false);
         setIsDisabled(false);

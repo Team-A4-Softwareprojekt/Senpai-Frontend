@@ -6,28 +6,57 @@ import { useNavigate } from 'react-router-dom';
 import { ManipulationPlayerContext } from '../../context/manipulationQuestionContext.jsx';
 import { socket } from '../../socket.js';
 import PopUpManipulationWordLimit from '../../popups/popUpManipulation/PopUpManipulationWordLimit.jsx';
-import styles2 from './ManipulationPage.module.css';
+import styles from './ManipulationPage.module.css';
 import ScoresRound from "../../components/scoresRound/ScoresRound.jsx";
 import {ScoreContext} from "../../context/scoreContext.jsx";
 import PopUpPlayerManipulationDisconnect from "../../popups/popUpPlayerDisconnected/PopUpPlayerManipulationDisconnect.jsx";
 
+/**
+ * ManipulationPage Component
+ * 
+ * This component renders the manipulation game page where players can manipulate
+ * a given piece of code. It provides functionalities to submit the code and check
+ * the remaining characters allowed for manipulation.
+ * 
+ * Props:
+ * - None
+ * 
+ * Context:
+ * - ManipulationPlayerContext: Manages the state of the manipulation question.
+ * - ScoreContext: Manages the state of the scores.
+ * 
+ * State:
+ * - code: The current code being manipulated.
+ * - initialCode: The initial code before any manipulation.
+ * - selectedLanguage: The programming language selected for the editor.
+ * - charactersLeft: The number of characters left for manipulation.
+ * - expectedOutput: The expected output of the code after manipulation.
+ * - inputParameterQuestion: The input parameter for the question.
+ * - showEditor: Boolean to control the visibility of the code editor.
+ * - showInfoContainer: Boolean to control the visibility of the information container.
+ * - showManipulationContainer: Boolean to control the visibility of the manipulation container.
+ * - actionText: Text to display actions or instructions to the user.
+ * - codeTest: The test code to append to the main code.
+ * - showWordLimitPopup: Boolean to control the visibility of the word limit popup.
+ * - isPlayerDisconnected: Boolean to check if the opponent player is disconnected.
+ * - isPopUpPlayerDisconnectedVisible: Boolean to control the visibility of the player disconnected popup.
+ */
 function ManipulationPage() {
   const navigate = useNavigate();
   const { manipulationQuestion } = useContext(ManipulationPlayerContext);
-
   const [code, setCode] = useState('');
   const [initialCode, setInitialCode] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
   const [charactersLeft, setCharactersLeft] = useState(0);
   const [expectedOutput, setExpectedOutput] = useState('');
   const [inputParameterQuestion, setInputParameterQuestion] = useState('');
-  const [showEditor, setShowEditor] = useState(true); // State to toggle editor visibility
+  const [showEditor, setShowEditor] = useState(true);
   const [showInfoContainer, setShowInfoContainer] = useState(true);
   const [showManipulationContainer, setShowManipulationContainer] = useState(true);
   const [actionText, setActionText] = useState('');
   const [codeTest, setCodeTest] = useState('');
   const { ownPoints, opponentPoints } = useContext(ScoreContext);
-  const [showWordLimitPopup, setShowWordLimitPopup] = useState(false); // State to manage word limit popup visibility
+  const [showWordLimitPopup, setShowWordLimitPopup] = useState(false);
   const [isPlayerDisconnected, setIsPlayerDisconnected] = useState(false);
   const [isPopUpPlayerDisconnectedVisible, setIsPopUpPlayerDisconnectedVisible] = useState(false);
 
@@ -36,14 +65,13 @@ function ManipulationPage() {
     { value: 'python', label: 'Python', disabled: true },
     { value: 'java', label: 'Java', disabled: true },
     { value: 'ruby', label: 'Ruby', disabled: true },
-    // Add more languages as needed
   ];
 
+  // Function to submit the manipulated code
   const submitCode = () => {
-    let codeWithTest = code + '\n' + codeTest; // Concatenate code and codeTest with a newline
-
+    let codeWithTest = code + '\n' + codeTest;
     socket.emit('SUBMIT_CHANGES_MANIPULATION', { code: codeWithTest, expectedOutput, inputParameterQuestion });
-    setShowEditor(false); // Hide editor after submission
+    setShowEditor(false);
     setShowInfoContainer(false);
     setActionText('Warte bis dein Gegner fertig ist...');
   };
@@ -51,8 +79,10 @@ function ManipulationPage() {
   // Function to handle changes in the editor
   const onChange = (newCode) => {
     let codeLines = manipulationQuestion.code.split('\n');
-    let lastLine = codeLines[codeLines.length - 1]; // Get the last line
-    const initialLength = initialCode.replace(/\s/g, '').length - lastLine.replace(/\s/g, '').length; // Initial code length without spaces and without the last line
+    // Get the last line
+    let lastLine = codeLines[codeLines.length - 1];
+    // Initial code length without spaces and without the last line
+    const initialLength = initialCode.replace(/\s/g, '').length - lastLine.replace(/\s/g, '').length;
     const currentLength = newCode.replace(/\s/g, '').length;
     const changeCount = Math.abs(currentLength - initialLength);
   
@@ -72,7 +102,7 @@ function ManipulationPage() {
       // Set initial code, expected output, input parameter, and characters left
       let codeLines = manipulationQuestion.code.split('\n');
       let codeExceptLastLine = codeLines.slice(0, -1).join('\n');
-      let codeTest = codeLines[codeLines.length - 1]; // Get the last line
+      let codeTest = codeLines[codeLines.length - 1];
 
       // Set the code and codeTest
       setCode(codeExceptLastLine);
@@ -117,7 +147,7 @@ function ManipulationPage() {
       // Clean up socket event listeners
       socket.off('START_NEW_ROUND_MANIPULATION', handleStartNewRound);
       socket.off('SWITCH_PAGE_MANIPULATION', handleSwitchPageManipulation);
-        socket.off('OPPONENT_DISCONNECTED', opponentDisconnected);
+      socket.off('OPPONENT_DISCONNECTED', opponentDisconnected);
     };
   }, []);
 
@@ -128,40 +158,40 @@ function ManipulationPage() {
   };
 
   return (
-    <div className={styles2.backgroundImage} >
+    <div className={styles.backgroundImage} >
       {showManipulationContainer && (
-      <div className={styles2.manipulationContainer}>
+      <div className={styles.manipulationContainer}>
         <ScoresRound ownPoints={ownPoints} opponentPoints={opponentPoints} />
         {showInfoContainer && (
-          <div className={styles2.infoContainer}>
-            <div className={styles2.infoBox}>
+          <div className={styles.infoContainer}>
+            <div className={styles.infoBox}>
                 Verbleibende Zeichen:
-              <div className={styles2.dynamicContainer}>
-                <span className={styles2.dynamicData}>{charactersLeft}</span>
+              <div className={styles.dynamicContainer}>
+                <span className={styles.dynamicData}>{charactersLeft}</span>
               </div>
             </div>
-            <div className={styles2.infoBox}>
+            <div className={styles.infoBox}>
                 Parameterwert:
-              <div className={styles2.dynamicContainer}>
-                <span className={styles2.dynamicData}>{inputParameterQuestion}</span>
+              <div className={styles.dynamicContainer}>
+                <span className={styles.dynamicData}>{inputParameterQuestion}</span>
               </div>
             </div>
-            <div className={styles2.infoBox}>
+            <div className={styles.infoBox}>
                 Konsolenausgabe:
-              <div className={styles2.dynamicContainer}>
-                <span className={styles2.dynamicData}>{expectedOutput}</span>
+              <div className={styles.dynamicContainer}>
+                <span className={styles.dynamicData}>{expectedOutput}</span>
               </div>
             </div>
           </div>
         )}
         <div>
-          <h2 className={styles2.infoText}>
+          <h2 className={styles.infoText}>
             {actionText}
           </h2>
         </div>
         {showEditor && (
           <>
-            <div className={`${styles2.editor}`}>
+            <div className={`${styles.editor}`}>
               <AceEditor
                 mode={selectedLanguage}
                 theme="monokai"
@@ -174,7 +204,7 @@ function ManipulationPage() {
                 readOnly={languages.find((lang) => lang.value === selectedLanguage).disabled}
               />
             </div>
-            <button onClick={submitCode} className={styles2.runButton}>
+            <button onClick={submitCode} className={styles.runButton}>
               Bestätigen
             </button>
           </>
