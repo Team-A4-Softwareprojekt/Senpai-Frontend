@@ -90,13 +90,13 @@ function CodeBattlePage() {
     useEffect(() => {
 
         // Handle game found for the buzzer game mode
-        const handleGameFoundBuzzer = (fullRoom) => {
+        const handleGameFoundBuzzer = () => {
             setIsPopUpQueueVisible(false);
             setIsPopUpCountdownVisible(true);
         };
     
         // Handle game found for the manipulation game mode
-        const handleGameFoundManipulation = (fullRoom) => {
+        const handleGameFoundManipulation = () => {
             setIsPopUpQueueVisible(false);
             setIsPopUpCountdownVisible(true);
 
