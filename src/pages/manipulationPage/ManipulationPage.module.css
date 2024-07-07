@@ -1,0 +1,92 @@
+.runButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.runButton:hover {
+    background-color: #218838;
+}
+
+.editor {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid black;
+    background: lightblue;
+}
+
+.backgroundImage {
+    background-image: url('../../assets/codeBattleIngame.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+}
+
+.manipulationContainer {
+    background-color: white;
+    border-radius: 10px;
+    border: 5px solid black;
+    width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoBox {
+    background: white;
+    padding: 5px;
+    border: 3px solid black;
+    border-radius: 10px;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    text-align: center;
+    margin: 5px;
+    font-size: 22px;
+}
+  
+.infoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 800px;
+}
+
+.dynamicData {
+    color: blue;
+    font-weight: bold;
+}
+
+.infoText {
+    color: rgb(78, 78, 78);
+}
+
+/* For the AceEditor */
+.disabledEditor {
+    background-color: #f2f2f2; /* Light gray background */
+    color: #b0b0b0; /* Light gray text */
+    pointer-events: none; /* Disable pointer events */
+    opacity: 0.6; /* Reduced opacity */
+}
+  
+  /* For the Submit Button */
+.disabledButton {
+    background-color: #d3d3d3; /* Light gray background */
+    color: #a0a0a0; /* Light gray text */
+    cursor: not-allowed; /* Show disabled cursor */
+    opacity: 0.6; /* Reduced opacity */
+}

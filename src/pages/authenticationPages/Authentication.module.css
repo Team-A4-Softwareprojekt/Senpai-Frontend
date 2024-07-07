@@ -1,0 +1,110 @@
+.authenticationContainer {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 5px solid black;
+  width: 375px;
+  max-width: 100%;
+  margin: 50px auto;
+}
+
+.authenticationFormDiv {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.authenticationFormDiv label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+.authenticationFormDiv input,
+.authenticationFormDiv select {
+  width: calc(100% - 20px);
+  margin-top: 5px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.additionalLinks {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.separator {
+  color: #333;
+  margin: 0 10px;
+}
+
+.buttonDiv {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.button {
+  text-align: center;
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.button:hover {
+  background: #218838;
+}
+
+.h1 {
+  color: black;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.backgroundContainer {
+  background-image: url('../../assets/clouds.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
+
+.registrationFail
+.passwordChangeFail {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+}

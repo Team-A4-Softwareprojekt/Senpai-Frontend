@@ -1,0 +1,59 @@
+.slideContainer {
+    text-align: center;
+}
+
+.image {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+.textContainer {
+    background-color: white;
+    border: 3px solid black;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.navigationDots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 5px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.active {
+    background-color: red;
+}
+
+.headerText {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 
+    2px 2px 0 black,
+    -2px -2px 0 black,
+    -2px 2px 0 black,
+    2px -2px 0 black,
+    2px 0 0 black,
+    -2px 0 0 black,
+    0 2px 0 black,
+    0 -2px 0 black;
+}

@@ -1,0 +1,28 @@
+.userCardDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
+    padding: 0px;
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    height: 80px;
+    border-radius: 15px;
+}
+
+.userName {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.streak {
+    color: black;
+    font-size: 16px;
+    margin: 0;
+}   
+

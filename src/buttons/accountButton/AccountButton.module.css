@@ -1,0 +1,28 @@
+.accountButtonContainer {
+    position: absolute;
+    top: 2px;
+    left: 513px;
+}
+
+.accountButton {
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-size: 25px;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.accountButton:hover {
+    background: #f3bfbf;
+}
+
+.accountIcon {
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+}
+  

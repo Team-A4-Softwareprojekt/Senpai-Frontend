@@ -1,28 +1,202 @@
-
 .accountDiv {
-    position: absolute;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 5px solid black;
+    width: 600px;
+    max-width: 100%;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px; 
+}
+
+.container {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 3px solid black;
+    border-radius: 5px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: 173px;
+    width: 350px;
+}
+
+.heading {
+    color: black;
+    font-size: 25px;
+    text-align: center;
+}
+
+.infoRowContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.infoRow strong {
+    width: 40%;
+    font-size: 20px;
+}
+
+.infoRow span {
+    width: 75%;
+    text-align: left;
+    font-size: 20px;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.button {
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    width: 200px;
+    height: 59px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #3fdd61;
+}
+
+.deleteAccountButton {
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    width: 200px;
+    height: 59px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: #dc3545;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteAccountButton:hover {
+    background: #c82333;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.descriptionText {
+    color: black;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.friendListPopUp {
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
-    border: 3px;
+    background: white;
+    padding: 20px;
+    border: 5px solid black;
     border-radius: 10px;
-    border : 3px solid white;   
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
 }
 
-.friendList {
-    max-height: 47vh;
-    overflow-y: auto;
-    scrollbar-width: none;
-}
-
-
-p {
-    font-size: 20px;
-}
-
-input {
+.friendListPopUp input {
     font-size: 20px;
     margin: 10px;
     border-radius: 8px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.friendList {
+    max-height: 400px;
+    max-width: 250px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.friendList::-webkit-scrollbar {
+    width: 8px;
+}
+
+.friendList::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.closeButton {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 18px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.closeButton:hover {
+    background-color: #c82333;
+}
+
+.blurBackground {
+    filter: blur(5px);
+}
+
+.backgroundContainer {
+    background-image: url('../../assets/cloudsBlurry.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
 }

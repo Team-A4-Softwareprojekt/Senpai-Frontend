@@ -1,0 +1,43 @@
+.cardsGridContainer {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+    justify-items: center;
+}
+
+.cardsGridContainer img {
+    max-width: 100%;;
+    height: auto;
+}
+
+.grayImg {
+    filter: grayscale(100%);
+}
+
+.h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: rgb(255, 230, 0);
+    text-align: center;
+    text-shadow: 
+    2px 2px 0 black,
+    -2px -2px 0 black,
+    -2px 2px 0 black,
+    2px -2px 0 black,
+    2px 0 0 black,
+    -2px 0 0 black,
+    0 2px 0 black,
+    0 -2px 0 black;
+    margin-bottom: 50px;
+}
+
+.backgroundContainer {
+    background-image: url('../../assets/cloudsBlurry.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+}

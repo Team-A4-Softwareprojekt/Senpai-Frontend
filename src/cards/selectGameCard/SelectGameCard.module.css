@@ -1,0 +1,71 @@
+.selectCardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-right: 15px;
+}
+
+.buttonText {
+    margin-bottom: 10px;
+    color: rgb(255, 230, 0);
+    text-shadow: 
+    2px 2px 0 black,
+    -2px -2px 0 black,
+    -2px 2px 0 black,
+    2px -2px 0 black,
+    2px 0 0 black,
+    -2px 0 0 black,
+    0 2px 0 black,
+    0 -2px 0 black;
+}
+
+.selectCardImg {
+    width: 95%;
+    border: 4px solid black;
+    border-radius: 5px; 
+}
+
+.selectButton {
+    width: 350px;
+    height: 350px;
+    background-color: hsl(212, 55%, 54%);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.selectButton:hover {
+    background-color: gold;
+}
+
+.infoContainer {
+    margin-top: 10px;
+}
+
+.infoButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.verticalContainer {
+    margin-top: 20px;
+    border: 3px solid black;
+    padding: 15px;
+    background-color: hsl(212, 77%, 75%);
+}
+
+.dropdownContainer {  
+    border: 1px solid black;
+    width: 98%;
+    text-align: center;
+}
+
+.dropdownContainer select {
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+    text-align: center;
+}

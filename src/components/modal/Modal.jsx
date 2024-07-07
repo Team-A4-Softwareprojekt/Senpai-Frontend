@@ -1,40 +1,42 @@
 import styles from './Modal.module.css';
 import React, { useState } from "react";
 
-/*
-This is a basic modal component that holds text and a close button
-The header and text parameters are set when the component is initialized
-*/
-function Modal({header, text}){
+/**
+ * Modal Component
+ * 
+ * This component displays a button that, when clicked, opens a modal displaying a header and text.
+ * The modal includes an overlay to close it when clicked outside of the content and a close button inside the modal.
+ */
+function Modal({ header, text }) {
 
-    // Modal is a boolean and setModal is the setter function for the boolean
+    // State to control the visibility of the modal
     const [modal, setModal] = useState(false);
 
-    // Simple toggle function that sets the boolean to the opposite when called
+    // Function to toggle the modal visibility
     const toggleModal = () => {
         setModal(!modal)
     }
 
-    return(
+    return (
         <div>
-            <button onClick={toggleModal} className= {styles.button}>
-                ?
+            <button onClick={toggleModal} className={styles.button}>
+                Information
             </button>
             {modal && (
-                <div className= {styles.modal} >
-                
-                    <div onClick= {toggleModal} className= {styles.overlay}></div>
-                        <div className= {styles.content}>
-                            <h2>{header}</h2>
-                            <p>{text}</p>
-                            <div className={styles.buttonContainer}>
-                                <button className={styles.button} onClick={toggleModal}>Close</button>
+                <div className={styles.modal} >
+                    <div onClick={toggleModal} className={styles.overlay}></div>
+                    <div className={styles.content}>
+                        <h2 className={styles.popupHeader}>{header}</h2>
+                        <p className={styles.text}>{text}</p>
+                        <div className={styles.buttonContainer}>
+                            <button className={styles.closeButton} onClick={toggleModal}>Schließen</button>
                         </div>
                     </div>
-                </div>   
+                </div>
             )}
-            
+
         </div>
     );
 }
+
 export default Modal;

@@ -1,0 +1,48 @@
+.FillInTheBlankTextDiv {
+    color: black;
+    line-height: 2.0;
+}
+
+.buttonDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    color: black;
+}
+
+.actiontext {
+    color: black;
+}
+
+.buttonCheck,
+.buttonHelp {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 3px solid white;
+}
+  
+.buttonCheck:hover {
+    background-color: #218838;
+}
+
+.buttonHelp {
+    background: #dc3545;
+}
+
+.buttonHelp:hover {
+    background-color: #c82333;
+}
+
+.line {
+    margin-top: 20px;
+}

@@ -1,50 +1,38 @@
-import styles from '../General.module.css';
-import styles2 from "./StartPage.module.css";
 import { useNavigate } from "react-router-dom";
-import senpaiBackground from "../../assets/senpaiStartPage.jpg";
+import styles from "./StartPage.module.css";
 
-
-/*
-This is the start page with the title and a button to move on
-*/
-function StartPage(){
-    // UseNavigate is used to switch between pages
+/**
+ * StartPage Component
+ * 
+ * This component serves as the landing page for the Senpai application.
+ * It provides a brief introduction to the app's purpose and a button to start the training by navigating to the login page.
+ */
+function StartPage() {
     const navigate = useNavigate();
 
-    // Navigates to the login page
+    // Handle button click to navigate to the login page
     const handleClick = () => {
         navigate("./login");
-
-        fetch('https://senpai-server.onrender.com/registration')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text(); // Die Antwort als Text lesen
-        })
-        .then(data => {
-            console.log('Response from server:', data); // Anzeige der Antwort in der Konsole
-            // Hier kannst du die Antwort in deiner Anwendungslogik weiterverarbeiten oder anzeigen
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-
-
     };
 
-    return(
-        // Background image 
-        <div className={styles2.background} style={{backgroundImage: `url(${senpaiBackground})`}}>
-            <div className= {styles2.startDiv}>
-                <h1>Senpai</h1>
-                <div>
-                    <button className={styles.button01} onClick={handleClick}>
-                        Start Your Journey
-                    </button> 
+    return (
+        <div className={styles.backgroundContainer}>
+            <div className={styles.contentContainer}>
+                <div className={styles.senpaiText}>Senpai</div>
+                <div className={styles.startDiv}>
+                    <button className={styles.button74} onClick={handleClick}>
+                        Starte dein Training
+                    </button>
+                </div>
+                <div className={styles.infoBox}>
+                    <li>Du interessierst dich für die Themenbereiche Programmieren, Mathematik, Medizin oder Fitness und möchtest mehr dazulernen?<br/></li>
+                    <li>Du bist traditionelle Lernmethoden leid?<br/></li>
+                    <li>Du brauchst mehr Action und willst dich mit anderen messen?<br/><br/></li>
+                    <strong>Dann bist du hier genau richtig!<br/><br/></strong>
+                    Senpai hilft dir, deine Lernziele auf spielerische Weise zu erreichen.<br/>
+                    Beginne dein Training indem du auf den Button unten rechts klickst.
                 </div>
             </div>
-            
         </div>
     );
 }

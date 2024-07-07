@@ -1,0 +1,62 @@
+.backgroundImage {
+    background-image: url('../../assets/cloudsBlurry.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 18px;
+    padding: 20px;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.centeredContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+}
+
+.infoText {
+    color: black;
+    margin-bottom: 20px;
+}
+
+.text {
+    padding: 10px 20px;
+    background-color: white;
+    text-align: center;
+    color: black;
+    margin-bottom: 20px;
+    border: 3px solid black;
+    border-radius: 18px;
+}
+
+.motivationText {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.fillInTheBlanksDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(255, 255, 255);
+    color: black;
+    padding: 15px;
+    border: 3px solid black;
+    border-radius: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    font-size: 18px;
+}
