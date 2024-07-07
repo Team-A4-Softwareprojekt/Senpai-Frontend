@@ -48,7 +48,7 @@ function FillInTheBlankText({ text, blankIndices, allowHelp }) {
       const allCorrect = newResults.every(result => result);
       if (allCorrect) {
         setIsWinner(true);
-        setActionText('Glückwunsch! Du hast alle Wörter im ersten Versuch gefunden!');
+        setActionText('Glückwunsch! Du hast alle Wörter gefunden!');
 
         // Notify server of streak success
         fetch(url, {
